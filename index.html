@@ -1301,26 +1301,27 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 40px;
-      min-width: 180px;
+      min-width: 230px;
       padding: 0;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(23, 21, 19, 0.08);
-      background: rgba(255, 253, 248, 0.92);
-      box-shadow: 0 10px 24px rgba(69, 59, 44, 0.06);
-      overflow: hidden;
     }
 
     .name-bubble input {
       width: 100%;
-      padding: 10px 16px;
-      border: none;
-      background: transparent;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--panel);
       color: var(--text);
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
       text-align: center;
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .name-bubble input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
     }
 
     .name-bubble input::placeholder {
