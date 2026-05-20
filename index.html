@@ -1488,6 +1488,7 @@
         0 22px 44px rgba(69, 59, 44, 0.08),
         0 0 0 2px rgba(255,255,255,0.42);
       animation: creatureFloat 4s ease-in-out infinite, creatureMorph 8s ease-in-out infinite;
+      cursor: pointer;
     }
 
     .builder-agimon-shadow {
@@ -2723,11 +2724,19 @@
       previewAgimon.style.background = button.dataset.gradient;
     }
 
+    function cyclePreviewColor() {
+      const currentIndex = paletteButtons.findIndex((button) => button.classList.contains("is-selected"));
+      const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % paletteButtons.length : 0;
+      selectColor(paletteButtons[nextIndex]);
+    }
+
     paletteButtons.forEach((button) => {
       button.addEventListener("click", function () {
         selectColor(button);
       });
     });
+
+    previewAgimon.addEventListener("click", cyclePreviewColor);
 
     function parseWorkflowEntries() {
       return workflowNote.value
