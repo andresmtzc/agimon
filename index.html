@@ -1364,6 +1364,19 @@
       font-weight: 700;
     }
 
+    .pricing-includes {
+      list-style: disc;
+      display: grid;
+      gap: 8px;
+      width: fit-content;
+      margin: 6px auto 0;
+      padding: 0 0 0 22px;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
     .pricing-note {
       width: min(700px, 100%);
       color: var(--muted);
@@ -2055,7 +2068,7 @@
       </div>
       <h2 data-i18n-html="whatTitle">Agimon handles the repetitive work still being done by <span class="accent">hand</span></h2>
       <p class="copy">
-        <span data-i18n="whatCopy">The same jobs keep showing up in WhatsApp.</span>
+      <span data-i18n="whatCopy">The work is repetitive, easy to miss, and keeps interrupting everything else.</span>
       </p>
       <div class="primitive-list" aria-label="Agimon workflow primitives" data-i18n-aria-label="primitiveAria">
         <span class="primitive-chip" data-i18n="primitiveReceipts">Reading Receipts</span>
@@ -2211,6 +2224,7 @@
     <section class="story-section" id="how">
       <div class="section-kicker" data-i18n="howKicker">How</div>
       <h2 data-i18n-html="howTitle">Every Agimon <span class="accent">starts</span> small</h2>
+      <p class="copy" data-i18n="howIntro">You do not need to change how you work to start.</p>
 
       <div class="how-grid">
         <article class="how-card">
@@ -2325,9 +2339,14 @@
       <div class="pricing-card">
         <div class="price-intro" data-i18n="priceIntro">Early adoption starts at:</div>
         <div class="price-line"><span>$599 MXN</span> <span data-i18n="pricePeriod">/ mo</span></div>
+        <ul class="pricing-includes" aria-label="What's included">
+          <li data-i18n="priceIncludeAgimon">1 Agimon</li>
+          <li data-i18n="priceIncludeNumber">1 phone number</li>
+          <li data-i18n="priceIncludeWorkflow">1 starting workflow</li>
+        </ul>
       </div>
       <p class="pricing-note">
-        <span data-i18n-html="pricingNote">Each Agimon is dedicated to one client.<br>Shaped around the WhatsApp work that matters most first.</span>
+        <span data-i18n="pricingNote">Shaped around the WhatsApp work that matters most first.</span>
       </p>
 
       <a class="soft-link" href="#adopt">
@@ -2483,7 +2502,7 @@
         heroNext: "What is Agimon?",
         whatKicker: "What Is",
         whatTitle: 'Agimon handles the repetitive work still being done by <span class="accent">hand</span>',
-        whatCopy: "The same jobs keep showing up in WhatsApp.",
+        whatCopy: "The work is repetitive, easy to miss, and keeps interrupting everything else.",
         primitiveAria: "Agimon workflow primitives",
         primitiveReceipts: "Reading Receipts",
         primitiveReminders: "Sending Reminders",
@@ -2512,6 +2531,7 @@
         examplesNext: "Agimons grow",
         howKicker: "How",
         howTitle: 'Every Agimon <span class="accent">starts</span> small',
+        howIntro: "You do not need to change how you work to start.",
         howWatch: "Watch",
         howWatchCopy: "Agimon reads the conversations already happening in WhatsApp and notices when the right kind of work shows up.",
         howLearn: "Learn",
@@ -2523,7 +2543,10 @@
         pricingTitle: 'Starting with <span class="accent">one</span> workflow',
         priceIntro: "Early adoption starts at:",
         pricePeriod: "/ mo",
-        pricingNote: "Each Agimon is dedicated to one client.<br>Shaped around the WhatsApp work that matters most first.",
+        priceIncludeAgimon: "1 Agimon",
+        priceIncludeNumber: "1 phone number",
+        priceIncludeWorkflow: "1 starting workflow",
+        pricingNote: "Shaped around the WhatsApp work you already do.",
         pricingNext: "Adopt an Agimon",
         adoptKicker: "Adoption",
         adoptTitle: '<span class="accent">Join</span> the adoption waitlist',
@@ -2562,7 +2585,7 @@
         heroNext: "¿Qué es Agimon?",
         whatKicker: "Qué es",
         whatTitle: 'Agimon se encarga del trabajo repetitivo que todavía se hace a <span class="accent">mano</span>',
-        whatCopy: "Las mismas tareas siguen apareciendo en WhatsApp.",
+        whatCopy: "El trabajo es repetitivo, fácil de perder, y sigue interrumpiendo todo lo demás.",
         primitiveAria: "Flujos de trabajo de Agimon",
         primitiveReceipts: "Leer comprobantes",
         primitiveReminders: "Mandar recordatorios",
@@ -2591,6 +2614,7 @@
         examplesNext: "Agimons crecen",
         howKicker: "Cómo",
         howTitle: 'Cada Agimon <span class="accent">empieza</span> pequeño',
+        howIntro: "No necesitas cambiar cómo trabajas para comenzar.",
         howWatch: "Observa",
         howWatchCopy: "Agimon lee las conversaciones que ya están pasando en WhatsApp y nota cuando aparece el tipo correcto de trabajo.",
         howLearn: "Aprende",
@@ -2602,7 +2626,10 @@
         pricingTitle: 'Empezando con <span class="accent">un</span> workflow',
         priceIntro: "Adopción temprana desde:",
         pricePeriod: "/ mes",
-        pricingNote: "Cada Agimon está dedicado a un solo cliente.<br>Formado alrededor del trabajo de WhatsApp más importante.",
+        priceIncludeAgimon: "1 Agimon",
+        priceIncludeNumber: "1 número de teléfono",
+        priceIncludeWorkflow: "1 workflow inicial",
+        pricingNote: "Adaptado al trabajo de WhatsApp que ya haces.",
         pricingNext: "Adopta un Agimon",
         adoptKicker: "ADOPCIÓN",
         adoptTitle: '<span class="accent">Únete</span> a la lista de adopción',
