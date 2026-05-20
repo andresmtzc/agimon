@@ -229,6 +229,10 @@
       line-height: 1.02;
     }
 
+    .hero-subhead .keep-together {
+      white-space: nowrap;
+    }
+
     h3 {
       font-size: clamp(26px, 4vw, 34px);
     }
@@ -563,6 +567,11 @@
       display: flex;
       align-items: center;
       gap: 14px;
+    }
+
+    .how-head h3 {
+      margin-right: auto;
+      font-size: clamp(24px, 3vw, 30px);
     }
 
     .how-head .growth-group .tiny-head--sm {
@@ -969,6 +978,14 @@
       text-align: left;
     }
 
+    [data-theme="dark"] .example-card,
+    [data-theme="dark"] .how-card,
+    [data-theme="dark"] .pricing-card {
+      background: rgba(38, 33, 29, 0.42);
+      border-color: rgba(255, 246, 232, 0.06);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+    }
+
     .example-figure {
       display: flex;
       flex-direction: column;
@@ -1187,6 +1204,22 @@
       box-shadow: 0 0 0 4px var(--accent-soft);
     }
 
+    [data-theme="dark"] .suggestion-chip {
+      border-color: var(--line);
+      background: var(--panel-solid);
+      color: var(--muted);
+    }
+
+    [data-theme="dark"] .suggestion-chip:hover {
+      border-color: rgba(255, 246, 232, 0.16);
+    }
+
+    [data-theme="dark"] .suggestion-chip.is-selected {
+      border-color: var(--accent);
+      color: var(--text);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+
     .how-grid {
       width: 100%;
       display: grid;
@@ -1285,7 +1318,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 14px;
+      max-width: 420px;
+      margin: 0 auto;
     }
 
     .adopt-preview {
@@ -1491,9 +1527,9 @@
 
     .palette-grid {
       display: grid;
-      grid-template-columns: repeat(3, 18px);
+      grid-template-columns: repeat(9, 18px);
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .color-chip {
@@ -1614,6 +1650,16 @@
         padding-bottom: 24px;
       }
 
+      #examples.story-section {
+        padding-bottom: 38px;
+      }
+
+      #examples .soft-link {
+        position: static;
+        transform: none;
+        margin-top: clamp(22px, 4vw, 34px);
+      }
+
       .example-grid,
       .how-grid,
       .field-grid {
@@ -1627,6 +1673,37 @@
 
       .adopt-preview {
         padding-top: 0;
+      }
+
+      .adopt-config {
+        gap: 12px;
+        max-width: 330px;
+      }
+
+      .builder-agimon {
+        --creature-size: 118px;
+        --creature-eye-gap: 13px;
+        --creature-eyes-top: -5px;
+        --creature-eye-width: 18px;
+        --creature-eye-height: 21px;
+        --creature-pupil-size: 9px;
+        --creature-pupil-bottom: 4px;
+        --creature-mouth-width: 10px;
+        --creature-mouth-height: 5px;
+        --creature-mouth-bottom: 34px;
+      }
+
+      .builder-agimon-shadow {
+        width: 72px;
+        height: 10px;
+      }
+
+      .builder-agimon-wrap {
+        margin-top: 10px;
+      }
+
+      .name-bubble {
+        min-width: 190px;
       }
 
       .adopt-actions {
@@ -1656,9 +1733,10 @@
       }
 
       .story-section {
-        min-height: auto;
-        padding-top: 92px;
-        padding-bottom: 120px;
+        min-height: 100svh;
+        padding-top: 58px;
+        padding-bottom: 132px;
+        gap: 16px;
       }
 
       .hero.story-section {
@@ -1666,33 +1744,154 @@
         padding: 0 20px 120px;
       }
 
+      .story-section h2 {
+        font-size: 38px;
+        max-width: 360px;
+      }
+
+      .hero-subhead {
+        font-size: clamp(23px, 6.4vw, 30px);
+        max-width: 350px;
+      }
+
+      .copy {
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      .section-motif {
+        width: 78px;
+        height: 78px;
+      }
+
+      .section-motif-eyes {
+        gap: 10px;
+        top: -3px;
+      }
+
+      .section-motif-eye {
+        width: 13px;
+        height: 15px;
+      }
+
+      .section-motif-eye::after {
+        width: 7px;
+        height: 7px;
+        bottom: 2px;
+      }
+
+      .section-motif-mouth {
+        width: 8px;
+        height: 4px;
+        bottom: 21px;
+      }
+
+      .section-motif-shadow {
+        width: 68px;
+        height: 10px;
+        margin-top: 8px;
+      }
+
       #adopt.story-section {
         padding-bottom: 18px;
       }
 
+      #examples.story-section {
+        padding-bottom: 34px;
+      }
+
       .example-card {
-        grid-template-columns: 1fr;
+        grid-template-columns: 112px minmax(0, 1fr);
         gap: 14px;
-        justify-items: center;
-        text-align: center;
+        padding: 18px 16px;
+        justify-items: start;
+        text-align: left;
+        max-width: 390px;
+      }
+
+      .example-figure {
+        gap: 5px;
       }
 
       .example-body {
-        align-items: center;
+        align-items: flex-start;
+        gap: 8px;
       }
 
       .example-card p {
-        text-align: center;
-        max-width: 32ch;
+        text-align: left;
+        max-width: none;
+        font-size: 13px;
+        line-height: 1.45;
       }
 
       .task-list {
+        justify-content: flex-start;
+        gap: 6px;
+      }
+
+      .task-tag {
+        padding: 5px 8px;
+        font-size: 10px;
+      }
+
+      .agimon-chip {
+        --creature-size: 70px;
+        --creature-eye-gap: 8px;
+        --creature-eyes-top: -3px;
+        --creature-eye-width: 11px;
+        --creature-eye-height: 13px;
+        --creature-pupil-size: 5.5px;
+        --creature-pupil-bottom: 2.5px;
+        --creature-mouth-width: 6px;
+        --creature-mouth-height: 3px;
+        --creature-mouth-bottom: 20px;
+        flex-basis: 70px;
+      }
+
+      .example-shadow {
+        width: 52px;
+        height: 8px;
+        margin-bottom: 4px;
+      }
+
+      .example-card h3 {
+        font-size: 22px;
+      }
+
+      .example-role {
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .primitive-list {
+        width: min(360px, 100%);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 12px;
+      }
+
+      .primitive-chip {
+        width: 100%;
+        min-height: 42px;
+        padding: 9px 8px;
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        text-align: center;
+        display: flex;
+        align-items: center;
         justify-content: center;
+      }
+
+      .soft-link {
+        bottom: 24px;
+        gap: 8px;
+        font-size: 16px;
       }
 
       .lede,
       .copy {
-        font-size: 17px;
+        font-size: 16px;
       }
     }
   </style>
@@ -1721,7 +1920,7 @@
       </div>
 
       <h1>Adopt an <span class="accent">Agi</span>mon</h1>
-      <h2 class="hero-subhead">A virtual employee that lives in WhatsApp</h2>
+      <h2 class="hero-subhead">A virtual employee <span class="keep-together">that lives in WhatsApp</span></h2>
       <p class="lede">For people and businesses who handle a lot through chat.</p>
 
       <a class="soft-link" href="#what-is">
@@ -1914,6 +2113,7 @@
         <article class="how-card">
           <div class="how-head">
             <div class="step">01</div>
+            <h3>Watch</h3>
             <div class="growth-group" aria-hidden="true">
               <span class="tiny-head tiny-head--default tiny-head--sm">
                 <span class="tiny-head-eyes">
@@ -1924,7 +2124,6 @@
               </span>
             </div>
           </div>
-          <h3>Watch</h3>
           <p>
             Agimon reads the conversations already happening in WhatsApp and notices when the right kind of work shows up.
           </p>
@@ -1933,6 +2132,7 @@
         <article class="how-card">
           <div class="how-head">
             <div class="step">02</div>
+            <h3>Learn</h3>
             <div class="growth-group" aria-hidden="true">
               <span class="tiny-head tiny-head--default tiny-head--sm">
                 <span class="tiny-head-eyes">
@@ -1950,7 +2150,6 @@
               </span>
             </div>
           </div>
-          <h3>Learn</h3>
           <p>
             Every Agimon starts with one workflow and gets trained around the real context, habits, and needs of the client.
           </p>
@@ -1959,6 +2158,7 @@
         <article class="how-card">
           <div class="how-head">
             <div class="step">03</div>
+            <h3>Grow</h3>
             <div class="growth-group" aria-hidden="true">
               <span class="tiny-head tiny-head--default tiny-head--sm">
                 <span class="tiny-head-eyes">
@@ -1983,7 +2183,6 @@
               </span>
             </div>
           </div>
-          <h3>Grow</h3>
           <p>
             Once that first job is working well, Agimon can gradually take on more repetitive work over time.
           </p>
