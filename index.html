@@ -2326,7 +2326,7 @@
         <div class="adopt-config">
           <div class="adopt-preview">
             <label class="name-bubble" for="agimon-name">
-              <input id="agimon-name" name="agimon-name" type="text" placeholder="Name your Agimon" required="">
+              <input id="agimon-name" name="agimon-name" type="text" placeholder="Name your Agimon">
             </label>
             <div class="builder-agimon-wrap" aria-hidden="true">
               <div class="builder-agimon" id="preview-agimon">
@@ -2508,9 +2508,11 @@
     workflowNote.addEventListener("input", syncSuggestionState);
     syncSuggestionState();
 
-    document.getElementById("adoption-form").addEventListener("submit", function (event) {
+    document.getElementById("adoption-form").addEventListener("submit", async function (event) {
       event.preventDefault();
 
+      const form = event.currentTarget;
+      const submitButton = form.querySelector(".primary-button");
       const business = document.getElementById("business-name").value.trim();
       const country = document.getElementById("contact-country").value.trim();
       const phone = document.getElementById("contact-phone").value.trim();
@@ -2518,20 +2520,42 @@
       const agimonColor = document.getElementById("agimon-color").value.trim();
       const workflow = document.getElementById("workflow-note").value.trim();
 
-      const subject = encodeURIComponent("Agimon adoption request");
-      const body = encodeURIComponent(
-        [
-          "Business or person: " + business,
-          "Phone: " + [country, phone].filter(Boolean).join(" "),
-          "Agimon name: " + agimonName,
-          "Agimon color: " + agimonColor,
-          "",
-          "WhatsApp work to take over:",
-          workflow
-        ].join("\n")
-      );
+      const message = [
+        "Business or person: " + business,
+        "Phone: " + [country, phone].filter(Boolean).join(" "),
+        "Agimon name: " + (agimonName || "Not chosen yet"),
+        "Agimon color: " + agimonColor,
+        "",
+        "WhatsApp work to take over:",
+        workflow
+      ].join("\n");
 
-      window.location.href = "mailto:andresmtzc@gmail.com?subject=" + subject + "&body=" + body;
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+
+      try {
+        const response = await fetch("https://ntfy.sh/agimon-adoptions-k7r4m2xq", {
+          method: "POST",
+          headers: {
+            "Title": "New Agimon adoption request",
+            "Tags": "robot,whatsapp",
+            "Priority": "4"
+          },
+          body: message
+        });
+
+        if (!response.ok) {
+          throw new Error("ntfy request failed");
+        }
+
+        submitButton.textContent = "Request sent";
+        form.reset();
+        paletteButtons[0].click();
+        syncSuggestionState();
+      } catch (error) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Try again";
+      }
     });
   </script>
 
