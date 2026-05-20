@@ -1126,6 +1126,21 @@
       color: var(--muted);
       font-size: 15px;
       font-weight: 600;
+      max-width: 100%;
+      line-height: 1.25;
+    }
+
+    .example-role a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(126, 116, 101, 0.28);
+      transition: color 0.2s ease, border-color 0.2s ease;
+      overflow-wrap: anywhere;
+    }
+
+    .example-role a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
     }
 
     .example-card p {
@@ -1176,19 +1191,20 @@
     }
 
     .suggestion-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
       margin-top: 4px;
     }
 
     .suggestion-chip {
-      padding: 8px 12px;
+      min-height: 38px;
+      padding: 8px 10px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(23, 21, 19, 0.08);
       background: rgba(255, 253, 248, 0.84);
       color: var(--text);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -1242,6 +1258,7 @@
     .step {
       width: 42px;
       height: 42px;
+      flex: 0 0 42px;
       border-radius: 50%;
       background: var(--secondary-soft);
       color: var(--secondary-deep);
@@ -1250,6 +1267,46 @@
       font-family: var(--font-mono);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    @media (max-width: 1080px) and (min-width: 861px) {
+      .how-card {
+        padding: 18px;
+      }
+
+      .how-head {
+        gap: 10px;
+      }
+
+      .how-head h3 {
+        font-size: 26px;
+      }
+
+      .step {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+        font-size: 11px;
+      }
+
+      .how-head .growth-group {
+        gap: 6px;
+      }
+
+      .how-head .growth-group .tiny-head--sm {
+        width: 11px;
+        height: 11px;
+      }
+
+      .how-head .growth-group .tiny-head--md {
+        width: 16px;
+        height: 16px;
+      }
+
+      .how-head .growth-group .tiny-head:not(.tiny-head--sm):not(.tiny-head--md) {
+        width: 22px;
+        height: 22px;
+      }
     }
 
     .how-card p {
@@ -1307,7 +1364,7 @@
       grid-template-rows: auto 1fr auto;
       gap: 24px;
       text-align: left;
-      align-items: start;
+      align-items: stretch;
       background: transparent;
       border: none;
       box-shadow: none;
@@ -1374,16 +1431,16 @@
     }
 
     .builder-agimon {
-      --creature-size: 150px;
-      --creature-eye-gap: 17px;
-      --creature-eyes-top: -7px;
-      --creature-eye-width: 23px;
-      --creature-eye-height: 27px;
-      --creature-pupil-size: 12px;
-      --creature-pupil-bottom: 5px;
-      --creature-mouth-width: 13px;
-      --creature-mouth-height: 7px;
-      --creature-mouth-bottom: 43px;
+      --creature-size: 128px;
+      --creature-eye-gap: 15px;
+      --creature-eyes-top: -6px;
+      --creature-eye-width: 20px;
+      --creature-eye-height: 24px;
+      --creature-pupil-size: 10px;
+      --creature-pupil-bottom: 4px;
+      --creature-mouth-width: 11px;
+      --creature-mouth-height: 6px;
+      --creature-mouth-bottom: 37px;
       width: var(--creature-size);
       height: var(--creature-size);
       border-radius: 42% 58% 55% 45% / 50% 42% 58% 50%;
@@ -1399,8 +1456,8 @@
     }
 
     .builder-agimon-shadow {
-      width: 90px;
-      height: 12px;
+      width: 78px;
+      height: 10px;
       background: radial-gradient(ellipse, rgba(0,0,0,0.08), transparent);
       border-radius: 50%;
       animation: shadowPulse 4s ease-in-out infinite;
@@ -1458,7 +1515,8 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 10px;
+      min-height: 0;
     }
 
     .adopt-actions {
@@ -1467,8 +1525,7 @@
       gap: 0;
       width: 100%;
       align-self: end;
-      padding-top: 18px;
-      transform: translateY(28px);
+      padding-top: 0;
     }
 
     .field-grid {
@@ -1503,7 +1560,7 @@
     }
 
     .field textarea {
-      min-height: 140px;
+      min-height: 80px;
       resize: vertical;
     }
 
@@ -1639,7 +1696,7 @@
 
     @media (max-width: 860px) {
       .story-section {
-        padding: 90px 26px 120px;
+        padding: 90px 18px 120px;
       }
 
       .hero.story-section {
@@ -1648,6 +1705,7 @@
 
       #adopt.story-section {
         padding-bottom: 24px;
+        justify-content: flex-start;
       }
 
       #examples.story-section {
@@ -1667,7 +1725,8 @@
       }
 
       .adopt-card {
-        min-height: auto;
+        flex: 1;
+        min-height: 0;
         gap: 22px;
       }
 
@@ -1681,21 +1740,21 @@
       }
 
       .builder-agimon {
-        --creature-size: 118px;
-        --creature-eye-gap: 13px;
-        --creature-eyes-top: -5px;
-        --creature-eye-width: 18px;
-        --creature-eye-height: 21px;
-        --creature-pupil-size: 9px;
-        --creature-pupil-bottom: 4px;
-        --creature-mouth-width: 10px;
+        --creature-size: 104px;
+        --creature-eye-gap: 12px;
+        --creature-eyes-top: -4px;
+        --creature-eye-width: 16px;
+        --creature-eye-height: 19px;
+        --creature-pupil-size: 8px;
+        --creature-pupil-bottom: 3px;
+        --creature-mouth-width: 9px;
         --creature-mouth-height: 5px;
-        --creature-mouth-bottom: 34px;
+        --creature-mouth-bottom: 30px;
       }
 
       .builder-agimon-shadow {
-        width: 72px;
-        height: 10px;
+        width: 64px;
+        height: 9px;
       }
 
       .builder-agimon-wrap {
@@ -1707,8 +1766,8 @@
       }
 
       .adopt-actions {
-        padding-top: 8px;
-        transform: translateY(18px);
+        margin-top: 14px;
+        padding-top: 0;
       }
 
       .creature {
@@ -1734,8 +1793,7 @@
 
       .story-section {
         min-height: 100svh;
-        padding-top: 58px;
-        padding-bottom: 132px;
+        padding: 58px 8px 132px;
         gap: 16px;
       }
 
@@ -1793,7 +1851,13 @@
       }
 
       #adopt.story-section {
-        padding-bottom: 18px;
+        padding-bottom: clamp(18px, 4svh, 34px);
+      }
+
+      @media (min-height: 880px) {
+        .adopt-actions {
+          margin-top: auto;
+        }
       }
 
       #examples.story-section {
@@ -1881,6 +1945,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+
+      .how-card {
+        padding: 16px;
+        gap: 10px;
+      }
+
+      .how-card p {
+        font-size: 14px;
+        line-height: 1.55;
       }
 
       .soft-link {
@@ -2011,11 +2085,11 @@
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
             <h3>Martita</h3>
-            <div class="example-role">For a beauty clinic</div>
+            <div class="example-role">Works at<br><a href="https://www.instagram.com/dra.alejandracampuzano/" target="_blank" rel="noopener noreferrer">@dra.alejandracampuzano</a></div>
           </div>
           <div class="example-body">
             <p>
-              Martita works inside a clinic where several people already attend WhatsApp. Repetitive admin tasks keep showing up between patient conversations, confirmations, and everyday coordination.
+              Martita helps a clinic team already handling WhatsApp all day. Repetitive admin tasks keep showing up between patient conversations, confirmations, and everyday coordination.
             </p>
             <div class="task-list">
               <span class="task-tag">patient admin</span>
@@ -2036,7 +2110,7 @@
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
             <h3>Arturito</h3>
-            <div class="example-role">For a building administrator</div>
+            <div class="example-role">Works at <a href="https://maps.app.goo.gl/EUbbUBpzWWsd1WgdA" target="_blank" rel="noopener noreferrer">Colmena</a></div>
           </div>
           <div class="example-body">
             <p>
@@ -2061,7 +2135,7 @@
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
             <h3>Alana</h3>
-            <div class="example-role">For an Uber fleet</div>
+            <div class="example-role">Works for Armando</div>
           </div>
           <div class="example-body">
             <p>
@@ -2247,9 +2321,6 @@
     <section class="story-section" id="adopt">
       <div class="section-kicker">Adoption</div>
       <h2><span class="accent">Join</span> the adoption waitlist</h2>
-      <p class="copy">
-        Pick a name, pick a color, and tell us what you need Agimon for.
-      </p>
 
       <form class="adopt-card" id="adoption-form">
         <div class="adopt-config">
@@ -2357,12 +2428,9 @@
             <div class="suggestion-list" id="workflow-suggestions">
               <button class="suggestion-chip" type="button" data-value="Reading receipts">Reading receipts</button>
               <button class="suggestion-chip" type="button" data-value="Sending reminders">Sending reminders</button>
-              <button class="suggestion-chip" type="button" data-value="Checking balances">Checking balances</button>
-              <button class="suggestion-chip" type="button" data-value="Checking voice notes">Checking voice notes</button>
-              <button class="suggestion-chip" type="button" data-value="Following up">Following up</button>
               <button class="suggestion-chip" type="button" data-value="Updating records">Updating records</button>
             </div>
-            <textarea id="workflow-note" name="workflow-note" placeholder="Receipts, reminders, weekly collections, confirmations, keeping count, or whatever keeps getting lost in WhatsApp." required=""></textarea>
+            <textarea id="workflow-note" name="workflow-note" placeholder="Receipts, reminders, weekly collections, or the work you want off your plate." required=""></textarea>
           </div>
 
           <div class="adopt-actions">
