@@ -2,8 +2,8 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agimon | Adopt a virtual employee for WhatsApp</title>
-  <meta name="description" content="Agimon is a virtual employee for WhatsApp. It takes repetitive hand-done work off the plate of people and businesses who use WhatsApp a lot.">
+  <title>Agimon | Adopt a virtual employee for your business</title>
+  <meta name="description" content="Agimon is a virtual employee that lives in WhatsApp and takes repetitive hand-done work off the plate of people and businesses who handle a lot through chat.">
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
   <link href="./backup_files/css2" rel="stylesheet">
@@ -136,6 +136,28 @@
 
     .theme-toggle:hover svg {
       color: var(--accent);
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 39px;
+      left: 32px;
+      z-index: 20;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      cursor: pointer;
+      opacity: 0.72;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .lang-toggle:hover {
+      color: var(--accent);
+      opacity: 1;
     }
 
     .page {
@@ -1791,6 +1813,11 @@
         height: 46px;
       }
 
+      .lang-toggle {
+        top: 32px;
+        left: 18px;
+      }
+
       .story-section {
         min-height: 100svh;
         padding: 58px 8px 132px;
@@ -1971,6 +1998,8 @@
   </style>
 </head>
 <body>
+  <button class="lang-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">EN</button>
+
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
     <svg id="theme-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="4"></circle>
@@ -1988,14 +2017,14 @@
             <div class="creature-eye"></div>
           </div>
           <div class="creature-mouth"></div>
-          <div class="creature-status">ONLINE</div>
+          <div class="creature-status" data-i18n="statusOnline">ONLINE</div>
         </div>
         <div class="creature-shadow"></div>
       </div>
 
-      <h1>Adopt an <span class="accent">Agi</span>mon</h1>
-      <h2 class="hero-subhead">A virtual employee <span class="keep-together">that lives in WhatsApp</span></h2>
-      <p class="lede">For people and businesses who handle a lot through chat.</p>
+      <h1 data-i18n-html="heroTitle">Adopt an <span class="accent">Agi</span>mon</h1>
+      <h2 class="hero-subhead" data-i18n-html="heroSubhead">A virtual employee <span class="keep-together">that lives in WhatsApp</span></h2>
+      <p class="lede" data-i18n="heroLede">For people and businesses who handle a lot through chat.</p>
 
       <a class="soft-link" href="#what-is">
         <span class="soft-link-preview" aria-hidden="true">
@@ -2007,13 +2036,13 @@
             <span class="tiny-head-mouth"></span>
           </span>
         </span>
-        <span>What is Agimon?</span>
+        <span data-i18n="heroNext">What is Agimon?</span>
         <span class="arrow">↓</span>
       </a>
     </section>
 
     <section class="story-section" id="what-is">
-      <div class="section-kicker">What Is</div>
+      <div class="section-kicker" data-i18n="whatKicker">What Is</div>
       <div class="section-motif-wrap" aria-hidden="true">
         <div class="section-motif">
           <div class="section-motif-eyes">
@@ -2024,17 +2053,17 @@
         </div>
         <div class="section-motif-shadow"></div>
       </div>
-      <h2>Agimon handles the repetitive work still being done by <span class="accent">hand</span></h2>
+      <h2 data-i18n-html="whatTitle">Agimon handles the repetitive work still being done by <span class="accent">hand</span></h2>
       <p class="copy">
-        The same jobs keep showing up in WhatsApp.
+        <span data-i18n="whatCopy">The same jobs keep showing up in WhatsApp.</span>
       </p>
-      <div class="primitive-list" aria-label="Agimon workflow primitives">
-        <span class="primitive-chip">Reading Receipts</span>
-        <span class="primitive-chip">Sending Reminders</span>
-        <span class="primitive-chip">Checking Balances</span>
-        <span class="primitive-chip">Checking Voice Notes</span>
-        <span class="primitive-chip">Following Up</span>
-        <span class="primitive-chip">Updating Records</span>
+      <div class="primitive-list" aria-label="Agimon workflow primitives" data-i18n-aria-label="primitiveAria">
+        <span class="primitive-chip" data-i18n="primitiveReceipts">Reading Receipts</span>
+        <span class="primitive-chip" data-i18n="primitiveReminders">Sending Reminders</span>
+        <span class="primitive-chip" data-i18n="primitiveBalances">Checking Balances</span>
+        <span class="primitive-chip" data-i18n="primitiveVoice">Checking Voice Notes</span>
+        <span class="primitive-chip" data-i18n="primitiveFollowUp">Following Up</span>
+        <span class="primitive-chip" data-i18n="primitiveRecords">Updating Records</span>
       </div>
 
       <a class="soft-link" href="#examples">
@@ -2061,16 +2090,16 @@
             <span class="tiny-head-mouth"></span>
           </span>
         </span>
-        <span>Agimons at work</span>
+        <span data-i18n="whatNext">Agimons at work</span>
         <span class="arrow">↓</span>
       </a>
     </section>
 
     <section class="story-section" id="examples">
-      <div class="section-kicker">Examples</div>
-      <h2>Agimons at <span class="accent">work</span></h2>
+      <div class="section-kicker" data-i18n="examplesKicker">Examples</div>
+      <h2 data-i18n-html="examplesTitle">Agimons at <span class="accent">work</span></h2>
       <p class="copy">
-        Each one belongs to a different client, with a different job inside WhatsApp.
+        <span data-i18n="examplesCopy">Each one belongs to a different client, with a different job inside WhatsApp.</span>
       </p>
 
       <div class="example-grid">
@@ -2085,16 +2114,16 @@
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
             <h3>Martita</h3>
-            <div class="example-role">Works at<br><a href="https://www.instagram.com/dra.alejandracampuzano/" target="_blank" rel="noopener noreferrer">@dra.alejandracampuzano</a></div>
+            <div class="example-role"><span data-i18n="worksAt">Works at</span><br><a href="https://www.instagram.com/dra.alejandracampuzano/" target="_blank" rel="noopener noreferrer">@dra.alejandracampuzano</a></div>
           </div>
           <div class="example-body">
             <p>
-              Martita helps a clinic team already handling WhatsApp all day. Repetitive admin tasks keep showing up between patient conversations, confirmations, and everyday coordination.
+              <span data-i18n="martitaCopy">Martita helps a clinic team already handling WhatsApp all day. Repetitive admin tasks keep showing up between patient conversations, confirmations, and everyday coordination.</span>
             </p>
             <div class="task-list">
-              <span class="task-tag">patient admin</span>
-              <span class="task-tag">receipt reading</span>
-              <span class="task-tag">confirmations</span>
+              <span class="task-tag" data-i18n="tagPatientAdmin">patient admin</span>
+              <span class="task-tag" data-i18n="tagReceiptReading">receipt reading</span>
+              <span class="task-tag" data-i18n="tagConfirmations">confirmations</span>
             </div>
           </div>
         </article>
@@ -2110,16 +2139,16 @@
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
             <h3>Arturito</h3>
-            <div class="example-role">Works at <a href="https://maps.app.goo.gl/EUbbUBpzWWsd1WgdA" target="_blank" rel="noopener noreferrer">Colmena</a></div>
+            <div class="example-role"><span data-i18n="worksAt">Works at</span> <a href="https://maps.app.goo.gl/EUbbUBpzWWsd1WgdA" target="_blank" rel="noopener noreferrer">Colmena</a></div>
           </div>
           <div class="example-body">
             <p>
-              Arturito lives in a WhatsApp flow full of dues, receipts, reminders, balances, and follow-up. The work is repetitive, easy to lose, and essential to keeping things running.
+              <span data-i18n="arturitoCopy">Arturito lives in a WhatsApp flow full of dues, receipts, reminders, balances, and follow-up. The work is repetitive, easy to lose, and essential to keeping things running.</span>
             </p>
             <div class="task-list">
-              <span class="task-tag">who paid</span>
-              <span class="task-tag">reminders</span>
-              <span class="task-tag">balances</span>
+              <span class="task-tag" data-i18n="tagWhoPaid">who paid</span>
+              <span class="task-tag" data-i18n="tagReminders">reminders</span>
+              <span class="task-tag" data-i18n="tagBalances">balances</span>
             </div>
           </div>
         </article>
@@ -2135,16 +2164,16 @@
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
             <h3>Alana</h3>
-            <div class="example-role">Works for Armando</div>
+            <div class="example-role"><span data-i18n="worksForArmando">Works for Armando</span></div>
           </div>
           <div class="example-body">
             <p>
-              Alana starts with weekly car rent collection: noticing payments, tracking what came in, and helping keep the follow-up so collections aren’t lost.
+              <span data-i18n="alanaCopy">Alana starts with weekly car rent collection: noticing payments, tracking what came in, and helping keep the follow-up so collections aren’t lost.</span>
             </p>
             <div class="task-list">
-              <span class="task-tag">weekly rent</span>
-              <span class="task-tag">payment tracking</span>
-              <span class="task-tag">follow-up</span>
+              <span class="task-tag" data-i18n="tagWeeklyRent">weekly rent</span>
+              <span class="task-tag" data-i18n="tagPaymentTracking">payment tracking</span>
+              <span class="task-tag" data-i18n="tagFollowUp">follow-up</span>
             </div>
           </div>
         </article>
@@ -2174,20 +2203,20 @@
             <span class="tiny-head-mouth"></span>
           </span>
         </span>
-        <span>Agimons grow</span>
+        <span data-i18n="examplesNext">Agimons grow</span>
         <span class="arrow">↓</span>
       </a>
     </section>
 
     <section class="story-section" id="how">
-      <div class="section-kicker">How</div>
-      <h2>Every Agimon <span class="accent">starts</span> small</h2>
+      <div class="section-kicker" data-i18n="howKicker">How</div>
+      <h2 data-i18n-html="howTitle">Every Agimon <span class="accent">starts</span> small</h2>
 
       <div class="how-grid">
         <article class="how-card">
           <div class="how-head">
             <div class="step">01</div>
-            <h3>Watch</h3>
+            <h3 data-i18n="howWatch">Watch</h3>
             <div class="growth-group" aria-hidden="true">
               <span class="tiny-head tiny-head--default tiny-head--sm">
                 <span class="tiny-head-eyes">
@@ -2199,14 +2228,14 @@
             </div>
           </div>
           <p>
-            Agimon reads the conversations already happening in WhatsApp and notices when the right kind of work shows up.
+            <span data-i18n="howWatchCopy">Agimon reads the conversations already happening in WhatsApp and notices when the right kind of work shows up.</span>
           </p>
         </article>
 
         <article class="how-card">
           <div class="how-head">
             <div class="step">02</div>
-            <h3>Learn</h3>
+            <h3 data-i18n="howLearn">Learn</h3>
             <div class="growth-group" aria-hidden="true">
               <span class="tiny-head tiny-head--default tiny-head--sm">
                 <span class="tiny-head-eyes">
@@ -2225,14 +2254,14 @@
             </div>
           </div>
           <p>
-            Every Agimon starts with one workflow and gets trained around the real context, habits, and needs of the client.
+            <span data-i18n="howLearnCopy">Every Agimon starts with one workflow and gets trained around the real context, habits, and needs of the client.</span>
           </p>
         </article>
 
         <article class="how-card">
           <div class="how-head">
             <div class="step">03</div>
-            <h3>Grow</h3>
+            <h3 data-i18n="howGrow">Grow</h3>
             <div class="growth-group" aria-hidden="true">
               <span class="tiny-head tiny-head--default tiny-head--sm">
                 <span class="tiny-head-eyes">
@@ -2258,7 +2287,7 @@
             </div>
           </div>
           <p>
-            Once that first job is working well, Agimon can gradually take on more repetitive work over time.
+            <span data-i18n="howGrowCopy">Once that first job is working well, Agimon can gradually take on more repetitive work over time.</span>
           </p>
         </article>
       </div>
@@ -2275,13 +2304,13 @@
             <span class="bite-half bite-half--bottom"></span>
           </span>
         </span>
-        <span>Agimon pricing</span>
+        <span data-i18n="howNext">Agimon pricing</span>
         <span class="arrow">↓</span>
       </a>
     </section>
 
     <section class="story-section" id="pricing">
-      <div class="section-kicker">Pricing</div>
+      <div class="section-kicker" data-i18n="pricingKicker">Pricing</div>
       <div class="section-bite" aria-hidden="true">
         <span class="bite-half bite-half--top">
           <span class="bite-eyes">
@@ -2291,15 +2320,14 @@
         </span>
         <span class="bite-half bite-half--bottom"></span>
       </div>
-      <h2>Starting with <span class="accent">one</span> workflow</h2>
+      <h2 data-i18n-html="pricingTitle">Starting with <span class="accent">one</span> workflow</h2>
 
       <div class="pricing-card">
-        <div class="price-intro">Early adoption starts at:</div>
-        <div class="price-line"><span>$599 MXN</span> / mo</div>
+        <div class="price-intro" data-i18n="priceIntro">Early adoption starts at:</div>
+        <div class="price-line"><span>$599 MXN</span> <span data-i18n="pricePeriod">/ mo</span></div>
       </div>
       <p class="pricing-note">
-        Each Agimon is dedicated to one client.<br>
-        Shaped around the WhatsApp work that matters most first.
+        <span data-i18n-html="pricingNote">Each Agimon is dedicated to one client.<br>Shaped around the WhatsApp work that matters most first.</span>
       </p>
 
       <a class="soft-link" href="#adopt">
@@ -2313,20 +2341,20 @@
           </span>
           <span class="soft-link-dot"></span>
         </span>
-        <span>Adopt an Agimon</span>
+        <span data-i18n="pricingNext">Adopt an Agimon</span>
         <span class="arrow">↓</span>
       </a>
     </section>
 
     <section class="story-section" id="adopt">
-      <div class="section-kicker">Adoption</div>
-      <h2><span class="accent">Join</span> the adoption waitlist</h2>
+      <div class="section-kicker" data-i18n="adoptKicker">Adoption</div>
+      <h2 data-i18n-html="adoptTitle"><span class="accent">Join</span> the adoption waitlist</h2>
 
       <form class="adopt-card" id="adoption-form">
         <div class="adopt-config">
           <div class="adopt-preview">
             <label class="name-bubble" for="agimon-name">
-              <input id="agimon-name" name="agimon-name" type="text" placeholder="Name your Agimon">
+              <input id="agimon-name" name="agimon-name" type="text" placeholder="Name your Agimon" data-i18n-placeholder="namePlaceholder">
             </label>
             <div class="builder-agimon-wrap" aria-hidden="true">
               <div class="builder-agimon" id="preview-agimon">
@@ -2341,7 +2369,7 @@
           </div>
           <div class="field palette-field">
             <input id="agimon-color" name="agimon-color" type="hidden" value="Ash" required="">
-            <div class="palette-grid" id="palette-grid" aria-label="Agimon color palette">
+            <div class="palette-grid" id="palette-grid" aria-label="Agimon color palette" data-i18n-aria-label="paletteAria">
               <button class="color-chip is-selected" type="button" data-color="Ash" data-gradient="linear-gradient(145deg, #b7b7b7, #d8d8d8)" aria-label="Ash">
                 <span class="color-dot" style="background:#bdbdbd;"></span>
               </button>
@@ -2376,13 +2404,13 @@
         <div class="adopt-fields">
           <div class="field-grid">
             <div class="field">
-              <label for="business-name">Business or person</label>
-              <input id="business-name" name="business-name" type="text" placeholder="Business or person name" required="">
+              <label for="business-name" data-i18n="businessLabel">Business or person</label>
+              <input id="business-name" name="business-name" type="text" placeholder="Business or person name" data-i18n-placeholder="businessPlaceholder" required="">
             </div>
             <div class="field">
-              <label for="contact-phone">Phone</label>
+              <label for="contact-phone" data-i18n="phoneLabel">Phone</label>
               <div class="phone-row">
-                <select id="contact-country" name="contact-country" aria-label="Country code">
+                <select id="contact-country" name="contact-country" aria-label="Country code" data-i18n-aria-label="countryAria">
                   <option value="+52">🇲🇽 +52</option>
                   <option value="+1">🇺🇸 +1</option>
                   <option value="+55">🇧🇷 +55</option>
@@ -2424,17 +2452,17 @@
           </div>
 
           <div class="field">
-            <label for="workflow-note">What do you need Agimon for?</label>
+            <label for="workflow-note" data-i18n="workflowLabel">What do you need Agimon for?</label>
             <div class="suggestion-list" id="workflow-suggestions">
-              <button class="suggestion-chip" type="button" data-value="Reading receipts">Reading receipts</button>
-              <button class="suggestion-chip" type="button" data-value="Sending reminders">Sending reminders</button>
-              <button class="suggestion-chip" type="button" data-value="Updating records">Updating records</button>
+              <button class="suggestion-chip" type="button" data-suggestion="receipts" data-value="Reading receipts" data-i18n="suggestReceipts">Reading receipts</button>
+              <button class="suggestion-chip" type="button" data-suggestion="reminders" data-value="Sending reminders" data-i18n="suggestReminders">Sending reminders</button>
+              <button class="suggestion-chip" type="button" data-suggestion="records" data-value="Updating records" data-i18n="suggestRecords">Updating records</button>
             </div>
-            <textarea id="workflow-note" name="workflow-note" placeholder="Receipts, reminders, weekly collections, or the work you want off your plate." required=""></textarea>
+            <textarea id="workflow-note" name="workflow-note" placeholder="Receipts, reminders, weekly collections, or the work you want off your plate." data-i18n-placeholder="workflowPlaceholder" required=""></textarea>
           </div>
 
           <div class="adopt-actions">
-            <button class="primary-button" type="submit">Adopt mine</button>
+            <button class="primary-button" type="submit" data-i18n="submitButton">Adopt mine</button>
           </div>
         </div>
       </form>
@@ -2442,6 +2470,208 @@
   </main>
 
   <script>
+    const translations = {
+      EN: {
+        title: "Agimon | Adopt a virtual employee for your business",
+        description: "Agimon is a virtual employee that lives in WhatsApp and takes repetitive hand-done work off the plate of people and businesses who handle a lot through chat.",
+        switchLanguage: "Switch language",
+        toggleTheme: "Toggle theme",
+        statusOnline: "ONLINE",
+        heroTitle: 'Adopt an <span class="accent">Agi</span>mon',
+        heroSubhead: 'A virtual employee <span class="keep-together">that lives in WhatsApp</span>',
+        heroLede: "For people and businesses who handle a lot through chat.",
+        heroNext: "What is Agimon?",
+        whatKicker: "What Is",
+        whatTitle: 'Agimon handles the repetitive work still being done by <span class="accent">hand</span>',
+        whatCopy: "The same jobs keep showing up in WhatsApp.",
+        primitiveAria: "Agimon workflow primitives",
+        primitiveReceipts: "Reading Receipts",
+        primitiveReminders: "Sending Reminders",
+        primitiveBalances: "Checking Balances",
+        primitiveVoice: "Checking Voice Notes",
+        primitiveFollowUp: "Following Up",
+        primitiveRecords: "Updating Records",
+        whatNext: "Agimons at work",
+        examplesKicker: "Examples",
+        examplesTitle: 'Agimons at <span class="accent">work</span>',
+        examplesCopy: "Each one belongs to a different client, with a different job inside WhatsApp.",
+        worksAt: "Works at",
+        worksForArmando: "Works for Armando",
+        martitaCopy: "Martita helps a clinic team already handling WhatsApp all day. Repetitive admin tasks keep showing up between patient conversations, confirmations, and everyday coordination.",
+        arturitoCopy: "Arturito lives in a WhatsApp flow full of dues, receipts, reminders, balances, and follow-up. The work is repetitive, easy to lose, and essential to keeping things running.",
+        alanaCopy: "Alana starts with weekly car rent collection: noticing payments, tracking what came in, and helping keep the follow-up so collections aren’t lost.",
+        tagPatientAdmin: "patient admin",
+        tagReceiptReading: "receipt reading",
+        tagConfirmations: "confirmations",
+        tagWhoPaid: "who paid",
+        tagReminders: "reminders",
+        tagBalances: "balances",
+        tagWeeklyRent: "weekly rent",
+        tagPaymentTracking: "payment tracking",
+        tagFollowUp: "follow-up",
+        examplesNext: "Agimons grow",
+        howKicker: "How",
+        howTitle: 'Every Agimon <span class="accent">starts</span> small',
+        howWatch: "Watch",
+        howWatchCopy: "Agimon reads the conversations already happening in WhatsApp and notices when the right kind of work shows up.",
+        howLearn: "Learn",
+        howLearnCopy: "Every Agimon starts with one workflow and gets trained around the real context, habits, and needs of the client.",
+        howGrow: "Grow",
+        howGrowCopy: "Once that first job is working well, Agimon can gradually take on more repetitive work over time.",
+        howNext: "Agimon pricing",
+        pricingKicker: "Pricing",
+        pricingTitle: 'Starting with <span class="accent">one</span> workflow',
+        priceIntro: "Early adoption starts at:",
+        pricePeriod: "/ mo",
+        pricingNote: "Each Agimon is dedicated to one client.<br>Shaped around the WhatsApp work that matters most first.",
+        pricingNext: "Adopt an Agimon",
+        adoptKicker: "Adoption",
+        adoptTitle: '<span class="accent">Join</span> the adoption waitlist',
+        namePlaceholder: "Name your Agimon",
+        paletteAria: "Agimon color palette",
+        businessLabel: "Business or person",
+        businessPlaceholder: "Business or person name",
+        phoneLabel: "Phone",
+        countryAria: "Country code",
+        workflowLabel: "What do you need Agimon for?",
+        suggestReceipts: "Reading receipts",
+        suggestReminders: "Sending reminders",
+        suggestRecords: "Updating records",
+        workflowPlaceholder: "Receipts, reminders, weekly collections, or the work you want off your plate.",
+        submitButton: "Adopt mine",
+        sending: "Sending...",
+        sent: "Request sent",
+        tryAgain: "Try again",
+        ntfyTitle: "New Agimon adoption request",
+        ntfyBusiness: "Business or person",
+        ntfyPhone: "Phone",
+        ntfyName: "Agimon name",
+        ntfyNoName: "Not chosen yet",
+        ntfyColor: "Agimon color",
+        ntfyWorkflow: "WhatsApp work to take over:"
+      },
+      ES: {
+        title: "Agimon | Adopta un empleado virtual para tu negocio",
+        description: "Agimon es un empleado virtual que vive en WhatsApp y quita trabajo repetitivo hecho a mano del plato de personas y negocios que manejan mucho por chat.",
+        switchLanguage: "Cambiar idioma",
+        toggleTheme: "Cambiar tema",
+        statusOnline: "EN LÍNEA",
+        heroTitle: 'Adopta un <span class="accent">Agi</span>mon',
+        heroSubhead: 'Un empleado virtual <span class="keep-together">que vive en WhatsApp</span>',
+        heroLede: "Para personas y negocios que manejan mucho por chat.",
+        heroNext: "¿Qué es Agimon?",
+        whatKicker: "Qué es",
+        whatTitle: 'Agimon se encarga del trabajo repetitivo que todavía se hace a <span class="accent">mano</span>',
+        whatCopy: "Las mismas tareas siguen apareciendo en WhatsApp.",
+        primitiveAria: "Flujos de trabajo de Agimon",
+        primitiveReceipts: "Leer comprobantes",
+        primitiveReminders: "Mandar recordatorios",
+        primitiveBalances: "Revisar saldos",
+        primitiveVoice: "Revisar audios",
+        primitiveFollowUp: "Dar seguimiento",
+        primitiveRecords: "Actualizar registros",
+        whatNext: "Agimons trabajando",
+        examplesKicker: "Ejemplos",
+        examplesTitle: 'Agimons <span class="accent">trabajando</span>',
+        examplesCopy: "Cada uno pertenece a un cliente distinto, con un trabajo distinto dentro de WhatsApp.",
+        worksAt: "Trabaja en",
+        worksForArmando: "Trabaja para Armando",
+        martitaCopy: "Martita ayuda a un equipo en una clínica que ya maneja WhatsApp todo el día. Las tareas administrativas repetitivas aparecen entre conversaciones con pacientes, confirmaciones y coordinación diaria.",
+        arturitoCopy: "Arturito vive en un flujo de WhatsApp lleno de cuotas, comprobantes, recordatorios, saldos y seguimiento. El trabajo es repetitivo, fácil de perder, y es esencial para que todo siga funcionando.",
+        alanaCopy: "Alana empieza cobrando la renta semanal de autos: anota pagos, lleva control de lo que entró y ayuda a que el seguimiento de cobranza no se pierda.",
+        tagPatientAdmin: "admin pacientes",
+        tagReceiptReading: "leer comprobantes",
+        tagConfirmations: "confirmaciones",
+        tagWhoPaid: "quién pagó",
+        tagReminders: "recordatorios",
+        tagBalances: "saldos",
+        tagWeeklyRent: "renta semanal",
+        tagPaymentTracking: "control de pagos",
+        tagFollowUp: "seguimiento",
+        examplesNext: "Agimons crecen",
+        howKicker: "Cómo",
+        howTitle: 'Cada Agimon <span class="accent">empieza</span> pequeño',
+        howWatch: "Observa",
+        howWatchCopy: "Agimon lee las conversaciones que ya están pasando en WhatsApp y nota cuando aparece el tipo correcto de trabajo.",
+        howLearn: "Aprende",
+        howLearnCopy: "Cada Agimon empieza con un workflow y se entrena alrededor del contexto, hábitos y necesidades reales del cliente.",
+        howGrow: "Crece",
+        howGrowCopy: "Cuando ese primer trabajo ya funciona bien, Agimon puede tomar más trabajo repetitivo poco a poco.",
+        howNext: "Precio de Agimon",
+        pricingKicker: "Precio",
+        pricingTitle: 'Empezando con <span class="accent">un</span> workflow',
+        priceIntro: "Adopción temprana desde:",
+        pricePeriod: "/ mes",
+        pricingNote: "Cada Agimon está dedicado a un solo cliente.<br>Formado alrededor del trabajo de WhatsApp más importante.",
+        pricingNext: "Adopta un Agimon",
+        adoptKicker: "ADOPCIÓN",
+        adoptTitle: '<span class="accent">Únete</span> a la lista de adopción',
+        namePlaceholder: "Nombra tu Agimon",
+        paletteAria: "Paleta de color de Agimon",
+        businessLabel: "Negocio o persona",
+        businessPlaceholder: "Nombre del negocio o persona",
+        phoneLabel: "Teléfono",
+        countryAria: "Código de país",
+        workflowLabel: "¿Para qué necesitas Agimon?",
+        suggestReceipts: "Leer comprobantes",
+        suggestReminders: "Mandar recordatorios",
+        suggestRecords: "Actualizar registros",
+        workflowPlaceholder: "Comprobantes, recordatorios, cobranza semanal, o el trabajo que quieres quitarte.",
+        submitButton: "Adoptar el mío",
+        sending: "Enviando...",
+        sent: "Solicitud enviada",
+        tryAgain: "Intentar de nuevo",
+        ntfyTitle: "Nueva solicitud de adopción Agimon",
+        ntfyBusiness: "Negocio o persona",
+        ntfyPhone: "Teléfono",
+        ntfyName: "Nombre del Agimon",
+        ntfyNoName: "Aún no eligió",
+        ntfyColor: "Color del Agimon",
+        ntfyWorkflow: "Trabajo de WhatsApp:"
+      }
+    };
+
+    let currentLanguage = "EN";
+
+    function applyLanguage(language) {
+      const dictionary = translations[language];
+      currentLanguage = language;
+      document.documentElement.lang = language.toLowerCase();
+      document.title = dictionary.title;
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dictionary.description);
+
+      document.querySelector(".lang-toggle").textContent = language;
+      document.querySelector(".lang-toggle").setAttribute("aria-label", dictionary.switchLanguage);
+      document.querySelector(".theme-toggle").setAttribute("aria-label", dictionary.toggleTheme);
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = dictionary[element.dataset.i18n];
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach((element) => {
+        element.innerHTML = dictionary[element.dataset.i18nHtml];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        element.setAttribute("placeholder", dictionary[element.dataset.i18nPlaceholder]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+        element.setAttribute("aria-label", dictionary[element.dataset.i18nAriaLabel]);
+      });
+
+      document.querySelectorAll("[data-suggestion]").forEach((element) => {
+        element.dataset.value = element.textContent;
+      });
+
+      syncSuggestionState();
+    }
+
+    function toggleLanguage() {
+      applyLanguage(currentLanguage === "EN" ? "ES" : "EN");
+    }
+
     function toggleTheme() {
       const html = document.documentElement;
       const isDark = html.getAttribute("data-theme") === "dark";
@@ -2519,25 +2749,26 @@
       const agimonName = document.getElementById("agimon-name").value.trim();
       const agimonColor = document.getElementById("agimon-color").value.trim();
       const workflow = document.getElementById("workflow-note").value.trim();
+      const dictionary = translations[currentLanguage];
 
       const message = [
-        "Business or person: " + business,
-        "Phone: " + [country, phone].filter(Boolean).join(" "),
-        "Agimon name: " + (agimonName || "Not chosen yet"),
-        "Agimon color: " + agimonColor,
+        dictionary.ntfyBusiness + ": " + business,
+        dictionary.ntfyPhone + ": " + [country, phone].filter(Boolean).join(" "),
+        dictionary.ntfyName + ": " + (agimonName || dictionary.ntfyNoName),
+        dictionary.ntfyColor + ": " + agimonColor,
         "",
-        "WhatsApp work to take over:",
+        dictionary.ntfyWorkflow,
         workflow
       ].join("\n");
 
       submitButton.disabled = true;
-      submitButton.textContent = "Sending...";
+      submitButton.textContent = dictionary.sending;
 
       try {
         const response = await fetch("https://ntfy.sh/agimon-adoptions-k7r4m2xq", {
           method: "POST",
           headers: {
-            "Title": "New Agimon adoption request",
+            "Title": dictionary.ntfyTitle,
             "Tags": "robot,whatsapp",
             "Priority": "4"
           },
@@ -2548,15 +2779,17 @@
           throw new Error("ntfy request failed");
         }
 
-        submitButton.textContent = "Request sent";
+        submitButton.textContent = dictionary.sent;
         form.reset();
         paletteButtons[0].click();
         syncSuggestionState();
       } catch (error) {
         submitButton.disabled = false;
-        submitButton.textContent = "Try again";
+        submitButton.textContent = dictionary.tryAgain;
       }
     });
+
+    applyLanguage(currentLanguage);
   </script>
 
 
