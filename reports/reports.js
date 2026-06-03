@@ -25,6 +25,14 @@ function formatMoney(value) {
   });
 }
 
+function formatPercent(value) {
+  const amount = Number(value || 0);
+  return `${amount.toLocaleString("es-MX", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}%`;
+}
+
 function formatDate(value) {
   if (!value) return "";
   return new Date(value).toLocaleString("es-MX", {
@@ -88,6 +96,7 @@ function renderTable(report) {
     <tr>
       ${columns.map(column => {
         if (column.key === "unit") return `<td>${row.unit}</td>`;
+        if (column.key === "ownership_pct") return `<td>${formatPercent(row.ownership_pct || 0)}</td>`;
         return `<td>${formatMoney(row.values?.[column.key] || 0)}</td>`;
       }).join("")}
     </tr>
@@ -96,6 +105,7 @@ function renderTable(report) {
     <tr class="total-row">
       ${columns.map(column => {
         if (column.key === "unit") return "<td>TOTAL</td>";
+        if (column.key === "ownership_pct") return "<td>100.00%</td>";
         return `<td>${formatMoney(totals[column.key] || 0)}</td>`;
       }).join("")}
     </tr>
