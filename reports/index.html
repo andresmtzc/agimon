@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agimon Reports</title>
+  <link rel="stylesheet" href="./reports.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Agimon</p>
+        <h1 id="report-title">Reporte</h1>
+      </div>
+      <div class="meta" id="report-meta"></div>
+    </header>
+
+    <section class="summary" id="summary" hidden></section>
+
+    <section class="table-wrap" id="table-wrap" hidden>
+      <table id="report-table"></table>
+    </section>
+
+    <section class="empty" id="empty-state">
+      <h2>Reporte no disponible</h2>
+      <p>Abre el enlace completo de Agimon o pide generar un reporte nuevo.</p>
+    </section>
+  </main>
+  <script src="./reports.js"></script>
+</body>
+</html>
