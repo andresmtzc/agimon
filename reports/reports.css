@@ -98,22 +98,26 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
   width: 100%;
-  min-width: 920px;
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0;
+  table-layout: fixed;
 }
 
 th,
 td {
-  padding: 10px 12px;
+  width: 84px;
+  padding: 8px 8px;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   white-space: nowrap;
   text-align: right;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -123,18 +127,24 @@ th {
   z-index: 2;
   background: #eef3f0;
   color: #26322d;
-  font-size: 13px;
+  font-size: 12px;
   text-align: right;
 }
 
 th:first-child,
 td:first-child {
+  width: 62px;
   position: sticky;
   left: 0;
   z-index: 1;
   text-align: left;
   font-weight: 750;
   background: #fbfcfb;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 72px;
 }
 
 th:first-child {
@@ -188,5 +198,41 @@ tr.total-row td {
 
   .summary {
     grid-template-columns: 1fr;
+  }
+
+  table {
+    min-width: 690px;
+  }
+
+  th,
+  td {
+    width: 72px;
+    padding: 7px 6px;
+    font-size: 12px;
+  }
+
+  th {
+    height: 44px;
+    vertical-align: bottom;
+    line-height: 1.05;
+    white-space: normal;
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 50px;
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 64px;
+  }
+
+  .metric {
+    padding: 10px 12px;
+  }
+
+  .metric strong {
+    font-size: 19px;
   }
 }
