@@ -77,6 +77,45 @@ h1 {
   border-radius: 8px;
 }
 
+.task-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.task-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.task-filter {
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.task-filter:hover,
+.task-filter.is-active {
+  border-color: #527565;
+  background: #e5f1eb;
+}
+
+.task-filter-count {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .metric {
   background: var(--panel);
   padding: 14px 16px;
@@ -268,6 +307,36 @@ th:first-child {
   font-size: 10px;
   font-weight: 800;
   line-height: 1.5;
+}
+
+.evidence-item + .evidence-item {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.evidence-item-meta {
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.evidence-toggle {
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: #315f4c;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evidence-history {
+  margin-top: 10px;
 }
 
 .task-table td.col-folio,

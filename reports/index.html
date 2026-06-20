@@ -19,6 +19,17 @@
 
     <section class="summary" id="summary" hidden></section>
 
+    <section class="task-filters" id="task-filters" hidden>
+      <div class="task-filter-buttons" role="group" aria-label="Filter tasks by commitment date">
+        <button type="button" class="task-filter is-active" data-date-filter="all">All</button>
+        <button type="button" class="task-filter" data-date-filter="7">Next 7 days</button>
+        <button type="button" class="task-filter" data-date-filter="15">Next 15 days</button>
+        <button type="button" class="task-filter" data-date-filter="30">Next 30 days</button>
+        <button type="button" class="task-filter" data-date-filter="overdue">Overdue</button>
+      </div>
+      <span class="task-filter-count" id="task-filter-count"></span>
+    </section>
+
     <section class="table-wrap" id="table-wrap" hidden>
       <table id="report-table"></table>
     </section>

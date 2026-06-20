@@ -7,6 +7,8 @@ const summaryEl = document.getElementById("summary");
 const tableWrapEl = document.getElementById("table-wrap");
 const tableEl = document.getElementById("report-table");
 const emptyEl = document.getElementById("empty-state");
+const taskFiltersEl = document.getElementById("task-filters");
+const taskFilterCountEl = document.getElementById("task-filter-count");
 
 function tokenFromLocation() {
   const hashMatch = window.location.hash.match(/\/r\/([^/?#]+)/);
@@ -140,6 +142,46 @@ function compareCellValues(left, right, column) {
   return String(left).localeCompare(String(right), "es", { sensitivity: "base", numeric: true });
 }
 
+function localDateKey(value, timezone) {
+  const date = value ? new Date(value) : new Date();
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: timezone || "America/Monterrey",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+}
+
+function addDays(dateKey, days) {
+  const date = new Date(`${dateKey}T12:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + Number(days || 0));
+  return date.toISOString().slice(0, 10);
+}
+
+function renderEvidenceCell(row, fallbackValue) {
+  const items = Array.isArray(row?.meta?.evidence_items) ? row.meta.evidence_items : [];
+  if (!items.length) return escapeHtml(fallbackValue);
+  const latest = items.at(-1);
+  const previous = items.slice(0, -1);
+  const formatItem = item => `
+    <div class="evidence-item">
+      <div class="evidence-item-meta">${escapeHtml([
+        item.sender_name || "",
+        item.created_at ? formatDate(item.created_at) : "",
+      ].filter(Boolean).join(" · "))}</div>
+      <div>${escapeHtml(item.text || "")}</div>
+    </div>
+  `;
+  return `
+    ${formatItem(latest)}
+    ${previous.length ? `
+      <button type="button" class="evidence-toggle" aria-expanded="false">View ${previous.length} more</button>
+      <div class="evidence-history" hidden>${previous.map(formatItem).join("")}</div>
+    ` : ""}
+  `;
+}
+
 function renderTable(report) {
   const columns = Array.isArray(report.columns) ? report.columns : [];
   const originalRows = (Array.isArray(report.rows) ? report.rows : []).map((row, index) => ({ row, index }));
@@ -157,9 +199,18 @@ function renderTable(report) {
   ` : "";
   let sortKey = null;
   let sortDirection = null;
+  let dateFilter = "all";
+  const today = localDateKey(report.generated_at, report.timezone);
 
   const render = () => {
-    const sortedRows = [...originalRows];
+    const filteredRows = originalRows.filter(({ row }) => {
+      if (report.report_type !== "alex_project_task_table" || dateFilter === "all") return true;
+      const commitmentDate = String(row?.values?.commitment_date || "").slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(commitmentDate)) return false;
+      if (dateFilter === "overdue") return commitmentDate < today;
+      return commitmentDate >= today && commitmentDate <= addDays(today, Number(dateFilter));
+    });
+    const sortedRows = [...filteredRows];
     const sortColumn = columns.find(column => column.key === sortKey);
     if (sortColumn && sortDirection) {
       sortedRows.sort((left, right) => {
@@ -197,7 +248,10 @@ function renderTable(report) {
         <tr class="${rowClass}">
           ${columns.map(column => {
             const rawValue = rawCellValue(row, column);
-            const value = escapeHtml(formatCell(rawValue, column));
+            const formattedValue = formatCell(rawValue, column);
+            const value = report.report_type === "alex_project_task_table" && column.key === "evidence"
+              ? renderEvidenceCell(row, formattedValue)
+              : escapeHtml(formattedValue);
             const badge = report.report_type === "alex_project_task_table" && column.key === "folio" && evidenceCount > 0
               ? `<span class="evidence-badge">+${evidenceCount}</span>`
               : "";
@@ -224,7 +278,32 @@ function renderTable(report) {
         render();
       });
     });
+    tableEl.querySelectorAll(".evidence-toggle").forEach(button => {
+      button.addEventListener("click", () => {
+        const history = button.nextElementSibling;
+        const expanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!expanded));
+        if (history) history.hidden = expanded;
+        const count = history?.querySelectorAll(".evidence-item").length || 0;
+        button.textContent = expanded ? `View ${count} more` : "Show less";
+      });
+    });
+    if (taskFilterCountEl && report.report_type === "alex_project_task_table") {
+      taskFilterCountEl.textContent = `${sortedRows.length} task${sortedRows.length === 1 ? "" : "s"}`;
+    }
   };
+  if (taskFiltersEl) {
+    taskFiltersEl.hidden = report.report_type !== "alex_project_task_table";
+    taskFiltersEl.querySelectorAll(".task-filter").forEach(button => {
+      button.addEventListener("click", () => {
+        dateFilter = button.dataset.dateFilter || "all";
+        taskFiltersEl.querySelectorAll(".task-filter").forEach(item => {
+          item.classList.toggle("is-active", item === button);
+        });
+        render();
+      });
+    });
+  }
   render();
   tableWrapEl.hidden = false;
 }
