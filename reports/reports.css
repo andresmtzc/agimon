@@ -109,6 +109,17 @@ table {
   table-layout: fixed;
 }
 
+td.long-text {
+  min-width: 280px;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+td.status-cell {
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
 th,
 td {
   width: 84px;
