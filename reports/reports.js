@@ -116,31 +116,36 @@ function columnClass(column) {
   ].filter(Boolean).join(" ");
 }
 
+function rawCellValue(row, column) {
+  if (column.key === "unit") return row.unit;
+  if (column.key === "ownership_pct") return row.ownership_pct;
+  return row.values?.[column.key];
+}
+
+function compareCellValues(left, right, column) {
+  const leftEmpty = left === null || left === undefined || left === "";
+  const rightEmpty = right === null || right === undefined || right === "";
+  if (leftEmpty || rightEmpty) return leftEmpty === rightEmpty ? 0 : (leftEmpty ? 1 : -1);
+  if (["number", "money", "percent"].includes(column.type)) return Number(left) - Number(right);
+  if (["datetime", "date_text"].includes(column.type)) {
+    const leftTime = Date.parse(String(left));
+    const rightTime = Date.parse(String(right));
+    if (Number.isFinite(leftTime) && Number.isFinite(rightTime)) return leftTime - rightTime;
+  }
+  if (column.type === "status") {
+    const rank = { open: 1, resolved: 2, merged: 3, cancelled: 4 };
+    const difference = (rank[String(left).toLowerCase()] || 99) - (rank[String(right).toLowerCase()] || 99);
+    if (difference) return difference;
+  }
+  return String(left).localeCompare(String(right), "es", { sensitivity: "base", numeric: true });
+}
+
 function renderTable(report) {
   const columns = Array.isArray(report.columns) ? report.columns : [];
-  const rows = Array.isArray(report.rows) ? report.rows : [];
+  const originalRows = (Array.isArray(report.rows) ? report.rows : []).map((row, index) => ({ row, index }));
   const totals = report.totals && typeof report.totals === "object" ? report.totals : null;
   tableEl.className = report.report_type === "alex_project_task_table" ? "task-table" : "finance-table";
   const colgroup = `<colgroup>${columns.map(column => `<col class="${columnClass(column)}">`).join("")}</colgroup>`;
-  const thead = `
-    <thead>
-      <tr>
-        ${columns.map(column => `<th class="${columnClass(column)}">${escapeHtml(column.label)}</th>`).join("")}
-      </tr>
-    </thead>
-  `;
-  const bodyRows = rows.map(row => `
-    <tr>
-      ${columns.map(column => {
-        const rawValue = column.key === "unit"
-          ? row.unit
-          : column.key === "ownership_pct"
-            ? row.ownership_pct
-            : row.values?.[column.key];
-        return `<td class="${columnClass(column)}">${escapeHtml(formatCell(rawValue, column))}</td>`;
-      }).join("")}
-    </tr>
-  `).join("");
   const totalRow = totals ? `
     <tr class="total-row">
       ${columns.map(column => {
@@ -150,7 +155,77 @@ function renderTable(report) {
       }).join("")}
     </tr>
   ` : "";
-  tableEl.innerHTML = `${colgroup}${thead}<tbody>${bodyRows}${totalRow}</tbody>`;
+  let sortKey = null;
+  let sortDirection = null;
+
+  const render = () => {
+    const sortedRows = [...originalRows];
+    const sortColumn = columns.find(column => column.key === sortKey);
+    if (sortColumn && sortDirection) {
+      sortedRows.sort((left, right) => {
+        const leftValue = rawCellValue(left.row, sortColumn);
+        const rightValue = rawCellValue(right.row, sortColumn);
+        const leftEmpty = leftValue === null || leftValue === undefined || leftValue === "";
+        const rightEmpty = rightValue === null || rightValue === undefined || rightValue === "";
+        if (leftEmpty !== rightEmpty) return leftEmpty ? 1 : -1;
+        const comparison = compareCellValues(
+          leftValue,
+          rightValue,
+          sortColumn,
+        );
+        return comparison === 0
+          ? left.index - right.index
+          : comparison * (sortDirection === "asc" ? 1 : -1);
+      });
+    }
+    const thead = `
+      <thead>
+        <tr>
+          ${columns.map(column => {
+            const active = column.key === sortKey && sortDirection;
+            const indicator = active ? (sortDirection === "asc" ? "▲" : "▼") : "↕";
+            const ariaSort = active ? (sortDirection === "asc" ? "ascending" : "descending") : "none";
+            return `<th class="${columnClass(column)}" aria-sort="${ariaSort}"><button type="button" class="sort-button" data-sort-key="${escapeHtml(column.key)}">${escapeHtml(column.label)} <span class="sort-indicator" aria-hidden="true">${indicator}</span></button></th>`;
+          }).join("")}
+        </tr>
+      </thead>
+    `;
+    const bodyRows = sortedRows.map(({ row }) => {
+      const evidenceCount = Number(row?.meta?.new_evidence_count || 0);
+      const rowClass = row?.meta?.has_new_evidence ? "has-new-evidence" : "";
+      return `
+        <tr class="${rowClass}">
+          ${columns.map(column => {
+            const rawValue = rawCellValue(row, column);
+            const value = escapeHtml(formatCell(rawValue, column));
+            const badge = report.report_type === "alex_project_task_table" && column.key === "folio" && evidenceCount > 0
+              ? `<span class="evidence-badge">+${evidenceCount}</span>`
+              : "";
+            return `<td class="${columnClass(column)}">${value}${badge}</td>`;
+          }).join("")}
+        </tr>
+      `;
+    }).join("");
+    tableEl.innerHTML = `${colgroup}${thead}<tbody>${bodyRows}${totalRow}</tbody>`;
+    tableEl.querySelectorAll(".sort-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const nextKey = button.dataset.sortKey;
+        if (sortKey !== nextKey) {
+          sortKey = nextKey;
+          sortDirection = "asc";
+        } else if (sortDirection === "asc") {
+          sortDirection = "desc";
+        } else if (sortDirection === "desc") {
+          sortKey = null;
+          sortDirection = null;
+        } else {
+          sortDirection = "asc";
+        }
+        render();
+      });
+    });
+  };
+  render();
   tableWrapEl.hidden = false;
 }
 
@@ -167,6 +242,7 @@ async function main() {
       return;
     }
     const report = row.payload;
+    document.body.classList.toggle("task-report-view", report.report_type === "alex_project_task_table");
     titleEl.textContent = row.title || report.title || "Reporte Agimon";
     metaEl.innerHTML = [
       report.month ? `Mes: ${report.month}` : "",
