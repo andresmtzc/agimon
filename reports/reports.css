@@ -26,6 +26,10 @@ body {
   padding: 24px;
 }
 
+.task-report-view .shell {
+  width: min(1600px, 100%);
+}
+
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -161,45 +165,73 @@ th:first-child {
   background: #eef3f0;
 }
 
+.sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  width: 100%;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.sort-button:focus-visible {
+  outline: 2px solid #527565;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.sort-indicator {
+  color: #6d7f76;
+  font-size: 10px;
+}
+
 .task-table {
-  width: 1514px;
-  min-width: 1514px;
+  width: 100%;
+  min-width: 1200px;
 }
 
 .task-table col.col-folio {
-  width: 64px;
+  width: 70px;
 }
 
 .task-table col.col-area {
-  width: 130px;
+  width: 95px;
 }
 
 .task-table col.col-concept {
-  width: 300px;
+  width: 225px;
 }
 
 .task-table col.col-encargado {
-  width: 130px;
+  width: 95px;
 }
 
 .task-table col.col-commitment_date {
-  width: 130px;
+  width: 105px;
 }
 
 .task-table col.col-status {
-  width: 90px;
+  width: 70px;
 }
 
 .task-table col.col-source_group {
-  width: 180px;
+  width: 130px;
 }
 
 .task-table col.col-source_timestamp {
-  width: 170px;
+  width: 130px;
 }
 
 .task-table col.col-evidence {
-  width: 320px;
+  width: 280px;
 }
 
 .task-table th,
@@ -211,6 +243,31 @@ th:first-child {
   text-align: left;
   vertical-align: top;
   line-height: 1.35;
+}
+
+.task-table .sort-button {
+  justify-content: flex-start;
+}
+
+.task-table tr.has-new-evidence td {
+  background: #fff8dc;
+}
+
+.task-table tr.has-new-evidence td:first-child {
+  background: #ffefad;
+  box-shadow: inset 4px 0 0 #d99d16;
+}
+
+.evidence-badge {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: #d99d16;
+  color: #3d2a00;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.5;
 }
 
 .task-table td.col-folio,
