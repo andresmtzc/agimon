@@ -41,6 +41,15 @@ function formatDate(value) {
   });
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function setEmpty(message) {
   titleEl.textContent = "Reporte no disponible";
   metaEl.textContent = "";
@@ -67,49 +76,69 @@ async function loadReport(token) {
 
 function renderSummary(report) {
   const summary = report.summary || {};
-  const metrics = [
-    ["Total NORCE", summary.norce_total],
-    ["Total Chomo", summary.chomo_total],
-    ["Gran Total", summary.grand_total],
-  ];
+  const metrics = report.report_type === "alex_project_task_table"
+    ? [
+      ["Coincidencias", summary.matched_count],
+      ["En tabla", summary.returned_count],
+      ["Abiertos", summary.open_count],
+      ["Vencidos", summary.overdue_count],
+      ["Sin fecha", summary.without_date_count],
+    ]
+    : [
+      ["Total NORCE", summary.norce_total],
+      ["Total Chomo", summary.chomo_total],
+      ["Gran Total", summary.grand_total],
+    ];
   summaryEl.innerHTML = metrics.map(([label, value]) => `
     <div class="metric">
-      <span>${label}</span>
-      <strong>${formatMoney(value)}</strong>
+      <span>${escapeHtml(label)}</span>
+      <strong>${report.report_type === "alex_project_task_table" ? Number(value || 0).toLocaleString("es-MX") : formatMoney(value)}</strong>
     </div>
   `).join("");
   summaryEl.hidden = false;
 }
 
+function formatCell(value, column) {
+  if (column.type === "money") return formatMoney(value);
+  if (column.type === "percent") return formatPercent(value);
+  if (column.type === "datetime") return value ? formatDate(value) : "";
+  if (column.type === "number") return Number(value || 0).toLocaleString("es-MX");
+  return String(value ?? "");
+}
+
 function renderTable(report) {
   const columns = Array.isArray(report.columns) ? report.columns : [];
   const rows = Array.isArray(report.rows) ? report.rows : [];
-  const totals = report.totals || {};
+  const totals = report.totals && typeof report.totals === "object" ? report.totals : null;
   const thead = `
     <thead>
       <tr>
-        ${columns.map(column => `<th class="${column.rail ? `rail-${column.rail}` : ""}">${column.label}</th>`).join("")}
+        ${columns.map(column => `<th class="${column.rail ? `rail-${column.rail}` : ""}">${escapeHtml(column.label)}</th>`).join("")}
       </tr>
     </thead>
   `;
   const bodyRows = rows.map(row => `
     <tr>
       ${columns.map(column => {
-        if (column.key === "unit") return `<td>${row.unit}</td>`;
-        if (column.key === "ownership_pct") return `<td>${formatPercent(row.ownership_pct || 0)}</td>`;
-        return `<td>${formatMoney(row.values?.[column.key] || 0)}</td>`;
+        const rawValue = column.key === "unit"
+          ? row.unit
+          : column.key === "ownership_pct"
+            ? row.ownership_pct
+            : row.values?.[column.key];
+        const className = column.type === "long_text" ? "long-text" : column.type === "status" ? "status-cell" : "";
+        return `<td class="${className}">${escapeHtml(formatCell(rawValue, column))}</td>`;
       }).join("")}
     </tr>
   `).join("");
-  const totalRow = `
+  const totalRow = totals ? `
     <tr class="total-row">
       ${columns.map(column => {
         if (column.key === "unit") return "<td>TOTAL</td>";
         if (column.key === "ownership_pct") return "<td>100.00%</td>";
-        return `<td>${formatMoney(totals[column.key] || 0)}</td>`;
+        return `<td>${escapeHtml(formatCell(totals[column.key] || 0, column))}</td>`;
       }).join("")}
     </tr>
-  `;
+  ` : "";
   tableEl.innerHTML = `${thead}<tbody>${bodyRows}${totalRow}</tbody>`;
   tableWrapEl.hidden = false;
 }
@@ -130,6 +159,14 @@ async function main() {
     titleEl.textContent = row.title || report.title || "Reporte Agimon";
     metaEl.innerHTML = [
       report.month ? `Mes: ${report.month}` : "",
+      report.report_type === "alex_project_task_table" && report.filters
+        ? `Filtros: ${escapeHtml([
+          ...(report.filters.statuses || []),
+          report.filters.due_mode && report.filters.due_mode !== "any" ? report.filters.due_mode : "",
+          ...(report.filters.areas || []),
+          ...(report.filters.encargados || []),
+        ].filter(Boolean).join(" · ") || "todos")}`
+        : "",
       row.generated_at ? `Generado: ${formatDate(row.generated_at)}` : "",
       row.expires_at ? `Expira: ${formatDate(row.expires_at)}` : "",
     ].filter(Boolean).join("<br>");
