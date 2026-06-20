@@ -106,14 +106,26 @@ function formatCell(value, column) {
   return String(value ?? "");
 }
 
+function columnClass(column) {
+  const key = String(column?.key || "unknown").replace(/[^a-z0-9_-]/gi, "-").toLowerCase();
+  return [
+    `col-${key}`,
+    column?.rail ? `rail-${column.rail}` : "",
+    column?.type === "long_text" ? "long-text" : "",
+    column?.type === "status" ? "status-cell" : "",
+  ].filter(Boolean).join(" ");
+}
+
 function renderTable(report) {
   const columns = Array.isArray(report.columns) ? report.columns : [];
   const rows = Array.isArray(report.rows) ? report.rows : [];
   const totals = report.totals && typeof report.totals === "object" ? report.totals : null;
+  tableEl.className = report.report_type === "alex_project_task_table" ? "task-table" : "finance-table";
+  const colgroup = `<colgroup>${columns.map(column => `<col class="${columnClass(column)}">`).join("")}</colgroup>`;
   const thead = `
     <thead>
       <tr>
-        ${columns.map(column => `<th class="${column.rail ? `rail-${column.rail}` : ""}">${escapeHtml(column.label)}</th>`).join("")}
+        ${columns.map(column => `<th class="${columnClass(column)}">${escapeHtml(column.label)}</th>`).join("")}
       </tr>
     </thead>
   `;
@@ -125,21 +137,20 @@ function renderTable(report) {
           : column.key === "ownership_pct"
             ? row.ownership_pct
             : row.values?.[column.key];
-        const className = column.type === "long_text" ? "long-text" : column.type === "status" ? "status-cell" : "";
-        return `<td class="${className}">${escapeHtml(formatCell(rawValue, column))}</td>`;
+        return `<td class="${columnClass(column)}">${escapeHtml(formatCell(rawValue, column))}</td>`;
       }).join("")}
     </tr>
   `).join("");
   const totalRow = totals ? `
     <tr class="total-row">
       ${columns.map(column => {
-        if (column.key === "unit") return "<td>TOTAL</td>";
-        if (column.key === "ownership_pct") return "<td>100.00%</td>";
-        return `<td>${escapeHtml(formatCell(totals[column.key] || 0, column))}</td>`;
+        if (column.key === "unit") return `<td class="${columnClass(column)}">TOTAL</td>`;
+        if (column.key === "ownership_pct") return `<td class="${columnClass(column)}">100.00%</td>`;
+        return `<td class="${columnClass(column)}">${escapeHtml(formatCell(totals[column.key] || 0, column))}</td>`;
       }).join("")}
     </tr>
   ` : "";
-  tableEl.innerHTML = `${thead}<tbody>${bodyRows}${totalRow}</tbody>`;
+  tableEl.innerHTML = `${colgroup}${thead}<tbody>${bodyRows}${totalRow}</tbody>`;
   tableWrapEl.hidden = false;
 }
 
