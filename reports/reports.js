@@ -166,6 +166,13 @@ function renderEvidenceCell(row, fallbackValue) {
   const previous = items.slice(0, -1);
   const formatItem = item => `
     <div class="evidence-item">
+      ${item?.media?.original_url ? `
+        <a class="evidence-media" href="${escapeHtml(item.media.original_url)}" target="_blank" rel="noopener noreferrer">
+          ${item.media.thumbnail_url
+            ? `<img src="${escapeHtml(item.media.thumbnail_url)}" alt="Evidence thumbnail" loading="lazy">`
+            : `<span>View media</span>`}
+        </a>
+      ` : ""}
       <div class="evidence-item-meta">${escapeHtml([
         item.sender_name || "",
         item.created_at ? formatDate(item.created_at) : "",
@@ -243,7 +250,10 @@ function renderTable(report) {
     `;
     const bodyRows = sortedRows.map(({ row }) => {
       const evidenceCount = Number(row?.meta?.new_evidence_count || 0);
-      const rowClass = row?.meta?.has_new_evidence ? "has-new-evidence" : "";
+      const rowClass = [
+        row?.meta?.has_new_evidence ? "has-new-evidence" : "",
+        row?.meta?.provisional ? "is-provisional" : "",
+      ].filter(Boolean).join(" ");
       return `
         <tr class="${rowClass}">
           ${columns.map(column => {
@@ -255,7 +265,10 @@ function renderTable(report) {
             const badge = report.report_type === "alex_project_task_table" && column.key === "folio" && evidenceCount > 0
               ? `<span class="evidence-badge">+${evidenceCount}</span>`
               : "";
-            return `<td class="${columnClass(column)}">${value}${badge}</td>`;
+            const provisional = report.report_type === "alex_project_task_table" && column.key === "folio" && row?.meta?.provisional
+              ? `<span class="provisional-badge">Por relacionar</span>`
+              : "";
+            return `<td class="${columnClass(column)}">${value}${badge}${provisional}</td>`;
           }).join("")}
         </tr>
       `;

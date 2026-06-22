@@ -322,6 +322,50 @@ th:first-child {
   font-weight: 700;
 }
 
+.evidence-media {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 150px;
+  margin-bottom: 7px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--soft);
+  color: #315f4c;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.evidence-media img {
+  display: block;
+  width: 100%;
+  max-height: 105px;
+  object-fit: cover;
+}
+
+.evidence-media span {
+  padding: 8px 10px;
+}
+
+.provisional-badge {
+  display: block;
+  width: fit-content;
+  margin-top: 5px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #e8edf9;
+  color: #3e527e;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.task-table tr.is-provisional td:first-child {
+  box-shadow: inset 4px 0 0 #6d7fa7;
+}
+
 .evidence-toggle {
   margin-top: 8px;
   padding: 0;
