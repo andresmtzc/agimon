@@ -349,23 +349,6 @@ th:first-child {
   padding: 8px 10px;
 }
 
-.provisional-badge {
-  display: block;
-  width: fit-content;
-  margin-top: 5px;
-  padding: 2px 6px;
-  border-radius: 999px;
-  background: #e8edf9;
-  color: #3e527e;
-  font-size: 9px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.task-table tr.is-provisional td:first-child {
-  box-shadow: inset 4px 0 0 #6d7fa7;
-}
-
 .evidence-toggle {
   margin-top: 8px;
   padding: 0;

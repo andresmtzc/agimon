@@ -252,7 +252,6 @@ function renderTable(report) {
       const evidenceCount = Number(row?.meta?.new_evidence_count || 0);
       const rowClass = [
         row?.meta?.has_new_evidence ? "has-new-evidence" : "",
-        row?.meta?.provisional ? "is-provisional" : "",
       ].filter(Boolean).join(" ");
       return `
         <tr class="${rowClass}">
@@ -265,10 +264,7 @@ function renderTable(report) {
             const badge = report.report_type === "alex_project_task_table" && column.key === "folio" && evidenceCount > 0
               ? `<span class="evidence-badge">+${evidenceCount}</span>`
               : "";
-            const provisional = report.report_type === "alex_project_task_table" && column.key === "folio" && row?.meta?.provisional
-              ? `<span class="provisional-badge">Por relacionar</span>`
-              : "";
-            return `<td class="${columnClass(column)}">${value}${badge}${provisional}</td>`;
+            return `<td class="${columnClass(column)}">${value}${badge}</td>`;
           }).join("")}
         </tr>
       `;
