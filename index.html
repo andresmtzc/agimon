@@ -1027,8 +1027,8 @@
       background: linear-gradient(145deg, #f0b438, #ffd36f);
     }
 
-    .agimon-chip--alana {
-      background: linear-gradient(145deg, #67b56f, #8ad292);
+    .agimon-chip--robbie {
+      background: linear-gradient(145deg, #59a4c8, #84c7e5);
     }
 
     .mini-eyes {
@@ -1099,10 +1099,10 @@
       animation-delay: -2.1s;
     }
 
-    .example-card--alana .agimon-chip,
-    .example-card--alana .example-shadow,
-    .example-card--alana .creature-eye,
-    .example-card--alana .creature-eye::after {
+    .example-card--robbie .agimon-chip,
+    .example-card--robbie .example-shadow,
+    .example-card--robbie .creature-eye,
+    .example-card--robbie .creature-eye::after {
       animation-delay: -3.4s;
     }
 
@@ -1304,8 +1304,15 @@
       line-height: 1.7;
     }
 
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      width: min(960px, 100%);
+    }
+
     .pricing-card {
-      width: min(720px, 100%);
+      width: 100%;
       padding: 30px 32px;
       display: flex;
       flex-direction: column;
@@ -1315,6 +1322,21 @@
       border-color: rgba(120, 98, 72, 0.06);
       box-shadow: 0 12px 24px rgba(72, 55, 33, 0.025);
       backdrop-filter: blur(2px);
+    }
+
+    .pricing-card-kicker {
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    @media (max-width: 720px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .price-line {
@@ -1343,7 +1365,7 @@
       display: grid;
       gap: 8px;
       width: fit-content;
-      margin: 6px auto 0;
+      margin: 6px auto 24px;
       padding: 0 0 0 22px;
       color: var(--text);
       font-size: 16px;
@@ -1356,6 +1378,34 @@
       color: var(--muted);
       font-size: 18px;
       line-height: 1.65;
+    }
+
+    .price-unit {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pricing-card-cta {
+      align-self: center;
+      margin-top: auto;
+      padding: 8px 18px;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pricing-card-cta:hover {
+      text-decoration: underline;
     }
 
     .pricing-card p,
@@ -2001,6 +2051,90 @@
         font-size: 16px;
       }
     }
+
+    .demo-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      padding: 0;
+      background: rgba(23, 21, 19, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    [data-theme="dark"] .demo-modal {
+      background: rgba(0, 0, 0, 0.88);
+    }
+
+    .demo-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .demo-modal-frame {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .demo-modal-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: var(--bg);
+    }
+
+    .demo-modal-close {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 110;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(31, 26, 23, 0.78);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .demo-modal-close:hover {
+      transform: scale(1.06);
+      background: rgba(31, 26, 23, 0.92);
+    }
+
+    .demo-modal-close svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    body.demo-modal-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 720px) {
+      .demo-modal-close {
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2152,9 +2286,9 @@
           </div>
         </article>
 
-        <article class="example-card example-card--alana">
+        <article class="example-card example-card--robbie">
           <div class="example-figure">
-            <div class="agimon-chip agimon-chip--alana" aria-hidden="true">
+            <div class="agimon-chip agimon-chip--robbie" aria-hidden="true">
               <div class="creature-eyes">
                 <div class="creature-eye"></div>
                 <div class="creature-eye"></div>
@@ -2162,17 +2296,17 @@
               <div class="creature-mouth"></div>
             </div>
             <div class="example-shadow" aria-hidden="true"></div>
-            <h3>Alana</h3>
-            <div class="example-role"><span data-i18n="worksForArmando">Works for Armando</span></div>
+            <h3>Robbie</h3>
+            <div class="example-role"><span data-i18n="worksAt">Works at</span><br><a href="https://www.bristolpressurewash.co.uk/" target="_blank" rel="noopener noreferrer">bristolpressurewash.co.uk</a></div>
           </div>
           <div class="example-body">
             <p>
-              <span data-i18n="alanaCopy">Alana watches weekly car rent payments, notes what came in, and follows up on what is still pending.</span>
+              <span data-i18n="robbieCopy">Robbie keeps track of the leads Rob might lose and the follow-ups he owes, so nothing falls behind.</span>
             </p>
             <div class="task-list">
-              <span class="task-tag" data-i18n="tagWeeklyRent">weekly rent</span>
-              <span class="task-tag" data-i18n="tagPaymentTracking">payment tracking</span>
-              <span class="task-tag" data-i18n="tagFollowUp">follow-up</span>
+              <span class="task-tag" data-i18n="tagLeadFollowups">lead follow-ups</span>
+              <span class="task-tag" data-i18n="tagDailyDigest">daily digest</span>
+              <span class="task-tag" data-i18n="tagQuoteReminders">quote reminders</span>
             </div>
           </div>
         </article>
@@ -2322,17 +2456,39 @@
       </div>
       <h2 data-i18n-html="pricingTitle">Start with <span class="accent">one</span> job</h2>
 
-      <div class="pricing-card">
-        <div class="price-intro" data-i18n="priceIntro">Early adoption starts at:</div>
-        <div class="price-line"><span>$999</span> <span class="price-currency">MXN</span> <span class="price-period" data-i18n="pricePeriod">/ mo</span></div>
-        <ul class="pricing-includes" aria-label="What's included">
-          <li data-i18n="priceIncludeAgimon">1 Agimon</li>
-          <li data-i18n="priceIncludeNumber">1 phone number</li>
-          <li data-i18n="priceIncludeWorkflow">1 WhatsApp job to begin</li>
-        </ul>
+      <div class="pricing-grid">
+        <article class="pricing-card pricing-card--single">
+          <div class="pricing-card-kicker" data-i18n="priceTierSingle">Single-step</div>
+          <div class="price-line"><span>$35</span> <span class="price-currency">USD</span> <span class="price-period" data-i18n="pricePeriod">/ mo</span></div>
+          <div class="price-unit" data-i18n="priceUnit">per job</div>
+          <ul class="pricing-includes" aria-label="What's included">
+            <li data-i18n="priceIncludeAgimon">1 Agimon</li>
+            <li data-i18n="priceIncludeNumber">1 phone number</li>
+            <li data-i18n="priceIncludeSimple">1 recurring WhatsApp job</li>
+            <li data-i18n="priceFeatureReads">Reads every message</li>
+            <li data-i18n="priceFeatureDigest">Sends summaries</li>
+          </ul>
+          <button class="pricing-card-cta" type="button" data-i18n="priceViewExample">View example</button>
+        </article>
+
+        <article class="pricing-card pricing-card--multi">
+          <div class="pricing-card-kicker" data-i18n="priceTierMulti">Multi-step</div>
+          <div class="price-line"><span>$105</span> <span class="price-currency">USD</span> <span class="price-period" data-i18n="pricePeriod">/ mo</span></div>
+          <div class="price-unit" data-i18n="priceUnit">per job</div>
+          <ul class="pricing-includes" aria-label="What's included">
+            <li data-i18n="priceIncludeAgimon">1 Agimon</li>
+            <li data-i18n="priceIncludeNumber">1 phone number</li>
+            <li data-i18n="priceIncludeComplex">1 continuous WhatsApp job</li>
+            <li data-i18n="priceFeatureReads">Reads every message</li>
+            <li data-i18n="priceFeatureRemembers">Remembers what happened</li>
+            <li data-i18n="priceFeatureAnswers">Answers questions</li>
+            <li data-i18n="priceFeatureReports">Generates reports on-demand</li>
+          </ul>
+          <button class="pricing-card-cta" type="button" data-i18n="priceViewExample">View example</button>
+        </article>
       </div>
       <p class="pricing-note">
-        <span data-i18n="pricingNote">Payment tracking, receipt checks, reminders, or follow-ups.</span>
+        <span data-i18n="pricingNote">Whatever your WhatsApp looks like, Agimon learns the job. Tell us what you handle by hand today and we will show you how it runs on its own.</span>
       </p>
 
       <a class="soft-link" href="#adopt">
@@ -2483,6 +2639,15 @@
     </section>
   </main>
 
+  <div class="demo-modal" id="demo-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Agimon demo">
+    <div class="demo-modal-frame">
+      <button class="demo-modal-close" id="demo-modal-close" type="button" aria-label="Close demo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+      <iframe id="demo-modal-iframe" title="Agimon interactive demo" src="about:blank"></iframe>
+    </div>
+  </div>
+
   <script>
     const translations = {
       EN: {
@@ -2506,14 +2671,17 @@
         primitiveRecords: "Updating Records",
         primitiveCollections: "Weekly Collections",
         whatNext: "Agimons at work",
-        examplesKicker: "Examples",
+        examplesKicker: "Happy customers",
         examplesTitle: 'Agimons at <span class="accent">work</span>',
         examplesCopy: "Each one belongs to a different client, with a different job inside WhatsApp.",
         worksAt: "Works at",
         worksForArmando: "Works for Armando",
         martitaCopy: "Martita helps a clinic team keep track of patient payments, receipts, and confirmations inside WhatsApp, so admin work does not interrupt patient care.",
         arturitoCopy: "Arturito keeps track of who paid, who hasn’t, and which reminders need to go out, so building collections do not fall behind.",
-        alanaCopy: "Alana watches weekly car rent payments, notes what came in, and follows up on what is still pending.",
+        robbieCopy: "Robbie keeps track of the leads Rob might lose and the follow-ups he owes, so nothing falls behind.",
+        tagLeadFollowups: "lead follow-ups",
+        tagDailyDigest: "daily digest",
+        tagQuoteReminders: "quote reminders",
         tagPatientPayments: "patient payments",
         tagReceiptChecks: "receipt checks",
         tagConfirmations: "confirmations",
@@ -2534,14 +2702,23 @@
         howGrow: "Grow",
         howGrowCopy: "Once that first job works reliably, Agimon can take on more admin work over time: reminders, records, and follow-ups.",
         howNext: "Agimon pricing",
-        pricingKicker: "Pricing",
+        pricingKicker: "Pricing & Examples",
         pricingTitle: 'Start with <span class="accent">one</span> job',
-        priceIntro: "Early adoption starts at:",
+        priceUnit: "per job",
+        priceTierSingle: "Single-step",
+        priceTierMulti: "Multi-step",
+        priceFeatureReads: "Reads every message",
+        priceFeatureDigest: "Sends summaries",
+        priceFeatureRemembers: "Remembers what happened",
+        priceFeatureAnswers: "Answers questions",
+        priceFeatureReports: "Generates reports on-demand",
+        priceViewExample: "View example",
         pricePeriod: "/ mo",
         priceIncludeAgimon: "1 Agimon",
         priceIncludeNumber: "1 phone number",
-        priceIncludeWorkflow: "1 WhatsApp job to begin",
-        pricingNote: "Payment tracking, receipt checks, reminders, or follow-ups.",
+        priceIncludeSimple: "1 recurring WhatsApp job",
+        priceIncludeComplex: "1 continuous WhatsApp workflow",
+        pricingNote: "Whatever your WhatsApp looks like, Agimon learns the job. Tell us what you handle by hand today and we will show you how it runs on its own.",
         pricingNext: "Adopt an Agimon",
         adoptKicker: "Adoption",
         adoptTitle: '<span class="accent">Apply</span> to adopt an Agimon',
@@ -2591,14 +2768,17 @@
         primitiveRecords: "Actualizar registros",
         primitiveCollections: "Cobranza semanal",
         whatNext: "Agimons trabajando",
-        examplesKicker: "Ejemplos",
+        examplesKicker: "Clientes felices",
         examplesTitle: 'Agimons <span class="accent">trabajando</span>',
         examplesCopy: "Cada uno pertenece a un cliente distinto, con un trabajo distinto dentro de WhatsApp.",
         worksAt: "Trabaja en",
         worksForArmando: "Trabaja para Armando",
         martitaCopy: "Martita ayuda a un equipo de clínica a llevar control de pagos, comprobantes y confirmaciones de pacientes dentro de WhatsApp, para que la administración no interrumpa la atención.",
         arturitoCopy: "Arturito lleva control de quién pagó, quién no, y qué recordatorios deben salir, para que la cobranza del edificio no se atrase.",
-        alanaCopy: "Alana observa los pagos semanales de renta de autos, anota lo que entró y da seguimiento a lo que sigue pendiente.",
+        robbieCopy: "Robbie lleva control de los leads que Rob podría perder y los seguimientos que debe, para que nada se quede atrás.",
+        tagLeadFollowups: "seguimiento de leads",
+        tagDailyDigest: "resumen diario",
+        tagQuoteReminders: "recordatorios de cotizaciones",
         tagPatientPayments: "pagos pacientes",
         tagReceiptChecks: "revisar comprobantes",
         tagConfirmations: "confirmaciones",
@@ -2619,14 +2799,23 @@
         howGrow: "Crece",
         howGrowCopy: "Cuando ese primer trabajo funciona bien, Agimon puede tomar más administración con el tiempo: recordatorios, registros y seguimiento.",
         howNext: "Precio de Agimon",
-        pricingKicker: "Precio",
+        pricingKicker: "Precios y ejemplos",
         pricingTitle: 'Empieza con <span class="accent">un</span> trabajo',
-        priceIntro: "Adopción temprana desde:",
+        priceUnit: "por trabajo",
+        priceTierSingle: "Paso único",
+        priceTierMulti: "Varios pasos",
         pricePeriod: "/ mes",
         priceIncludeAgimon: "1 Agimon",
         priceIncludeNumber: "1 número de teléfono",
-        priceIncludeWorkflow: "1 trabajo de WhatsApp para empezar",
-        pricingNote: "Control de pagos, revisión de comprobantes, recordatorios o seguimiento.",
+        priceIncludeSimple: "1 trabajo recurrente en WhatsApp",
+        priceIncludeComplex: "1 trabajo continuo en WhatsApp",
+        priceFeatureReads: "Lee cada mensaje",
+        priceFeatureDigest: "Envía resúmenes",
+        priceFeatureRemembers: "Recuerda lo que pasó",
+        priceFeatureAnswers: "Responde preguntas",
+        priceFeatureReports: "Genera reportes cuando los necesites",
+        priceViewExample: "Ver ejemplo",
+        pricingNote: "No importa cómo se vea tu WhatsApp, Agimon aprende el trabajo. Dinos qué sigues haciendo a mano hoy y te mostraremos cómo puede correr por sí solo.",
         pricingNext: "Adopta un Agimon",
         adoptKicker: "ADOPCIÓN",
         adoptTitle: '<span class="accent">Aplica</span> para adoptar un Agimon',
@@ -2824,6 +3013,63 @@
     });
 
     applyLanguage(currentLanguage);
+
+    const demoModal = document.getElementById("demo-modal");
+    const demoModalIframe = document.getElementById("demo-modal-iframe");
+    const demoModalClose = document.getElementById("demo-modal-close");
+    const singleStepCta = document.querySelector(".pricing-card--single .pricing-card-cta");
+    const multiStepCta = document.querySelector(".pricing-card--multi .pricing-card-cta");
+    const demoSources = {
+      single: "demo only.html#simple",
+      multi: "demo only.html#payments"
+    };
+
+    function openDemoModal(scenario) {
+      const src = demoSources[scenario] || demoSources.multi;
+      demoModalIframe.src = src;
+      demoModal.classList.add("is-open");
+      demoModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("demo-modal-open");
+    }
+
+    function closeDemoModal() {
+      demoModal.classList.remove("is-open");
+      demoModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("demo-modal-open");
+      window.setTimeout(() => {
+        if (!demoModal.classList.contains("is-open")) {
+          demoModalIframe.src = "about:blank";
+        }
+      }, 300);
+    }
+
+    window.addEventListener("message", function (event) {
+      if (event.data && event.data.type === "agimon-demo-finished") {
+        closeDemoModal();
+      }
+    });
+
+    if (singleStepCta) {
+      singleStepCta.addEventListener("click", function (event) {
+        event.preventDefault();
+        openDemoModal("single");
+      });
+    }
+    if (multiStepCta) {
+      multiStepCta.addEventListener("click", function (event) {
+        event.preventDefault();
+        openDemoModal("multi");
+      });
+    }
+    demoModalClose.addEventListener("click", closeDemoModal);
+    demoModal.addEventListener("click", function (event) {
+      if (event.target === demoModal) closeDemoModal();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && demoModal.classList.contains("is-open")) {
+        closeDemoModal();
+      }
+    });
   </script>
 
 
