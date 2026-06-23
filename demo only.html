@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agimon | Back Office Demo</title>
+  <meta name="description" content="A self-contained Agimon job demo focused on back-office records, ledgers, and operational memory.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f3ed;
+      --ink: #171513;
+      --muted: #6f675f;
+      --line: rgba(23, 21, 19, 0.11);
+      --panel: #fffdf8;
+      --panel-soft: #f1f6f2;
+      --accent: #e8503a;
+      --accent-dark: #c63e2d;
+      --accent-soft: rgba(232, 80, 58, 0.12);
+      --green: #2b6b5e;
+      --green-soft: #e1f1ec;
+      --blue: #315f96;
+      --blue-soft: #e7eef8;
+      --dark: #1f2529;
+      --shadow: 0 24px 70px rgba(65, 53, 37, 0.16);
+      --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --demo-panel-height: 732px;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .guide-card {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      z-index: 30;
+      width: min(340px, calc(100vw - 28px));
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid rgba(23, 21, 19, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.97);
+      box-shadow: 0 22px 56px rgba(65, 53, 37, 0.2);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .guide-card.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+    }
+
+    .guide-card::after {
+      content: "";
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      background: rgba(255, 253, 248, 0.97);
+      border: 1px solid rgba(23, 21, 19, 0.12);
+      transform: rotate(45deg);
+    }
+
+    .guide-card.is-hidden::after { display: none; }
+
+    .guide-card[data-placement="right"]::after {
+      left: -7px; top: 22px;
+      border-right: 0; border-top: 0;
+    }
+
+    .guide-card[data-placement="left"]::after {
+      right: -7px; top: 22px;
+      border-left: 0; border-bottom: 0;
+    }
+
+    .guide-card[data-placement="below"]::after {
+      top: -7px; left: 26px;
+      border-right: 0; border-bottom: 0;
+    }
+
+    .guide-card[data-placement="above"]::after {
+      bottom: -7px; left: 26px;
+      border-left: 0; border-top: 0;
+    }
+
+    .guide-step {
+      width: fit-content;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: var(--dark);
+      color: #fff;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .guide-title { margin: 0; font-size: 14px; font-weight: 850; }
+
+    .guide-copy {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .guide-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .guide-action {
+      width: fit-content;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border: 1px solid rgba(232, 80, 58, 0.26);
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .guide-action.secondary {
+      border-color: var(--line);
+      background: #f8f5ef;
+      color: var(--muted);
+    }
+
+    .guide-action.is-hidden { display: none; }
+
+    .guide-action svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .demo-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 22;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      border: 1px solid rgba(23, 21, 19, 0.08);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.7);
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .workbench.is-two-column .demo-overlay {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      right: auto;
+      width: calc((200% - 14px) / 3);
+      transform: translateX(-50%);
+    }
+
+    .demo-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .overlay-play {
+      width: 154px;
+      height: 154px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .overlay-play:hover {
+      color: #ff684f;
+      transform: scale(1.03);
+    }
+
+    .overlay-play svg {
+      width: 118px;
+      height: 118px;
+      fill: currentColor;
+      transform: translateX(6px);
+    }
+
+    .workbench {
+      position: relative;
+      width: min(1480px, calc(100vw - 48px));
+      min-height: var(--demo-panel-height);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .workbench.is-two-column {
+      grid-template-columns: repeat(2, minmax(0, calc((100% - 28px) / 3)));
+      justify-content: center;
+    }
+
+    .workbench.is-two-column #record-panel { display: none; }
+
+    .panel {
+      min-height: var(--demo-panel-height);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.9);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spotlight {
+      position: relative;
+      z-index: 2;
+      outline: 3px solid rgba(232, 80, 58, 0.82);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 9px rgba(232, 80, 58, 0.13), var(--shadow);
+      cursor: pointer;
+    }
+
+    .message.spotlight,
+    .step.spotlight,
+    .metric.spotlight,
+    .ledger-row.spotlight,
+    .chat-composer.spotlight,
+    .table-wrap.spotlight,
+    .metrics.spotlight,
+    .ledger.spotlight {
+      outline-offset: 5px;
+    }
+
+    .contact-rows.spotlight {
+      outline-offset: 6px;
+      border-radius: 10px;
+    }
+
+    .metrics.spotlight {
+      border-radius: var(--radius);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 6px;
+    }
+
+    .ledger.spotlight {
+      border-radius: var(--radius);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 10px;
+    }
+
+    .panel-header {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .panel-title { margin: 0; font-size: 14px; font-weight: 850; }
+
+    .panel-kicker {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-pill {
+      min-width: 84px;
+      padding: 6px 8px;
+      border: 1px solid rgba(43, 107, 94, 0.18);
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .status-pill.is-hidden { display: none; }
+
+    .chat-window {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background:
+        linear-gradient(rgba(255, 253, 248, 0.78), rgba(255, 253, 248, 0.78)),
+        repeating-linear-gradient(45deg, rgba(43, 107, 94, 0.055) 0 2px, transparent 2px 13px);
+      overflow: auto;
+    }
+
+    .contact-list {
+      flex: 1;
+      padding: 20px 14px;
+      background:
+        linear-gradient(rgba(255, 253, 248, 0.78), rgba(255, 253, 248, 0.78)),
+        repeating-linear-gradient(45deg, rgba(43, 107, 94, 0.055) 0 2px, transparent 2px 13px);
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-list.is-hidden {
+      display: none;
+    }
+
+    .scanning-indicator {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin: 0 12px 10px;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .scanning-indicator.is-visible {
+      display: flex;
+      animation: scanIn 0.3s ease;
+    }
+
+    .scanning-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: scanPulse 1.2s ease-in-out infinite;
+    }
+
+    .contact-rows {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 4px;
+      border-radius: 10px;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .contact-row:hover {
+      background: rgba(43, 107, 94, 0.06);
+    }
+
+    .contact-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--accent), var(--accent-dark));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .contact-avatar--bot {
+      background: linear-gradient(145deg, var(--green), #1f4f44);
+    }
+
+    .contact-info {
+      min-width: 0;
+    }
+
+    .contact-name {
+      font-weight: 750;
+      font-size: 14px;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-preview {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .contact-time {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    .incoming-badge {
+      display: none;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 7px;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .incoming-badge.is-visible {
+      display: inline-block;
+      animation: badgePop 0.4s ease;
+    }
+
+    @keyframes scanIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scanPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    @keyframes badgePop {
+      0% { transform: scale(0); }
+      60% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .message {
+      width: min(88%, 340px);
+      padding: 11px 12px;
+      border: 1px solid rgba(23, 21, 19, 0.08);
+      border-radius: var(--radius);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.38;
+      box-shadow: 0 8px 18px rgba(65, 53, 37, 0.08);
+      opacity: 0;
+      transform: translateY(8px);
+      animation: rise 0.38s ease forwards;
+    }
+
+    .message.user { align-self: flex-end; background: #dceee7; }
+
+    .message.neighbor-b {
+      align-self: flex-start;
+      background: #e9f1ff;
+      border-color: rgba(49, 95, 150, 0.18);
+    }
+
+    .message.agent { align-self: flex-start; background: #fffdf8; }
+
+    .message-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    .digest-link {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .digest-link:hover {
+      color: var(--accent);
+    }
+
+    .receipt-visual,
+    .meter-visual,
+    .inventory-visual {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding: 10px;
+      border: 1px dashed rgba(23, 21, 19, 0.16);
+      border-radius: 6px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.28)),
+        #f6f1e9;
+    }
+
+    .receipt-visual {
+      min-height: 156px;
+      position: relative;
+      gap: 7px;
+      padding: 18px 14px 14px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.32)),
+        repeating-linear-gradient(180deg, rgba(255, 253, 248, 0.96) 0 13px, rgba(233, 224, 209, 0.34) 13px 14px),
+        #f6f1e9;
+      box-shadow: inset 0 0 0 1px rgba(23, 21, 19, 0.05), 0 8px 18px rgba(65, 53, 37, 0.09);
+    }
+
+    .receipt-visual::before {
+      content: "SPEI";
+      position: absolute;
+      right: 12px;
+      top: 9px;
+      color: rgba(23, 21, 19, 0.38);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+    }
+
+    .receipt-line,
+    .meter-line,
+    .inventory-line {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(23, 21, 19, 0.13);
+    }
+
+    .receipt-line {
+      height: 6px;
+      background: rgba(23, 21, 19, 0.12);
+    }
+
+    .receipt-line--brand {
+      width: 42%;
+      height: 10px;
+      margin-bottom: 3px;
+      background: rgba(232, 80, 58, 0.42);
+    }
+
+    .receipt-line--wide { width: 82%; }
+    .receipt-line--mid { width: 68%; }
+    .receipt-line--short { width: 48%; }
+
+    .receipt-line--divider {
+      width: 100%;
+      height: 1px;
+      margin: 4px 0;
+      border-radius: 0;
+      background: rgba(23, 21, 19, 0.12);
+    }
+
+    .receipt-line--total {
+      width: 58%;
+      height: 12px;
+      background: rgba(43, 107, 94, 0.3);
+    }
+
+    .meter-line:nth-child(1),
+    .inventory-line:nth-child(1) {
+      width: 58%;
+      background: rgba(232, 80, 58, 0.45);
+    }
+
+    .meter-line:nth-child(2),
+    .inventory-line:nth-child(2) { width: 80%; }
+
+    .meter-line:nth-child(3),
+    .inventory-line:nth-child(3) {
+      width: 66%;
+      background: rgba(43, 107, 94, 0.28);
+    }
+
+    .chat-composer {
+      display: grid;
+      grid-template-columns: 1fr 42px;
+      gap: 10px;
+      padding: 12px 14px;
+      border-top: 1px solid var(--line);
+      background: var(--panel);
+      overflow: visible;
+    }
+
+    .composer-copy {
+      min-height: 42px;
+      display: grid;
+      align-items: stretch;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 13px;
+      background: #f8f5ef;
+      overflow: visible;
+      position: relative;
+    }
+
+    .attachment-card {
+      min-width: 0;
+      display: none;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      color: var(--ink);
+      transition: opacity 0.18s ease;
+      transform-origin: right center;
+    }
+
+    .attachment-thumb {
+      width: 30px;
+      height: 34px;
+      display: grid;
+      gap: 3px;
+      align-content: center;
+      padding: 5px;
+      border: 1px dashed rgba(23, 21, 19, 0.18);
+      border-radius: 4px;
+      background:
+        repeating-linear-gradient(180deg, rgba(255, 253, 248, 0.95) 0 7px, rgba(233, 224, 209, 0.45) 7px 8px),
+        #f6f1e9;
+      box-shadow: 0 3px 8px rgba(65, 53, 37, 0.08);
+    }
+
+    .attachment-thumb span {
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(23, 21, 19, 0.14);
+    }
+
+    .attachment-thumb span:first-child {
+      width: 66%;
+      background: rgba(232, 80, 58, 0.45);
+    }
+
+    .attachment-thumb span:last-child {
+      width: 72%;
+      background: rgba(43, 107, 94, 0.28);
+    }
+
+    .attachment-title {
+      display: block;
+      font-weight: 850;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .attachment-subtitle,
+    .composer-placeholder {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .composer-placeholder {
+      display: flex;
+      align-items: center;
+      min-height: 42px;
+      margin-top: 0;
+    }
+
+    .composer-placeholder::after {
+      content: "";
+      width: 1px;
+      height: 17px;
+      margin-left: 3px;
+      background: currentColor;
+      animation: blink 1s steps(2, start) infinite;
+    }
+
+    .chat-composer.has-attachment .attachment-card,
+    .chat-composer.is-attaching .attachment-card,
+    .chat-composer.is-sending .attachment-card {
+      display: grid;
+    }
+
+    .chat-composer.has-attachment .composer-placeholder,
+    .chat-composer.is-attaching .composer-placeholder,
+    .chat-composer.is-sending .composer-placeholder {
+      display: none;
+    }
+
+    .chat-composer.is-attaching .attachment-card {
+      animation: attachIn 0.58s cubic-bezier(0.2, 0.72, 0.22, 1) forwards;
+    }
+
+    .chat-composer.is-sending .attachment-card {
+      animation: attachSend 0.56s cubic-bezier(0.2, 0.72, 0.22, 1) forwards;
+    }
+
+    .chat-composer.is-sent .attachment-card { display: none; }
+    .chat-composer.is-sent .composer-placeholder { display: flex; }
+
+    .send-button {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--green);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .send-button:disabled {
+      opacity: 0.48;
+      cursor: default;
+    }
+
+    .send-button svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .process-body {
+      flex: 1;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(31, 37, 41, 0.98), rgba(31, 37, 41, 0.94));
+      color: #fff;
+    }
+
+    .process-meter { display: grid; gap: 8px; }
+
+    .process-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+
+    .process-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      transition: width 0.38s ease;
+    }
+
+    .process-count {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 11px;
+      font-family: var(--font-mono);
+    }
+
+    .steps { display: grid; gap: 10px; align-content: start; }
+
+    .process-empty,
+    .job-detected {
+      min-height: 96px;
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      padding: 14px;
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .process-empty strong,
+    .job-detected strong {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .job-detected {
+      min-height: auto;
+      border-style: solid;
+      border-color: rgba(232, 80, 58, 0.38);
+      background: rgba(232, 80, 58, 0.11);
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .step {
+      min-height: 76px;
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.58);
+      transition: border-color 0.28s ease, background 0.28s ease, color 0.28s ease;
+    }
+
+    .step.done {
+      border-color: rgba(90, 178, 159, 0.42);
+      background: rgba(90, 178, 159, 0.1);
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .step-index {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: inherit;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .step.done .step-index {
+      background: var(--green);
+      color: white;
+    }
+
+    .step-title { margin: 0; font-size: 13px; font-weight: 850; }
+
+    .step-detail {
+      margin: 5px 0 0;
+      color: inherit;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .record-body {
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto auto auto;
+      gap: 14px;
+      padding: 16px;
+      overflow: auto;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      min-height: 84px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-soft);
+    }
+
+    .metric:nth-child(3) {
+      grid-column: 1 / -1;
+      min-height: 72px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .metric-value {
+      margin-top: 9px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      line-height: 1.08;
+      font-weight: 850;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: anywhere;
+    }
+
+    .metric.changed {
+      border-color: rgba(43, 107, 94, 0.26);
+      background: var(--green-soft);
+      animation: pulse 0.88s ease;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.25;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      color: var(--muted);
+      background: rgba(49, 95, 150, 0.07);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .row-flash { animation: rowFlash 1s ease; }
+
+    .match-token {
+      display: inline-block;
+      border-radius: 5px;
+      transition: background 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
+    }
+
+    .match-token.is-match-highlighted {
+      padding: 0 3px;
+      margin: 0 -3px;
+      background: #ffe889;
+      color: #171513;
+      box-shadow: 0 0 0 3px rgba(255, 214, 84, 0.34);
+    }
+
+    .ledger { display: grid; gap: 8px; align-content: start; }
+
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfaf7;
+      font-size: 12px;
+      line-height: 1.25;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: rise 0.34s ease forwards;
+    }
+
+    .ledger-time {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    .ledger-type {
+      width: fit-content;
+      max-width: 100%;
+      padding: 5px 7px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .empty-ledger {
+      padding: 16px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 13px;
+      background: #fbfaf7;
+    }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    @keyframes attachIn {
+      0% { opacity: 0; transform: translate(-96px, -34px) scale(0.88) rotate(-3deg); }
+      72% { opacity: 1; transform: translate(4px, 0) scale(1.02) rotate(0deg); }
+      100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+    }
+
+    @keyframes attachSend {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      68% { opacity: 0.92; transform: translateY(-58px) scale(0.96); }
+      100% { opacity: 0; transform: translateY(-86px) scale(0.9); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(43, 107, 94, 0.3); }
+      100% { box-shadow: 0 0 0 16px rgba(43, 107, 94, 0); }
+    }
+
+    @keyframes rowFlash {
+      0% { background: var(--accent-soft); }
+      100% { background: transparent; }
+    }
+
+    @media (max-width: 1180px) {
+      .workbench {
+        min-height: 0;
+        grid-template-columns: 1fr;
+      }
+      .workbench.is-two-column { grid-template-columns: 1fr; justify-content: stretch; }
+      .panel { min-height: auto; }
+      .chat-window { min-height: 360px; }
+      .guide-card { position: static; width: 100%; }
+    }
+
+    @media (max-width: 680px) {
+      .metrics { grid-template-columns: 1fr; }
+      .ledger-row { grid-template-columns: 1fr; }
+      th, td { padding: 10px; }
+      .composer-copy { white-space: normal; align-items: flex-start; padding-top: 9px; line-height: 1.25; }
+    }
+  </style>
+</head>
+<body>
+  <section class="guide-card is-hidden" id="guide-card" aria-live="polite" data-placement="below">
+    <div class="guide-step" id="guide-step">Ready</div>
+    <div>
+      <p class="guide-title" id="guide-title">Choose an example, then run the job.</p>
+      <p class="guide-copy" id="guide-copy">Start the demo, then watch Agimon move through one operational job at a time.</p>
+    </div>
+    <div class="guide-actions">
+      <button class="guide-action secondary is-hidden" id="guide-back" type="button">Back</button>
+      <button class="guide-action" id="guide-action" type="button">Run</button>
+    </div>
+  </section>
+
+  <section class="workbench" aria-label="Interactive job demo">
+    <div class="demo-overlay" id="demo-overlay" aria-hidden="false">
+      <button class="overlay-play" type="button" id="overlay-play" aria-label="Play demo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v18l14-9z"></path></svg>
+      </button>
+    </div>
+
+    <article class="panel" id="chat-panel">
+      <div class="panel-header">
+        <div>
+          <p class="panel-title" id="chat-title">WhatsApp / Neighbor Chat</p>
+          <p class="panel-kicker" id="chat-kicker">Incoming operational signal</p>
+        </div>
+        <span class="status-pill is-hidden" id="chat-status"></span>
+      </div>
+      <div class="chat-window" id="chat-window" aria-live="polite"></div>
+      <div class="contact-list is-hidden" id="contact-list" aria-live="polite">
+        <div class="scanning-indicator" id="scanning-indicator">
+          <span class="scanning-dot"></span>
+          <span>Scanning watched chats</span>
+        </div>
+        <div class="contact-rows">
+          <div class="contact-row" data-contact="lead-a">
+            <div class="contact-avatar" aria-hidden="true">A</div>
+            <div class="contact-info">
+              <div class="contact-name">Lead A</div>
+              <div class="contact-preview">Replied and waiting</div>
+            </div>
+            <div class="contact-meta">
+              <span class="contact-time">08:42</span>
+            </div>
+          </div>
+          <div class="contact-row" data-contact="agimon">
+            <div class="contact-avatar contact-avatar--bot" aria-hidden="true">A</div>
+            <div class="contact-info">
+              <div class="contact-name">Agimon</div>
+              <div class="contact-preview">Daily action digest</div>
+            </div>
+            <div class="contact-meta">
+              <span class="contact-time">17:00</span>
+              <span class="incoming-badge" id="agimon-badge">1</span>
+            </div>
+          </div>
+          <div class="contact-row" data-contact="lead-b">
+            <div class="contact-avatar" aria-hidden="true">B</div>
+            <div class="contact-info">
+              <div class="contact-name">Lead B</div>
+              <div class="contact-preview">Quote sent, no reply</div>
+            </div>
+            <div class="contact-meta">
+              <span class="contact-time">Tue</span>
+            </div>
+          </div>
+          <div class="contact-row" data-contact="lead-c">
+            <div class="contact-avatar" aria-hidden="true">C</div>
+            <div class="contact-info">
+              <div class="contact-name">Lead C</div>
+              <div class="contact-preview">Needs information</div>
+            </div>
+            <div class="contact-meta">
+              <span class="contact-time">Mon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-composer" id="chat-composer">
+        <div class="composer-copy" id="composer-copy">
+          <div class="attachment-card" id="attachment-card">
+            <div class="attachment-thumb" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div>
+              <span class="attachment-title" id="attachment-title">1 photo attached</span>
+              <span class="attachment-subtitle" id="attachment-subtitle">Receipt proof image</span>
+            </div>
+          </div>
+          <span class="composer-placeholder" id="composer-placeholder">Message</span>
+        </div>
+        <button class="send-button" type="button" id="send-button" title="Send signal" aria-label="Send signal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg>
+        </button>
+      </div>
+    </article>
+
+    <article class="panel" id="process-panel">
+      <div class="panel-header">
+        <div>
+          <p class="panel-title">Agimon acts</p>
+          <p class="panel-kicker" id="process-kicker">Extraction, matching, update</p>
+        </div>
+        <span class="status-pill is-hidden" id="process-status"></span>
+      </div>
+      <div class="process-body">
+        <div class="process-meter">
+          <div class="process-track" aria-hidden="true"><div class="process-bar" id="process-bar"></div></div>
+          <div class="process-count" id="process-count">Waiting for incoming signal</div>
+        </div>
+        <div class="steps" id="steps"></div>
+      </div>
+    </article>
+
+    <article class="panel" id="record-panel">
+      <div class="panel-header">
+        <div>
+          <p class="panel-title" id="record-title">Back-office record</p>
+          <p class="panel-kicker" id="record-kicker">Ledger-backed operational memory</p>
+        </div>
+        <span class="status-pill is-hidden" id="record-status"></span>
+      </div>
+      <div class="record-body">
+        <div class="metrics" id="metrics"></div>
+        <div class="table-wrap" id="record-table">
+          <table aria-label="Operational records">
+            <thead id="record-head"></thead>
+            <tbody id="record-rows"></tbody>
+          </table>
+        </div>
+        <section class="ledger" id="ledger" aria-label="Ledger events"></section>
+      </div>
+    </article>
+  </section>
+
+  <script>
+    const examples = {
+      simple: {
+        layout: "two-column",
+        useContactList: true,
+        chatKicker: "Watched chats",
+        kicker: "Scheduled follow-up",
+        signalPrimary: "$600 MXN / $35 USD.",
+        signalSecondary: "Agimon sends a short action list on schedule.",
+        signalTime: "09:00",
+        chatTitle: "WhatsApp / Daily Digest",
+        attachmentTitle: "09:00 timer",
+        attachmentSubtitle: "Daily action digest",
+        composerPlaceholder: "Message",
+        composerMode: "timer",
+        processKicker: "Daily timer",
+        recordTitle: "",
+        recordKicker: "",
+        emptySignalHeading: "Waiting for the scheduled timer.",
+        emptySignalText: "Agimon is ready to send the daily action list at 09:00.",
+        waitingText: "Waiting for 09:00 timer",
+        showDetectedCard: false,
+        showStepsAtFirstStep: false,
+        chatStatuses: ["", "Watching", "Scanning", "Composing", "Sent"],
+        processStatuses: ["Timer", "Fired", "Scanning", "Writing", "Done"],
+        messageCountsByStep: [0, 0, 0, 0, 1],
+        completedByStep: [0, 1, 2, 3, 3],
+        activeByStep: [0, 1, 2, 3, 3],
+        incoming: [
+          {
+            side: "agent",
+            html: "Daily action digest: <strong>3 conversations need action.</strong><br><br>1. <a href=\"#\" class=\"digest-link\" onclick=\"event.preventDefault()\">Lead A</a> replied and is waiting.<br>2. <a href=\"#\" class=\"digest-link\" onclick=\"event.preventDefault()\">Lead B</a> received a quote and has not replied.<br>3. <a href=\"#\" class=\"digest-link\" onclick=\"event.preventDefault()\">Lead C</a> still needs to send photos.",
+            time: "09:00"
+          }
+        ],
+        steps: [
+          ["Timer fires", "At 09:00, the daily job starts."],
+          ["Scan watched chats", "Agimon reads each conversation to find pending items."],
+          ["Write digest", "Agimon drafts the daily action list."]
+        ],
+        guideSteps: [
+          {
+            step: "1 / 5",
+            title: "Before the timer fires",
+            copy: "It is 08:59. Agimon is watching your chats and waiting for 09:00.",
+            action: "Start",
+            targets: [".process-empty"]
+          },
+          {
+            step: "2 / 5",
+            title: "The timer fires",
+            copy: "09:00 arrives. Agimon starts the daily job.",
+            action: "Next",
+            targets: [".step[data-step-index=\"0\"]"]
+          },
+          {
+            step: "3 / 5",
+            title: "Agimon goes through your messages",
+            copy: "Each watched chat is checked for replies, no-replies, and missing information.",
+            action: "Next",
+            targets: [".contact-rows"]
+          },
+          {
+            step: "4 / 5",
+            title: "Your Agimon writes you a digest",
+            copy: "A short action list is ready to send to the watched chat.",
+            action: "Next",
+            targets: [".contact-row[data-contact=\"agimon\"]"]
+          },
+          {
+            step: "5 / 5",
+            title: "Opening that chat and viewing the digest",
+            copy: "A short action list arrives in the watched chat.",
+            action: "Finish",
+            targets: [".message[data-message-index=\"0\"]"]
+          }
+        ],
+        metricsBefore: [],
+        metricsAfter: [],
+        tableHead: [],
+        rowsBefore: [],
+        rowsAfter: [],
+        changedRows: [],
+        ledger: [],
+        ledgerAtRecordStep: 0
+      },
+      payments: {
+        kicker: "Building administration",
+        signalPrimary: "Back office, not just front office.",
+        signalSecondary: "Agimon keeps the ledger, balances, and follow-up queue current.",
+        signalTime: "12:35",
+        chatTitle: "WhatsApp / Neighbor Chat",
+        attachmentTitle: "1 photo attached",
+        attachmentSubtitle: "Receipt proof image",
+        composerPlaceholder: "Message",
+        processKicker: "Extraction, matching, update",
+        recordTitle: "Apartment ledger",
+        incoming: [
+          {
+            side: "user",
+            label: "neighbor a",
+            html: "<div class=\"receipt-visual\"><span class=\"receipt-line receipt-line--brand\"></span><span class=\"receipt-line receipt-line--wide\"></span><span class=\"receipt-line receipt-line--mid\"></span><span class=\"receipt-line receipt-line--short\"></span><span class=\"receipt-line receipt-line--divider\"></span><span class=\"receipt-line receipt-line--wide\"></span><span class=\"receipt-line receipt-line--mid\"></span><span class=\"receipt-line receipt-line--divider\"></span><span class=\"receipt-line receipt-line--total\"></span></div><strong>Payment receipt</strong><br>Apartment 4 / <span class=\"match-token\" data-match-key=\"payment-amount\">$1,941.39</span>",
+            time: "12:35"
+          },
+          {
+            side: "agent",
+            html: "Payment applied.<br>Applied to: Apartment 4<br>Remaining: $0.00<br><strong>Account is current.</strong>",
+            time: "12:35"
+          },
+          {
+            side: "neighbor-b",
+            label: "neighbor b",
+            html: "How much does Apartment 3 owe?",
+            time: "12:36"
+          },
+          {
+            side: "agent",
+            html: "Apartment 3 / May 2026<br><strong>Total pending: <span class=\"match-token\" data-match-key=\"answer-amount\">$2,351.38</span></strong>",
+            time: "12:36"
+          }
+        ],
+        steps: [
+          ["Read receipt", "Extracts amount, timestamp, sender, and proof image from WhatsApp."],
+          ["Match context", "Links the payment to Apartment 4 using the tenant thread and open obligations."],
+          ["Post ledger event", "Adds a receipt.applied event with proof, apartment, collector, and month."],
+          ["Confirm in chat", "Sends visible feedback to the chat after the ledger has changed."],
+          ["Answer from records", "Replies using the current ledger state, including unchanged Apartment 3 debt."]
+        ],
+        metricsBefore: [
+          ["Apt 4 balance", "$1,941.39"],
+          ["Apt 3 balance", "<span class=\"match-token\" data-match-key=\"answer-amount\">$2,351.38</span>"],
+          ["Apt 4 status", "Pending"]
+        ],
+        metricsAfter: [
+          ["Apt 4 balance", "$0.00"],
+          ["Apt 3 balance", "<span class=\"match-token\" data-match-key=\"answer-amount\">$2,351.38</span>"],
+          ["Apt 4 status", "Current"]
+        ],
+        tableHead: ["Apartment", "Month", "Status", "Balance"],
+        rowsBefore: [
+          ["Apartment 3", "May 2026", "Pending", "<span class=\"match-token\" data-match-key=\"answer-amount\">$2,351.38</span>"],
+          ["Apartment 4", "May 2026", "Pending", "<span class=\"match-token\" data-match-key=\"payment-amount\">$1,941.39</span>"],
+          ["Apartment 5", "May 2026", "Current", "$0.00"]
+        ],
+        rowsAfter: [
+          ["Apartment 3", "May 2026", "Pending", "<span class=\"match-token\" data-match-key=\"answer-amount\">$2,351.38</span>"],
+          ["Apartment 4", "May 2026", "Current", "$0.00"],
+          ["Apartment 5", "May 2026", "Current", "$0.00"]
+        ],
+        changedRows: [1],
+        ledger: [
+          ["12:35", "receipt.read", "SPEI proof parsed for $1,941.39."],
+          ["12:35", "payment.applied", "Apartment 4 balance reduced to $0.00."],
+          ["12:36", "balance.answer", "Apartment 3 pending total returned from ledger."]
+        ],
+        ledgerAtRecordStep: 2
+      },
+      water: {
+        kicker: "Finance operations",
+        signalPrimary: "The admin drops proof into chat.",
+        signalSecondary: "Agimon turns shared utilities into unit-level receivables.",
+        signalTime: "09:12",
+        chatTitle: "WhatsApp / Neighbor Chat",
+        attachmentTitle: "11 photos attached",
+        attachmentSubtitle: "Water bill + meter photos",
+        composerPlaceholder: "Message",
+        processKicker: "Proof, allocation, exceptions",
+        recordTitle: "Water distribution",
+        incoming: [
+          {
+            side: "user",
+            html: "<div class=\"meter-visual\"><span class=\"meter-line\"></span><span class=\"meter-line\"></span><span class=\"meter-line\"></span></div><strong>Water bill uploaded</strong><br>Total: $8,420.00 / 10 meter photos",
+            time: "09:12"
+          },
+          {
+            side: "agent",
+            html: "Water allocation drafted.<br>10 units read<br>1 unit needs review<br><strong>Monthly charges updated.</strong>",
+            time: "09:13"
+          },
+          {
+            side: "user",
+            html: "Which units need follow-up?",
+            time: "09:14"
+          },
+          {
+            side: "agent",
+            html: "D8 needs a meter photo retake.<br>D3, D4, and L1 were updated in the June obligation table.",
+            time: "09:14"
+          }
+        ],
+        steps: [
+          ["Read proof", "Extracts bill total, due date, and meter readings from image attachments."],
+          ["Allocate cost", "Uses meter deltas and building rules to calculate unit shares."],
+          ["Write obligations", "Updates June rows without overwriting existing rent and admin fees."],
+          ["Confirm in chat", "Tells the admin the allocation draft is ready after the record is updated."],
+          ["Open exception", "Creates a review item for the one meter image that is not reliable enough."]
+        ],
+        metricsBefore: [
+          ["Bill total", "$8,420"],
+          ["Allocated", "$0"],
+          ["Exceptions", "0"]
+        ],
+        metricsAfter: [
+          ["Bill total", "$8,420"],
+          ["Allocated", "$7,944"],
+          ["Exceptions", "1"]
+        ],
+        tableHead: ["Unit", "Previous", "Current", "June charge"],
+        rowsBefore: [
+          ["D3", "118.2 m3", "Pending", "$0.00"],
+          ["D4", "104.9 m3", "Pending", "$0.00"],
+          ["D8", "91.0 m3", "Pending", "$0.00"],
+          ["L1", "76.4 m3", "Pending", "$0.00"]
+        ],
+        rowsAfter: [
+          ["D3", "118.2 m3", "124.8 m3", "$1,386.00"],
+          ["D4", "104.9 m3", "110.1 m3", "$1,092.00"],
+          ["D8", "91.0 m3", "Review", "Hold"],
+          ["L1", "76.4 m3", "82.7 m3", "$1,323.00"]
+        ],
+        changedRows: [0, 1, 2, 3],
+        ledger: [
+          ["09:12", "proof.read", "Bill total and meter photos captured."],
+          ["09:13", "obligation.update", "June water charges posted for 9 units."],
+          ["09:13", "exception.opened", "D8 meter image needs a retake."]
+        ]
+      },
+      inventory: {
+        kicker: "Clinic operations",
+        signalPrimary: "The operational record moves with the team.",
+        signalSecondary: "Agimon tracks use, batch context, reorder pressure, and next actions.",
+        signalTime: "16:48",
+        chatTitle: "WhatsApp / Treatment Room",
+        attachmentTitle: "1 note attached",
+        attachmentSubtitle: "Stock usage note",
+        composerPlaceholder: "Message",
+        processKicker: "Consumption, batch, reorder",
+        recordTitle: "Inventory ledger",
+        incoming: [
+          {
+            side: "user",
+            html: "<div class=\"inventory-visual\"><span class=\"inventory-line\"></span><span class=\"inventory-line\"></span><span class=\"inventory-line\"></span></div>Used 1 vial Juvelook from batch B-17 for Sofia. Please mark it.",
+            time: "16:48"
+          },
+          {
+            side: "agent",
+            html: "Inventory updated.<br>Juvelook batch B-17: 2 vials left<br><strong>Reorder task opened.</strong>",
+            time: "16:48"
+          },
+          {
+            side: "user",
+            html: "Anything else low?",
+            time: "16:49"
+          },
+          {
+            side: "agent",
+            html: "Juvelook is below par level.<br>Needles are stable.<br>Gloves reorder is due Friday.",
+            time: "16:49"
+          }
+        ],
+        steps: [
+          ["Parse usage", "Finds product, quantity, batch, and patient context from the staff message."],
+          ["Validate stock", "Checks that batch B-17 exists and has enough on hand."],
+          ["Update inventory", "Writes a stock movement and links it to the treatment note."],
+          ["Confirm in chat", "Tells the team the inventory ledger was updated."],
+          ["Trigger reorder", "Opens a purchasing task because remaining stock is below par level."]
+        ],
+        metricsBefore: [
+          ["Juvelook B-17", "3 vials"],
+          ["Open reorder", "No"],
+          ["Linked notes", "18"]
+        ],
+        metricsAfter: [
+          ["Juvelook B-17", "2 vials"],
+          ["Open reorder", "Yes"],
+          ["Linked notes", "19"]
+        ],
+        tableHead: ["Item", "Batch", "On hand", "Status"],
+        rowsBefore: [
+          ["Juvelook", "B-17", "3 vials", "Above par"],
+          ["Needles", "N-02", "220 units", "Stable"],
+          ["Gloves", "G-41", "4 boxes", "Reorder Friday"]
+        ],
+        rowsAfter: [
+          ["Juvelook", "B-17", "2 vials", "Reorder opened"],
+          ["Needles", "N-02", "220 units", "Stable"],
+          ["Gloves", "G-41", "4 boxes", "Reorder Friday"]
+        ],
+        changedRows: [0],
+        ledger: [
+          ["16:48", "stock.use", "1 Juvelook vial consumed from batch B-17."],
+          ["16:48", "note.linked", "Usage attached to Sofia treatment record."],
+          ["16:48", "task.opened", "Reorder Juvelook before next clinic day."]
+        ]
+      }
+    };
+
+    const $ = selector => document.querySelector(selector);
+    const initialScenario = (() => {
+      const hash = window.location.hash.replace("#", "");
+      return examples[hash] ? hash : "payments";
+    })();
+    const state = {
+      current: initialScenario,
+      phase: "idle",
+      guideStep: -1,
+      timers: [],
+      guideRaf: 0
+    };
+
+    const guideSteps = [
+      {
+        step: "1 / 9",
+        title: "A neighbor attaches a receipt.",
+        copy: "The chat starts empty. The neighbor adds one payment screenshot.",
+        action: "Next",
+        targets: ["#chat-composer"]
+      },
+      {
+        step: "2 / 9",
+        title: "The receipt lands in chat.",
+        copy: "To the neighbor, it is just a normal WhatsApp message. For Agimon, it is proof, amount, and tenant in one message.",
+        action: "Next",
+        targets: [".message[data-message-index=\"0\"]"]
+      },
+      {
+        step: "3 / 9",
+        title: "Agimon reads the proof.",
+        copy: "Agimon extracts the amount, timestamp, apartment, and payment evidence.",
+        action: "Next",
+        targets: [".step[data-step-index=\"0\"]"]
+      },
+      {
+        step: "4 / 9",
+        title: "Agimon matches the ledger row.",
+        copy: "The $1,941.39 in the receipt is matched to Apartment 4's open balance.",
+        action: "Next",
+        targets: [".message[data-message-index=\"0\"]", "#record-table"]
+      },
+      {
+        step: "5 / 9",
+        title: "The record changes.",
+        copy: "Apartment 4 moves from pending to current.",
+        action: "Next",
+        targets: ["#metrics", "#record-table"]
+      },
+      {
+        step: "6 / 9",
+        title: "Agimon writes the audit trail.",
+        copy: "The ledger shows what changed, when it changed, and which proof caused it.",
+        action: "Next",
+        targets: ["#ledger"]
+      },
+      {
+        step: "7 / 9",
+        title: "Agimon confirms in chat.",
+        copy: "The group gets the useful feedback: payment applied, balance now $0.00.",
+        action: "Next",
+        targets: [".message[data-message-index=\"1\"]"]
+      },
+      {
+        step: "8 / 9",
+        title: "Another neighbor asks a follow-up.",
+        copy: "The next question can be answered because the ledger is already current.",
+        action: "Next",
+        targets: [".message[data-message-index=\"2\"]"]
+      },
+      {
+        step: "9 / 9",
+        title: "Agimon answers from records.",
+        copy: "The reply comes from the updated ledger, not from guessing in chat history.",
+        action: "Finish",
+        targets: [".message[data-message-index=\"3\"]", "#record-table"]
+      }
+    ];
+
+    const chatWindow = $("#chat-window");
+    const chatComposer = $("#chat-composer");
+    const stepsEl = $("#steps");
+    const metricsEl = $("#metrics");
+    const recordHead = $("#record-head");
+    const recordRows = $("#record-rows");
+    const ledgerEl = $("#ledger");
+    const sendButton = $("#send-button");
+    const runButton = $("#run-button");
+    const guideCard = $("#guide-card");
+    const guideActionButton = $("#guide-action");
+    const guideBackButton = $("#guide-back");
+    const demoOverlay = $("#demo-overlay");
+    const overlayPlayButton = $("#overlay-play");
+    const workbench = $(".workbench");
+    const attachmentTitle = $("#attachment-title");
+    const attachmentSubtitle = $("#attachment-subtitle");
+    const composerPlaceholder = $("#composer-placeholder");
+    const contactList = $("#contact-list");
+    const scanningIndicator = $("#scanning-indicator");
+    const agimonBadge = $("#agimon-badge");
+
+    function updateContactListForStep(stepIndex) {
+      const showChat = stepIndex >= 4;
+      contactList.classList.toggle("is-hidden", showChat);
+      chatWindow.style.display = showChat ? "" : "none";
+      scanningIndicator.classList.toggle("is-visible", stepIndex === 2);
+      agimonBadge.classList.toggle("is-visible", stepIndex >= 3 && !showChat);
+      const agimonRow = document.querySelector('.contact-row[data-contact="agimon"]');
+      const agimonTime = agimonRow.querySelector(".contact-time");
+      const agimonNewest = stepIndex >= 3 && !showChat;
+      agimonRow.style.order = agimonNewest ? "-1" : "";
+      agimonTime.textContent = agimonNewest ? "09:00" : "17:00";
+    }
+
+    function clearTimers() {
+      state.timers.forEach(timer => window.clearTimeout(timer));
+      state.timers = [];
+    }
+
+    function setText(id, value) {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    }
+
+    function setStatus(id, value) {
+      const element = document.getElementById(id);
+      if (!element) return;
+      element.textContent = value || "";
+      element.classList.toggle("is-hidden", !value);
+    }
+
+    function setHtml(id, value) {
+      const element = document.getElementById(id);
+      if (element) element.innerHTML = value;
+    }
+
+    function setGuideAction(label) {
+      const icons = {
+        Next: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14\"></path><path d=\"m13 6 6 6-6 6\"></path></svg>",
+        Finish: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"></path></svg>",
+        Run: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 5v14l11-7z\"></path></svg>"
+      };
+      guideActionButton.innerHTML = `<span>${label}</span>${icons[label] || icons.Next}`;
+      guideActionButton.setAttribute("aria-label", label === "Next" ? "Next step" : `${label} job`);
+    }
+
+    function setDemoOverlay() {
+      overlayPlayButton.setAttribute("aria-label", "Play demo");
+      demoOverlay.classList.remove("is-hidden");
+      demoOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function hideDemoOverlay() {
+      demoOverlay.classList.add("is-hidden");
+      demoOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function setGuideBack(isVisible) {
+      guideBackButton.classList.toggle("is-hidden", !isVisible);
+      guideBackButton.disabled = !isVisible;
+      guideBackButton.setAttribute("aria-hidden", String(!isVisible));
+    }
+
+    function clearHighlights() {
+      document.querySelectorAll(".spotlight").forEach(element => {
+        element.classList.remove("spotlight");
+        element.removeAttribute("data-click-advance");
+        element.removeAttribute("tabindex");
+      });
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function scheduleGuidePosition() {
+      window.cancelAnimationFrame(state.guideRaf);
+      state.guideRaf = window.requestAnimationFrame(positionGuide);
+    }
+
+    function positionGuide() {
+      if (!guideCard || guideCard.classList.contains("is-hidden")) return;
+      const spotlights = document.querySelectorAll(".spotlight");
+      const target = spotlights.length
+        ? spotlights[spotlights.length - 1]
+        : (guideActionButton || sendButton || workbench);
+      if (!target) return;
+
+      const margin = 24;
+      const inset = 10;
+      const targetRect = target.getBoundingClientRect();
+      const guideRect = guideCard.getBoundingClientRect();
+      const guideWidth = guideRect.width;
+      const guideHeight = guideRect.height;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      let placement = "below";
+      let left = targetRect.left;
+      let top = targetRect.bottom + margin;
+
+      if (targetRect.bottom + margin + guideHeight <= viewportHeight - inset) {
+        placement = "below";
+        left = targetRect.left;
+        top = targetRect.bottom + margin;
+      } else if (targetRect.top - margin - guideHeight >= inset) {
+        placement = "above";
+        left = targetRect.left;
+        top = targetRect.top - margin - guideHeight;
+      } else if (targetRect.right + margin + guideWidth <= viewportWidth - inset) {
+        placement = "right";
+        left = targetRect.right + margin;
+        top = targetRect.top;
+      } else {
+        placement = "left";
+        left = targetRect.left - margin - guideWidth;
+        top = targetRect.top;
+      }
+
+      guideCard.dataset.placement = placement;
+      guideCard.style.left = `${clamp(left, inset, Math.max(inset, viewportWidth - guideWidth - inset))}px`;
+      guideCard.style.top = `${clamp(top, inset, Math.max(inset, viewportHeight - guideHeight - inset))}px`;
+    }
+
+    function focusTargets(selectors, clickable = true) {
+      clearHighlights();
+      const focusedElements = [];
+      selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(element => {
+          element.classList.add("spotlight");
+          focusedElements.push(element);
+          if (clickable) {
+            element.setAttribute("data-click-advance", "true");
+            element.setAttribute("tabindex", "0");
+          }
+        });
+      });
+      if (focusedElements[0]) {
+        focusedElements[0].scrollIntoView({ block: "center", inline: "nearest" });
+      }
+      guideCard.classList.remove("is-hidden");
+      scheduleGuidePosition();
+    }
+
+    function setGuideReady() {
+      setText("guide-step", "Ready");
+      setText("guide-title", "Run the demo.");
+      setText("guide-copy", "Click run, then watch Agimon complete one operational job.");
+      setGuideAction("Run");
+      setGuideBack(false);
+      guideCard.classList.add("is-hidden");
+    }
+
+    function renderComposer(example) {
+      chatComposer.classList.remove("is-attaching", "has-attachment", "is-sending", "is-sent");
+      attachmentTitle.textContent = example.attachmentTitle || "1 photo attached";
+      attachmentSubtitle.textContent = example.attachmentSubtitle || "Proof image";
+      composerPlaceholder.textContent = example.composerPlaceholder || "Message";
+    }
+
+    function currentGuideSteps() {
+      return examples[state.current].guideSteps || guideSteps;
+    }
+
+    function setGuide(stepIndex) {
+      const guide = currentGuideSteps()[stepIndex];
+      setText("guide-step", guide.step);
+      setText("guide-title", guide.title);
+      setText("guide-copy", guide.copy);
+      setGuideAction(guide.action);
+      setGuideBack(stepIndex > 0);
+      focusTargets(guide.targets, stepIndex < currentGuideSteps().length - 1);
+    }
+
+    function renderScenario(key) {
+      clearTimers();
+      state.current = key;
+      state.phase = "idle";
+      state.guideStep = -1;
+      const example = examples[key];
+      workbench.classList.toggle("is-two-column", example.layout === "two-column");
+
+      setText("chat-title", example.chatTitle);
+      renderComposer(example);
+      setText("chat-kicker", example.chatKicker || "Incoming operational signal");
+      setText("process-kicker", example.processKicker);
+      setText("record-title", example.recordTitle);
+      setText("record-kicker", example.recordKicker || "Ledger-backed operational memory");
+      setStatus("chat-status", "");
+      setStatus("process-status", "");
+      setStatus("record-status", "");
+      setText("process-count", example.waitingText || "Waiting for incoming signal");
+      $("#process-bar").style.width = "0%";
+
+      sendButton.disabled = false;
+      clearHighlights();
+      setGuideReady();
+      setDemoOverlay();
+
+      chatWindow.innerHTML = "";
+      ledgerEl.innerHTML = "<div class=\"empty-ledger\">No new events in this run.</div>";
+      renderProcessEmpty();
+      renderMetrics(example.metricsBefore, []);
+      renderTable(example.tableHead, example.rowsBefore, []);
+      if (example.useContactList) updateContactListForStep(0);
+      else {
+        contactList.classList.add("is-hidden");
+        chatWindow.style.display = "";
+      }
+    }
+
+    function renderProcessEmpty() {
+      const example = examples[state.current];
+      stepsEl.innerHTML = `
+        <div class="process-empty">
+          <strong>${example.emptySignalHeading || "No job detected yet."}</strong>
+          <span>${example.emptySignalText || "Agimon is watching WhatsApp for a receipt, bill, usage note, or other operational signal."}</span>
+        </div>
+      `;
+    }
+
+    function renderSteps(example, activeIndex, detected = true) {
+      const detectedCard = detected ? `
+        <div class="job-detected">
+          <strong>Job detected.</strong>
+          <span>${example.detectedText || `${example.recordTitle} job opened from the incoming attachment.`}</span>
+        </div>
+      ` : "";
+      stepsEl.innerHTML = detectedCard + example.steps.map((step, index) => {
+
+        const status = index < activeIndex ? "done" : "";
+        const label = index < activeIndex ? "ok" : String(index + 1).padStart(2, "0");
+        return `
+          <div class="step ${status}" data-step-index="${index}">
+            <span class="step-index">${label}</span>
+            <div>
+              <p class="step-title">${step[0]}</p>
+              <p class="step-detail">${step[1]}</p>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderMetrics(items, changedIndexes) {
+      metricsEl.innerHTML = items.map((item, index) => `
+        <div class="metric ${changedIndexes.includes(index) ? "changed" : ""}">
+          <div class="metric-label">${item[0]}</div>
+          <div class="metric-value">${item[1]}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderTable(head, rows, changedRows) {
+      recordHead.innerHTML = `<tr>${head.map(label => `<th>${label}</th>`).join("")}</tr>`;
+      recordRows.innerHTML = rows.map((row, index) => `
+        <tr class="${changedRows.includes(index) ? "row-flash" : ""}" data-row-index="${index}">
+          ${row.map(value => `<td>${value}</td>`).join("")}
+        </tr>
+      `).join("");
+    }
+
+    function setContextMatchHighlight(stepIndex) {
+      const shouldHighlightAmount = state.current === "payments" && stepIndex === 3;
+      const shouldHighlightAnswer = state.current === "payments" && stepIndex === 8;
+      document.querySelectorAll(".match-token[data-match-key=\"payment-amount\"]").forEach(token => {
+        token.classList.toggle("is-match-highlighted", shouldHighlightAmount);
+      });
+      document.querySelectorAll(".match-token[data-match-key=\"answer-amount\"]").forEach(token => {
+        token.classList.toggle("is-match-highlighted", shouldHighlightAnswer);
+      });
+    }
+
+    function addMessage(message, index) {
+      if (document.querySelector(`.message[data-message-index="${index}"]`)) return;
+      const node = document.createElement("div");
+      node.className = `message ${message.side}`;
+      node.dataset.messageIndex = String(index);
+      node.style.animationDelay = `${Math.min(index * 0.03, 0.18)}s`;
+      const label = message.label || (message.side === "agent" ? "agimon" : "neighbor");
+      node.innerHTML = `
+        <div>${message.html}</div>
+        <div class="message-meta"><span>${label}</span><span>${message.time}</span></div>
+      `;
+      chatWindow.appendChild(node);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function messageCountForStep(stepIndex) {
+      const example = examples[state.current];
+      if (Array.isArray(example.messageCountsByStep)) {
+        const lastMessageCount = example.messageCountsByStep[example.messageCountsByStep.length - 1] || 0;
+        return example.messageCountsByStep[stepIndex] ?? lastMessageCount;
+      }
+      if (stepIndex >= 8) return 4;
+      if (stepIndex >= 7) return 3;
+      if (stepIndex >= 6) return 2;
+      if (stepIndex >= 1) return 1;
+      return 0;
+    }
+
+    function renderMessagesForStep(example, stepIndex) {
+      chatWindow.innerHTML = "";
+      const count = messageCountForStep(stepIndex);
+      example.incoming.slice(0, count).forEach((message, index) => addMessage(message, index));
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function renderComposerForStep(stepIndex) {
+      const example = examples[state.current];
+      chatComposer.classList.remove("is-attaching", "has-attachment", "is-sending", "is-sent");
+      if (example.composerMode === "timer") {
+        if (stepIndex > 0) chatComposer.classList.add("is-sent");
+        return;
+      }
+      chatComposer.classList.add(stepIndex === 0 ? "has-attachment" : "is-sent");
+    }
+
+    function changedMetricIndexes(example) {
+      return example.metricsBefore
+        .map((item, index) => item[1] !== example.metricsAfter[index][1] ? index : -1)
+        .filter(index => index >= 0);
+    }
+
+    function updateProgress(completed, total) {
+      const width = Math.round((completed / total) * 100);
+      $("#process-bar").style.width = `${width}%`;
+      setText("process-count", `${completed} / ${total} steps complete`);
+    }
+
+    function renderLedger(example, visibleCount = example.ledger.length) {
+      ledgerEl.innerHTML = example.ledger.slice(0, visibleCount).map((event, index) => `
+        <div class="ledger-row" style="animation-delay: ${index * 0.12}s">
+          <span class="ledger-time">${event[0]}</span>
+          <span>${event[2]}</span>
+          <span class="ledger-type">${event[1]}</span>
+        </div>
+      `).join("");
+    }
+
+    function resetRunState(example) {
+      chatWindow.innerHTML = "";
+      chatComposer.classList.remove("is-attaching", "has-attachment", "is-sending", "is-sent");
+      ledgerEl.innerHTML = "<div class=\"empty-ledger\">Waiting for Agimon to write events.</div>";
+      renderMetrics(example.metricsBefore, []);
+      renderTable(example.tableHead, example.rowsBefore, []);
+      renderProcessEmpty();
+      setStatus("chat-status", "");
+      setStatus("process-status", "");
+      setStatus("record-status", "");
+      $("#process-bar").style.width = "0%";
+      setText("process-count", example.waitingText || "Waiting for incoming signal");
+    }
+
+    function startGuidedJob() {
+      const example = examples[state.current];
+      clearTimers();
+      state.phase = "attaching";
+      state.guideStep = -1;
+      hideDemoOverlay();
+      sendButton.disabled = true;
+      guideActionButton.disabled = true;
+      guideBackButton.disabled = true;
+      resetRunState(example);
+      if (example.composerMode === "timer") {
+        state.phase = "active";
+        sendButton.disabled = true;
+        guideActionButton.disabled = false;
+        guideBackButton.disabled = false;
+        applyGuideStep(0);
+        return;
+      }
+      setStatus("chat-status", "Composing");
+      setStatus("process-status", "");
+      chatComposer.classList.add("is-attaching");
+      const timer = window.setTimeout(() => {
+        chatComposer.classList.remove("is-attaching");
+        chatComposer.classList.add("has-attachment");
+        state.phase = "active";
+        sendButton.disabled = false;
+        guideActionButton.disabled = false;
+        guideBackButton.disabled = false;
+        applyGuideStep(0);
+      }, 620);
+      state.timers.push(timer);
+    }
+
+    function sendAttachedSignal() {
+      state.phase = "sending";
+      sendButton.disabled = true;
+      guideActionButton.disabled = true;
+      guideBackButton.disabled = true;
+      clearHighlights();
+      guideCard.classList.add("is-hidden");
+      setGuideBack(false);
+      setStatus("chat-status", "Sending");
+      chatComposer.classList.remove("has-attachment");
+      chatComposer.classList.add("is-sending");
+      const timer = window.setTimeout(() => {
+        chatComposer.classList.remove("is-sending");
+        chatComposer.classList.add("is-sent");
+        state.phase = "active";
+        sendButton.disabled = true;
+        guideActionButton.disabled = false;
+        guideBackButton.disabled = false;
+        applyGuideStep(1);
+      }, 620);
+      state.timers.push(timer);
+    }
+
+    function applyGuideStep(stepIndex) {
+      const example = examples[state.current];
+      const completedByStep = example.completedByStep || [0, 0, 1, 2, 3, 3, 4, 4, 5];
+      const activeByStep = example.activeByStep || [0, 0, 1, 2, 3, 3, 4, 4, 5];
+      const isFinalStep = stepIndex === currentGuideSteps().length - 1;
+      state.guideStep = stepIndex;
+      state.phase = isFinalStep ? "complete" : "active";
+      sendButton.disabled = example.composerMode === "timer" || stepIndex !== 0;
+      renderComposerForStep(stepIndex);
+      renderMessagesForStep(example, stepIndex);
+
+      if (stepIndex === 0 && !example.showStepsAtFirstStep) {
+        renderProcessEmpty();
+        $("#process-bar").style.width = "0%";
+        setText("process-count", example.waitingText || "Waiting for incoming signal");
+      } else {
+        renderSteps(example, activeByStep[stepIndex], example.showDetectedCard !== false);
+        updateProgress(completedByStep[stepIndex], example.steps.length);
+      }
+
+      if (stepIndex >= 4) {
+        const isRecordChangeStep = stepIndex === 4;
+        renderMetrics(example.metricsAfter, isRecordChangeStep ? changedMetricIndexes(example) : []);
+        renderTable(example.tableHead, example.rowsAfter, isRecordChangeStep ? example.changedRows : []);
+        setStatus("record-status", example.recordStatusAfter || "Updated");
+      } else {
+        renderMetrics(example.metricsBefore, []);
+        renderTable(example.tableHead, example.rowsBefore, []);
+        setStatus("record-status", "");
+      }
+
+      if (stepIndex >= 5) {
+        const visibleLedgerCount = stepIndex >= 8
+          ? example.ledger.length
+          : (example.ledgerAtRecordStep || example.ledger.length);
+        renderLedger(example, visibleLedgerCount);
+      } else {
+        ledgerEl.innerHTML = "<div class=\"empty-ledger\">Waiting for Agimon to write events.</div>";
+      }
+
+      setContextMatchHighlight(stepIndex);
+
+      const processStatuses = example.processStatuses || ["", "Detected", "Reading", "Matching", "Writing", "Ledger", "Notified", "Current", "Done"];
+      setStatus("process-status", processStatuses[stepIndex]);
+      if (Array.isArray(example.chatStatuses)) {
+        setStatus("chat-status", example.chatStatuses[stepIndex] || "");
+      } else if (stepIndex === 0) setStatus("chat-status", "Composing");
+      else if (stepIndex >= 8) setStatus("chat-status", "Replied");
+      else if (stepIndex >= 7) setStatus("chat-status", "Question in");
+      else if (stepIndex >= 6) setStatus("chat-status", "Replied");
+      else setStatus("chat-status", "Signal in");
+
+      if (isFinalStep) {
+        renderSteps(example, example.steps.length, example.showDetectedCard !== false);
+        updateProgress(example.steps.length, example.steps.length);
+        setStatus("process-status", "Done");
+      }
+
+      if (example.useContactList) updateContactListForStep(stepIndex);
+
+      setGuide(stepIndex);
+    }
+
+    function advanceJob() {
+      if (state.phase === "idle" || state.phase === "finished") {
+        startGuidedJob();
+        return;
+      }
+      if (state.phase === "complete") {
+        finishJob();
+        return;
+      }
+      const nextStep = Math.min(state.guideStep + 1, currentGuideSteps().length - 1);
+      if (state.guideStep === 0 && nextStep === 1 && examples[state.current].composerMode !== "timer") {
+        sendAttachedSignal();
+        return;
+      }
+      applyGuideStep(nextStep);
+    }
+
+    function finishJob() {
+      state.phase = "finished";
+      clearHighlights();
+      guideCard.classList.add("is-hidden");
+      setGuideBack(false);
+      if (runButton) runButton.disabled = true;
+      sendButton.disabled = true;
+      guideActionButton.disabled = false;
+      guideBackButton.disabled = true;
+      setDemoOverlay();
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: "agimon-demo-finished" }, "*");
+      }
+    }
+
+    function retreatJob() {
+      if (!["active", "complete"].includes(state.phase)) return;
+      if (state.guideStep <= 0) return;
+      applyGuideStep(state.guideStep - 1);
+    }
+
+    function handlePrimaryAction() {
+      advanceJob();
+    }
+
+    document.addEventListener("click", event => {
+      if (state.phase !== "active") return;
+      if (!event.target.closest("[data-click-advance=\"true\"]")) return;
+      if (event.target.closest("button")) return;
+      advanceJob();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (state.phase !== "active") return;
+      if (!["Enter", " "].includes(event.key)) return;
+      if (!event.target.closest("[data-click-advance=\"true\"]")) return;
+      event.preventDefault();
+      advanceJob();
+    });
+
+    window.addEventListener("resize", scheduleGuidePosition);
+    document.addEventListener("scroll", scheduleGuidePosition, true);
+
+    overlayPlayButton.addEventListener("click", startGuidedJob);
+    sendButton.addEventListener("click", handlePrimaryAction);
+    guideActionButton.addEventListener("click", handlePrimaryAction);
+    guideBackButton.addEventListener("click", retreatJob);
+
+    renderScenario(state.current);
+  </script>
+</body>
+</html>
