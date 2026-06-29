@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect WhatsApp | Agimon</title>
+  <meta name="description" content="Connect your WhatsApp Business app to Agimon while keeping your number on your phone.">
+  <script>
+    document.documentElement.setAttribute(
+      "data-theme",
+      window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : ""
+    );
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <link href="./backup_files/css2" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f9f6f2;
+      --page-glow: rgba(245, 194, 68, 0.12);
+      --panel: rgba(255, 253, 248, 0.94);
+      --panel-solid: #fffdf7;
+      --panel-soft: #f8f1e5;
+      --text: #171513;
+      --muted: #7f766b;
+      --line: rgba(23, 21, 19, 0.08);
+      --accent: #e8503a;
+      --accent-deep: #d4442f;
+      --accent-soft: rgba(232, 80, 58, 0.12);
+      --secondary: #2b6b5e;
+      --shadow: 0 40px 100px rgba(68, 53, 33, 0.16);
+      --radius-lg: 36px;
+      --radius-pill: 999px;
+      --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1714;
+      --page-glow: rgba(245, 194, 68, 0.08);
+      --panel: rgba(31, 26, 23, 0.94);
+      --panel-solid: #241e1a;
+      --panel-soft: #2d251f;
+      --text: #f5efe7;
+      --muted: #b0a28f;
+      --line: rgba(245, 239, 231, 0.09);
+      --accent: #ef6a56;
+      --accent-deep: #f07d6b;
+      --accent-soft: rgba(239, 106, 86, 0.16);
+      --secondary: #3d9b89;
+      --shadow: 0 40px 100px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top center, var(--page-glow), transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, #f4f0ea 100%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    [data-theme="dark"] body {
+      background:
+        radial-gradient(circle at top center, var(--page-glow), transparent 34%),
+        linear-gradient(180deg, var(--bg) 0%, #14110f 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 28px;
+      left: 32px;
+      z-index: 2;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .card {
+      width: min(720px, 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 56px);
+      display: grid;
+      gap: 28px;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .builder-agimon-wrap {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .builder-agimon {
+      --creature-size: 82px;
+      --creature-eye-gap: 10px;
+      --creature-eyes-top: -4px;
+      --creature-eye-width: 13px;
+      --creature-eye-height: 16px;
+      --creature-pupil-size: 7px;
+      --creature-pupil-bottom: 3px;
+      --creature-mouth-width: 8px;
+      --creature-mouth-height: 4px;
+      --creature-mouth-bottom: 24px;
+      width: var(--creature-size);
+      height: var(--creature-size);
+      border-radius: 42% 58% 55% 45% / 50% 42% 58% 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: linear-gradient(145deg, #25d366, #78e08f);
+      box-shadow:
+        0 18px 36px rgba(37, 211, 102, 0.18),
+        0 0 0 2px rgba(255,255,255,0.42);
+      animation: creatureFloat 4s ease-in-out infinite, creatureMorph 8s ease-in-out infinite;
+    }
+
+    .builder-agimon-shadow {
+      width: 52px;
+      height: 7px;
+      background: radial-gradient(ellipse, rgba(0,0,0,0.08), transparent);
+      border-radius: 50%;
+      animation: shadowPulse 4s ease-in-out infinite;
+    }
+
+    .creature-eyes {
+      display: flex;
+      gap: var(--creature-eye-gap, 20px);
+      position: relative;
+      top: var(--creature-eyes-top, -8px);
+    }
+
+    .creature-eye {
+      width: var(--creature-eye-width, 28px);
+      height: var(--creature-eye-height, 32px);
+      border-radius: 50%;
+      background: #fff;
+      position: relative;
+      animation: blink 4.2s ease-in-out infinite;
+    }
+
+    .creature-eye::after {
+      content: "";
+      position: absolute;
+      width: var(--creature-pupil-size, 14px);
+      height: var(--creature-pupil-size, 14px);
+      border-radius: 50%;
+      background: #151311;
+      left: 50%;
+      bottom: var(--creature-pupil-bottom, 6px);
+      transform: translateX(-50%);
+      animation: lookAround 6s ease-in-out infinite;
+    }
+
+    .creature-mouth {
+      position: absolute;
+      bottom: var(--creature-mouth-bottom, 52px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--creature-mouth-width, 16px);
+      height: var(--creature-mouth-height, 8px);
+      border-radius: 0 0 16px 16px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 8vw, 72px);
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      max-width: 620px;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .lede {
+      color: var(--muted);
+      font-size: clamp(18px, 2.4vw, 23px);
+      line-height: 1.55;
+      max-width: 620px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .steps li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .step-number {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .connect-button {
+      width: 100%;
+      min-height: 58px;
+      border: none;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      color: #fff7f2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 18px 38px rgba(241, 92, 63, 0.30);
+    }
+
+    .client-field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .client-label {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .client-input {
+      width: 100%;
+      min-height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-solid);
+      color: var(--text);
+      padding: 0 16px;
+      font: inherit;
+      font-size: 16px;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .client-input:focus {
+      border-color: rgba(232, 80, 58, 0.46);
+    }
+
+    .microcopy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .status {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @keyframes creatureFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes creatureMorph {
+      0%, 100% { border-radius: 42% 58% 55% 45% / 50% 42% 58% 50%; }
+      25% { border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
+      50% { border-radius: 45% 55% 50% 50% / 48% 52% 48% 52%; }
+      75% { border-radius: 55% 45% 52% 48% / 50% 50% 55% 45%; }
+    }
+
+    @keyframes shadowPulse {
+      0%, 100% { transform: scaleX(1); opacity: 1; }
+      50% { transform: scaleX(0.8); opacity: 0.6; }
+    }
+
+    @keyframes blink {
+      0%, 44%, 48%, 100% { transform: scaleY(1); }
+      46% { transform: scaleY(0.12); }
+    }
+
+    @keyframes lookAround {
+      0%, 100% { transform: translateX(-50%) translateX(0); }
+      25% { transform: translateX(-50%) translateX(3px); }
+      75% { transform: translateX(-50%) translateX(-3px); }
+    }
+
+    @media (max-width: 520px) {
+      body {
+        align-items: start;
+        padding: 76px 16px 24px;
+      }
+
+      .back-link {
+        top: 24px;
+        left: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="index.html">← Back</a>
+  <main class="card">
+    <div class="brand-row">
+      <div class="builder-agimon-wrap" aria-hidden="true">
+        <div class="builder-agimon">
+          <div class="creature-eyes">
+            <div class="creature-eye"></div>
+            <div class="creature-eye"></div>
+          </div>
+          <div class="creature-mouth"></div>
+        </div>
+        <div class="builder-agimon-shadow"></div>
+      </div>
+      <div class="kicker">Agimon WhatsApp setup</div>
+    </div>
+    <h1>Connect your <span class="accent">WhatsApp Business app</span></h1>
+    <p class="lede">Keep using your number on your phone. Agimon adds automation in the background.</p>
+    <ol class="steps">
+      <li><span class="step-number">1</span><span>Sign in with Meta in the official popup.</span></li>
+      <li><span class="step-number">2</span><span>Select your business and current WhatsApp Business app number.</span></li>
+      <li><span class="step-number">3</span><span>Approve access and return here when the connection is ready.</span></li>
+    </ol>
+    <label class="client-field" for="business-name">
+      <span class="client-label">Business name</span>
+      <input class="client-input" id="business-name" name="businessName" type="text" autocomplete="organization" placeholder="Agimon" required>
+    </label>
+    <button class="connect-button" id="connect-whatsapp" type="button">Connect WhatsApp</button>
+    <p class="microcopy">Your WhatsApp Business app keeps working. Agimon can help read and respond to messages in the background.</p>
+    <p class="status" id="connect-status"></p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const status = document.getElementById("connect-status");
+    const businessNameInput = document.getElementById("business-name");
+    if (params.get("connected") === "whatsapp") {
+      status.textContent = "WhatsApp connected. You can close this page.";
+    }
+
+    document.getElementById("connect-whatsapp").addEventListener("click", async function (event) {
+      const button = event.currentTarget;
+      const businessName = businessNameInput.value.trim();
+      if (!businessName) {
+        status.textContent = "Add your business name first.";
+        businessNameInput.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Opening WhatsApp...";
+      const onboardingWindow = window.open("about:blank", "_blank");
+      if (onboardingWindow) {
+        onboardingWindow.document.write("<p style=\"font-family: system-ui; padding: 24px;\">Opening official Meta onboarding...</p>");
+      }
+
+      status.textContent = "Creating your WhatsApp setup...";
+
+      try {
+        const response = await fetch("https://zernio-whatsapp-bot.vercel.app/api/zernio-start-client-onboarding", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            businessName,
+            redirect_url: `${window.location.origin}${window.location.pathname}`
+          })
+        });
+        const data = await response.json();
+
+        if (!response.ok || !data.url) {
+          throw new Error(data.error || "Could not create onboarding link");
+        }
+
+        status.textContent = "Finish Meta onboarding in the new tab.";
+        if (onboardingWindow) {
+          onboardingWindow.location.href = data.url;
+        } else {
+          window.location.href = data.url;
+        }
+      } catch (error) {
+        if (onboardingWindow) onboardingWindow.close();
+        status.textContent = "Could not open onboarding. Please try again.";
+        button.disabled = false;
+        button.textContent = "Connect WhatsApp";
+      }
+    });
+  </script>
+</body>
+</html>
