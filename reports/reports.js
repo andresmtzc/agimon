@@ -9,6 +9,12 @@ const tableEl = document.getElementById("report-table");
 const emptyEl = document.getElementById("empty-state");
 const taskFiltersEl = document.getElementById("task-filters");
 const taskFilterCountEl = document.getElementById("task-filter-count");
+const taskCommandBarEl = document.getElementById("task-command-bar");
+const taskCommandCountEl = document.getElementById("task-command-count");
+const taskCommandPreviewEl = document.getElementById("task-command-preview");
+const taskCommandCopyEl = document.getElementById("task-command-copy");
+const taskCommandWhatsappEl = document.getElementById("task-command-whatsapp");
+const taskCommandClearEl = document.getElementById("task-command-clear");
 
 function tokenFromLocation() {
   const hashMatch = window.location.hash.match(/\/r\/([^/?#]+)/);
@@ -50,6 +56,25 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function formatFolioList(folios) {
+  const labels = [...folios].map(folio => String(folio));
+  if (labels.length <= 1) return labels[0] || "";
+  return `${labels.slice(0, -1).join(", ")} y ${labels.at(-1)}`;
+}
+
+function commandTextForFolios(folios) {
+  return `Pendientes ${formatFolioList(folios)} terminados`;
+}
+
+function reportCommandTarget(report) {
+  const action = report?.actions?.project_task_command || {};
+  const phone = String(action.target_phone || report?.project_task_command_target_phone || "").replace(/\D+/g, "");
+  return {
+    phone,
+    label: String(action.target_label || "Agimon observer").trim() || "Agimon observer",
+  };
 }
 
 function setEmpty(message) {
@@ -208,7 +233,31 @@ function renderTable(report) {
   let sortKey = null;
   let sortDirection = null;
   const activeDateFilters = new Set();
+  const selectedFolios = new Set();
+  const commandTarget = reportCommandTarget(report);
   const today = localDateKey(report.generated_at, report.timezone);
+
+  const updateCommandBar = () => {
+    if (!taskCommandBarEl) return;
+    const folios = [...selectedFolios].sort((a, b) => a - b);
+    const commandText = commandTextForFolios(folios);
+    taskCommandBarEl.hidden = report.report_type !== "alex_project_task_table" || !folios.length;
+    if (taskCommandCountEl) {
+      taskCommandCountEl.textContent = `${folios.length} seleccionado${folios.length === 1 ? "" : "s"}`;
+    }
+    if (taskCommandPreviewEl) {
+      taskCommandPreviewEl.textContent = folios.length ? commandText : "";
+    }
+    if (taskCommandWhatsappEl) {
+      if (commandTarget.phone && folios.length) {
+        taskCommandWhatsappEl.href = `https://wa.me/${encodeURIComponent(commandTarget.phone)}?text=${encodeURIComponent(commandText)}`;
+        taskCommandWhatsappEl.textContent = `Abrir WhatsApp (${commandTarget.label})`;
+        taskCommandWhatsappEl.hidden = false;
+      } else {
+        taskCommandWhatsappEl.hidden = true;
+      }
+    }
+  };
 
   const matchesDateFilters = row => {
     if (report.report_type !== "alex_project_task_table" || !activeDateFilters.size) return true;
@@ -261,11 +310,13 @@ function renderTable(report) {
     `;
     const bodyRows = sortedRows.map(({ row }) => {
       const evidenceCount = Number(row?.meta?.new_evidence_count || 0);
+      const folio = Number(row?.values?.folio || 0);
       const rowClass = [
         row?.meta?.has_new_evidence ? "has-new-evidence" : "",
+        selectedFolios.has(folio) ? "is-selected" : "",
       ].filter(Boolean).join(" ");
       return `
-        <tr class="${rowClass}">
+        <tr class="${rowClass}" ${report.report_type === "alex_project_task_table" && folio ? `data-folio="${escapeHtml(folio)}"` : ""}>
           ${columns.map(column => {
             const rawValue = rawCellValue(row, column);
             const formattedValue = formatCell(rawValue, column);
@@ -308,10 +359,44 @@ function renderTable(report) {
         button.textContent = expanded ? `View ${count} more` : "Show less";
       });
     });
+    if (report.report_type === "alex_project_task_table") {
+      tableEl.querySelectorAll("tbody tr[data-folio]").forEach(rowEl => {
+        rowEl.addEventListener("click", event => {
+          if (event.target.closest("a, button, input, textarea, select")) return;
+          const folio = Number(rowEl.dataset.folio || 0);
+          if (!folio) return;
+          if (selectedFolios.has(folio)) selectedFolios.delete(folio);
+          else selectedFolios.add(folio);
+          rowEl.classList.toggle("is-selected", selectedFolios.has(folio));
+          updateCommandBar();
+        });
+      });
+    }
     if (taskFilterCountEl && report.report_type === "alex_project_task_table") {
       taskFilterCountEl.textContent = `${sortedRows.length} task${sortedRows.length === 1 ? "" : "s"}`;
     }
+    updateCommandBar();
   };
+  if (taskCommandCopyEl) {
+    taskCommandCopyEl.addEventListener("click", async () => {
+      const folios = [...selectedFolios].sort((a, b) => a - b);
+      if (!folios.length) return;
+      const text = commandTextForFolios(folios);
+      try {
+        await navigator.clipboard.writeText(text);
+        taskCommandCopyEl.textContent = "Copiado";
+        setTimeout(() => { taskCommandCopyEl.textContent = "Copiar comando"; }, 1200);
+      } catch {
+        window.prompt("Copia el comando:", text);
+      }
+    });
+  }
+  if (taskCommandClearEl) {
+    taskCommandClearEl.addEventListener("click", () => {
+      selectedFolios.clear();
+      render();
+    });
+  }
   if (taskFiltersEl) {
     taskFiltersEl.hidden = report.report_type !== "alex_project_task_table";
     taskFiltersEl.querySelectorAll(".task-filter").forEach(button => {

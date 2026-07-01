@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Agimon Reports</title>
-  <link rel="stylesheet" href="./reports.css?v=20260701-1">
+  <link rel="stylesheet" href="./reports.css?v=20260701-2">
 </head>
 <body>
   <main class="shell">
@@ -32,6 +32,18 @@
       <span class="task-filter-count" id="task-filter-count"></span>
     </section>
 
+    <section class="task-command-bar" id="task-command-bar" hidden>
+      <div>
+        <strong id="task-command-count">0 seleccionados</strong>
+        <span id="task-command-preview"></span>
+      </div>
+      <div class="task-command-actions">
+        <button type="button" id="task-command-copy">Copiar comando</button>
+        <a id="task-command-whatsapp" href="#" target="_blank" rel="noopener noreferrer" hidden>Abrir WhatsApp</a>
+        <button type="button" id="task-command-clear">Limpiar</button>
+      </div>
+    </section>
+
     <section class="table-wrap" id="table-wrap" hidden>
       <table id="report-table"></table>
     </section>
@@ -41,6 +53,6 @@
       <p>Abre el enlace completo de Agimon o pide generar un reporte nuevo.</p>
     </section>
   </main>
-  <script src="./reports.js?v=20260701-1"></script>
+  <script src="./reports.js?v=20260701-2"></script>
 </body>
 </html>
