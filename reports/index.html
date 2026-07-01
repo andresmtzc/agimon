@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Agimon Reports</title>
-  <link rel="stylesheet" href="./reports.css?v=20260622-1">
+  <link rel="stylesheet" href="./reports.css?v=20260701-1">
 </head>
 <body>
   <main class="shell">
@@ -20,12 +20,14 @@
     <section class="summary" id="summary" hidden></section>
 
     <section class="task-filters" id="task-filters" hidden>
-      <div class="task-filter-buttons" role="group" aria-label="Filter tasks by commitment date">
-        <button type="button" class="task-filter is-active" data-date-filter="all">All</button>
-        <button type="button" class="task-filter" data-date-filter="7">Next 7 days</button>
-        <button type="button" class="task-filter" data-date-filter="15">Next 15 days</button>
-        <button type="button" class="task-filter" data-date-filter="30">Next 30 days</button>
-        <button type="button" class="task-filter" data-date-filter="overdue">Overdue</button>
+      <div class="task-filter-buttons" role="group" aria-label="Filtrar pendientes por fecha compromiso">
+        <button type="button" class="task-filter is-active" data-date-filter="all">Todos</button>
+        <button type="button" class="task-filter" data-date-filter="today">Hoy</button>
+        <button type="button" class="task-filter" data-date-filter="7">Próx. 7 días</button>
+        <button type="button" class="task-filter" data-date-filter="15">Próx. 15 días</button>
+        <button type="button" class="task-filter" data-date-filter="30">Próx. 30 días</button>
+        <button type="button" class="task-filter" data-date-filter="overdue">Vencidos</button>
+        <button type="button" class="task-filter" data-date-filter="no_date">Sin fecha</button>
       </div>
       <span class="task-filter-count" id="task-filter-count"></span>
     </section>
@@ -39,6 +41,6 @@
       <p>Abre el enlace completo de Agimon o pide generar un reporte nuevo.</p>
     </section>
   </main>
-  <script src="./reports.js?v=20260622-1"></script>
+  <script src="./reports.js?v=20260701-1"></script>
 </body>
 </html>

@@ -84,6 +84,7 @@ function renderSummary(report) {
       ["En tabla", summary.returned_count],
       ["Abiertos", summary.open_count],
       ["Vencidos", summary.overdue_count],
+      ["Vencen hoy", summary.due_today_count],
       ["Sin fecha", summary.without_date_count],
     ]
     : [
@@ -206,17 +207,27 @@ function renderTable(report) {
   ` : "";
   let sortKey = null;
   let sortDirection = null;
-  let dateFilter = "all";
+  const activeDateFilters = new Set();
   const today = localDateKey(report.generated_at, report.timezone);
 
+  const matchesDateFilters = row => {
+    if (report.report_type !== "alex_project_task_table" || !activeDateFilters.size) return true;
+    const commitmentDate = String(row?.values?.commitment_date || "").slice(0, 10);
+    const hasDate = /^\d{4}-\d{2}-\d{2}$/.test(commitmentDate);
+    for (const dateFilter of activeDateFilters) {
+      if (dateFilter === "no_date" && !hasDate) return true;
+      if (!hasDate) continue;
+      if (dateFilter === "today" && commitmentDate === today) return true;
+      if (dateFilter === "overdue" && commitmentDate < today) return true;
+      if (/^\d+$/.test(dateFilter) && commitmentDate >= today && commitmentDate <= addDays(today, Number(dateFilter))) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const render = () => {
-    const filteredRows = originalRows.filter(({ row }) => {
-      if (report.report_type !== "alex_project_task_table" || dateFilter === "all") return true;
-      const commitmentDate = String(row?.values?.commitment_date || "").slice(0, 10);
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(commitmentDate)) return false;
-      if (dateFilter === "overdue") return commitmentDate < today;
-      return commitmentDate >= today && commitmentDate <= addDays(today, Number(dateFilter));
-    });
+    const filteredRows = originalRows.filter(({ row }) => matchesDateFilters(row));
     const sortedRows = [...filteredRows];
     const sortColumn = columns.find(column => column.key === sortKey);
     if (sortColumn && sortDirection) {
@@ -305,9 +316,19 @@ function renderTable(report) {
     taskFiltersEl.hidden = report.report_type !== "alex_project_task_table";
     taskFiltersEl.querySelectorAll(".task-filter").forEach(button => {
       button.addEventListener("click", () => {
-        dateFilter = button.dataset.dateFilter || "all";
+        const nextFilter = button.dataset.dateFilter || "all";
+        if (nextFilter === "all") {
+          activeDateFilters.clear();
+        } else if (activeDateFilters.has(nextFilter)) {
+          activeDateFilters.delete(nextFilter);
+        } else {
+          activeDateFilters.add(nextFilter);
+        }
         taskFiltersEl.querySelectorAll(".task-filter").forEach(item => {
-          item.classList.toggle("is-active", item === button);
+          const itemFilter = item.dataset.dateFilter || "all";
+          item.classList.toggle("is-active", itemFilter === "all"
+            ? activeDateFilters.size === 0
+            : activeDateFilters.has(itemFilter));
         });
         render();
       });
