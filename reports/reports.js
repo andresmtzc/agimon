@@ -12,9 +12,7 @@ const taskFilterCountEl = document.getElementById("task-filter-count");
 const taskCommandBarEl = document.getElementById("task-command-bar");
 const taskCommandCountEl = document.getElementById("task-command-count");
 const taskCommandPreviewEl = document.getElementById("task-command-preview");
-const taskCommandCopyEl = document.getElementById("task-command-copy");
-const taskCommandWhatsappEl = document.getElementById("task-command-whatsapp");
-const taskCommandClearEl = document.getElementById("task-command-clear");
+const taskCommandActionEl = document.getElementById("task-command-action");
 
 function tokenFromLocation() {
   const hashMatch = window.location.hash.match(/\/r\/([^/?#]+)/);
@@ -248,14 +246,11 @@ function renderTable(report) {
     if (taskCommandPreviewEl) {
       taskCommandPreviewEl.textContent = folios.length ? commandText : "";
     }
-    if (taskCommandWhatsappEl) {
-      if (commandTarget.phone && folios.length) {
-        taskCommandWhatsappEl.href = `https://wa.me/${encodeURIComponent(commandTarget.phone)}?text=${encodeURIComponent(commandText)}`;
-        taskCommandWhatsappEl.textContent = `Abrir WhatsApp (${commandTarget.label})`;
-        taskCommandWhatsappEl.hidden = false;
-      } else {
-        taskCommandWhatsappEl.hidden = true;
-      }
+    if (taskCommandActionEl) {
+      taskCommandActionEl.textContent = commandTarget.phone ? "Marcar terminados" : "Copiar comando";
+      taskCommandActionEl.title = commandTarget.phone
+        ? `Abrir WhatsApp con ${commandTarget.label}`
+        : "Este reporte no incluye destino de WhatsApp; se copiará el comando.";
     }
   };
 
@@ -377,24 +372,22 @@ function renderTable(report) {
     }
     updateCommandBar();
   };
-  if (taskCommandCopyEl) {
-    taskCommandCopyEl.addEventListener("click", async () => {
+  if (taskCommandActionEl) {
+    taskCommandActionEl.addEventListener("click", async () => {
       const folios = [...selectedFolios].sort((a, b) => a - b);
       if (!folios.length) return;
       const text = commandTextForFolios(folios);
+      if (commandTarget.phone) {
+        window.open(`https://wa.me/${encodeURIComponent(commandTarget.phone)}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+        return;
+      }
       try {
         await navigator.clipboard.writeText(text);
-        taskCommandCopyEl.textContent = "Copiado";
-        setTimeout(() => { taskCommandCopyEl.textContent = "Copiar comando"; }, 1200);
+        taskCommandActionEl.textContent = "Copiado";
+        setTimeout(() => { taskCommandActionEl.textContent = "Copiar comando"; }, 1200);
       } catch {
         window.prompt("Copia el comando:", text);
       }
-    });
-  }
-  if (taskCommandClearEl) {
-    taskCommandClearEl.addEventListener("click", () => {
-      selectedFolios.clear();
-      render();
     });
   }
   if (taskFiltersEl) {

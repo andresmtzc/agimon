@@ -153,28 +153,21 @@ h1 {
   gap: 8px;
 }
 
-.task-command-actions button,
-.task-command-actions a {
+.task-command-actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 34px;
   padding: 7px 11px;
-  border: 1px solid #315f4c;
+  border: 1px solid #10b86c;
   border-radius: 999px;
-  background: #ffffff;
-  color: #174a34;
+  background: #10b86c;
+  color: #ffffff;
   font: inherit;
   font-size: 12px;
   font-weight: 800;
   text-decoration: none;
   cursor: pointer;
-}
-
-.task-command-actions a {
-  background: #10b86c;
-  border-color: #10b86c;
-  color: #ffffff;
 }
 
 .metric {
