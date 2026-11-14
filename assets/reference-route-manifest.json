@@ -9,7 +9,7 @@
     "hasClientMiddleware": false,
     "hasDefaultExport": true,
     "hasErrorBoundary": true,
-    "module": "/assets/root-Q4MYNn8J.js",
+    "module": "/assets/root-Q4MYNn8J.js?v=agimon-jade-f76f3fa06a42",
     "imports": [
       "/assets/rolldown-runtime-5JLZCTB7.js",
       "/assets/zod-CgK9DKxG.js",
