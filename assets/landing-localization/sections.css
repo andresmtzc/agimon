@@ -1,0 +1,17 @@
+.agimon-team ._mainTitle_qubww_97, .agimon-next-steps ._title_1ivbs_143 { white-space: pre-line; }
+.agimon-team :is(h2,h3,p,a) { overflow-wrap: break-word; }
+.agimon-team ._buttonWrapper_qubww_152 .button { max-width: 100%; white-space: normal; text-align: center; }
+.agimon-team ._buttonWrapper_qubww_152 .button-inner { min-height: 5.2rem; height: auto; }
+.agimon-team:is(:lang(ar),:lang(ur)) :is(h2,h3,p,a,.agimon-team__eyebrow,.pill-tag),
+[data-sentry-component="ScrollAppearText"]:is(:lang(ar),:lang(ur)) .scroll-appear-text-inner { font-family: 'Noto Sans Arabic',sans-serif; letter-spacing: 0; line-height: 1.45; }
+.agimon-team:lang(hi) :is(h2,h3,p,a,.agimon-team__eyebrow,.pill-tag),
+[data-sentry-component="ScrollAppearText"]:lang(hi) .scroll-appear-text-inner { font-family: 'Noto Sans Devanagari',sans-serif; letter-spacing: 0; line-height: 1.4; }
+.scene:is(:lang(ar),:lang(ur)) :is(.bubble,.speaker) { font-family: 'Noto Sans Arabic',sans-serif; letter-spacing: 0; line-height: 1.5; }
+.scene:lang(hi) :is(.bubble,.speaker) { font-family: 'Noto Sans Devanagari',sans-serif; letter-spacing: 0; line-height: 1.4; }
+.scene[dir=rtl] { text-align: right; }
+.scene[dir=rtl] .question { border-radius: 19px 4px 19px 19px; }
+.scene[dir=rtl] .reply { border-radius: 19px 19px 19px 4px; }
+.scene[dir=rtl] .reply-text { padding-right: 0; padding-left: 8px; transform-origin: right center; }
+.scene[dir=rtl] .typing { left: auto; right: 15px; }
+.scene[dir=rtl] .sent { right: auto; left: 9px; }
+.scene[dir=rtl] .motion-control { right: auto; left: 0; }

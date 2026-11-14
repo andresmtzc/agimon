@@ -1,0 +1,188 @@
+/* Original Jitter Footer/Newsletter/FaqGroups rules. Original 1rem = 10px. */
+@font-face{font-family:"Agimon Footer Lausanne";src:url('./assets/lausanne-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:"Agimon Footer Lausanne";src:url('./assets/lausanne-800.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:"Agimon Footer Lausanne";src:url('./assets/lausanne-750.woff2') format('woff2');font-weight:750;font-display:swap}
+@font-face{font-family:Inter;src:url('./assets/inter-regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Inter;src:url('./assets/inter-semibold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Noto Sans Arabic';src:url('./assets/noto-sans-arabic.woff2') format('woff2');font-weight:400 800;font-display:swap}
+@font-face{font-family:'Noto Sans Devanagari';src:url('./assets/noto-sans-devanagari.woff2') format('woff2');font-weight:400 800;font-display:swap}
+:host{--footer-surface:#202421;--footer-jade:#2f9d86;display:block;background:var(--footer-surface);font:400 16px/1.5 Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+h2,h3,p,figure{margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer;margin:0;padding:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+._button_ruopi_1{-webkit-user-select:none;user-select:none;white-space:nowrap;appearance:none;letter-spacing:-0.36px;background:0 0;border:none;font:600 18px/1 "Agimon Footer Lausanne",sans-serif;text-decoration:none;position:relative}
+._inner_ruopi_21{will-change:transform;pointer-events:none;width:100%;transition:transform .3s var(--ease-overshoot-linear), color .3s cubic-bezier(.25, .46, .45, .94), border-color .3s cubic-bezier(.25, .46, .45, .94);flex-shrink:0;justify-content:center;align-items:center;display:inline-flex}
+._jade_ruopi_122{color:#19171c}
+._jade_ruopi_122 ._inner_ruopi_21{background-color:var(--footer-jade)}
+._jade_ruopi_122._outlined_ruopi_51{color:var(--footer-jade)}
+._jade_ruopi_122._outlined_ruopi_51 ._inner_ruopi_21{background-color:#0000;border:2px solid var(--footer-jade)}
+._small_ruopi_150 ._inner_ruopi_21{border-radius:50px;height:52px;padding:8px 50px}
+._container_1vxje_1.container{width:calc(100% - 40px);max-width:400px;margin-left:auto;margin-right:auto}
+@media screen and (width>=1025px){._container_1vxje_1.container{width:860px;max-width:none}}
+@media screen and (width>=1441px){._container_1vxje_1.container{width:1180px}}
+@media screen and (width>=1729px){._container_1vxje_1.container{width:1320px}}
+._form_1b020_1{flex-direction:column;gap:20px;display:flex}
+@media screen and (width>=1025px){._form_1b020_1{gap:40px;width:51.2%}}
+@media screen and (width>=1441px){._form_1b020_1{width:49.2%}}
+@media screen and (width>=1729px){._form_1b020_1{width:51.8%}}
+._title_1b020_23{color:#fff;letter-spacing:-1.2px;font:750 30px/100% "Agimon Footer Lausanne",sans-serif}
+._title_1b020_23 b{font-weight:inherit}
+@media screen and (width>=1025px){._title_1b020_23{letter-spacing:-1.6px;font:800 40px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1441px){._title_1b020_23{letter-spacing:-2px;font:800 50px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1729px){._title_1b020_23{letter-spacing:-2.24px;font:800 56px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px){._title_1b020_23{max-width:430px}}
+@media screen and (width>=1441px){._title_1b020_23{max-width:490px}}
+@media screen and (width>=1729px){._title_1b020_23{max-width:550px}}
+._inputContainer_1b020_65{flex-direction:column;gap:20px;display:flex;position:relative}
+@media screen and (width>=1025px){._inputContainer_1b020_65{flex-direction:row;gap:0}}
+._input_1b020_65{color:#fff;letter-spacing:-0.75px;background:color-mix(in srgb,var(--footer-surface),#fff 6%);border:1px solid #ffffff1a;border-radius:50px;width:100%;padding:12px 24px;font-family:Inter,sans-serif;font-size:17px;font-weight:600;line-height:24px;transition:border .35s cubic-bezier(.25,.46,.45,.94)}
+._input_1b020_65:focus{border-color:#fff;outline:none}
+._input_1b020_65::placeholder{color:#ffffff8a}
+._input_1b020_65._inputError_1b020_99{border-color:red}
+@media screen and (width>=1025px){._input_1b020_65{border-radius:50px;margin-right:-20px;padding:13px 210px 13px 24px;position:absolute}}
+._submit_1b020_111{z-index:1;width:100%;max-width:100%;margin-left:auto}
+@media screen and (width>=1025px){._submit_1b020_111{max-width:203px}}
+._message_1b020_123{text-align:center;visibility:hidden;opacity:0;letter-spacing:-0.32px;width:100%;padding:12px 24px;font:400 16px/150% Inter,sans-serif;transition:all .35s cubic-bezier(.25,.46,.45,.94);position:absolute;bottom:-50%;left:0;transform:translateY(-50%)}
+._message_1b020_123._show_1b020_137{visibility:visible;opacity:1;transform:translateY(0)}
+._message_1b020_123._success_1b020_142{color:#fff}
+._message_1b020_123._error_1b020_145{color:red}
+._message_1b020_123._pending_1b020_148{color:#fff}
+@media screen and (width>=1025px){._message_1b020_123{text-align:left;padding:13px 210px 13px 24px;bottom:-100%}}
+._wrapper_1fzgv_1{padding:85px 0 110px;position:sticky;bottom:0;left:0}
+@media screen and (width>=1025px){._wrapper_1fzgv_1{padding:220px 0 240px}}
+._grid_1fzgv_13{flex-direction:column;justify-content:center;align-items:center;gap:48px;padding:0 17px;display:flex}
+@media screen and (width>=1025px){._grid_1fzgv_13{flex-direction:row;justify-content:space-between;gap:0;padding:0}}
+@media screen and (width>=1441px){._grid_1fzgv_13{padding:0 63px 0 60px}}
+._sticker_1fzgv_35{aspect-ratio:1;justify-content:center;align-items:center;width:300px;margin:-50px 0;display:flex}
+@media screen and (width>=1025px){._sticker_1fzgv_35{width:40%;margin:-70px 0}}
+._sticker_1fzgv_35 .media{background-color:#0000}
+._sticker_1fzgv_35 video{width:100%;display:block}
+._media_1fzgv_49{width:285px;margin:0 auto}
+@media screen and (width>=1025px){._media_1fzgv_49{width:300px}}
+@media screen and (width>=1441px){._media_1fzgv_49{width:360px}}
+._footer_1y8xr_1{background:var(--footer-surface);display:block;position:relative}
+._footer_1y8xr_1 *,._footer_1y8xr_1 :before,._footer_1y8xr_1 :after{box-sizing:border-box}
+._inner_1y8xr_12{z-index:10;backface-visibility:hidden;background:#f2f1f3;border-bottom-right-radius:40px;border-bottom-left-radius:40px;padding:120px 20px 60px;position:relative;overflow:hidden}
+._dark_1y8xr_22 ._inner_1y8xr_12{color:#19171c}
+._light_1y8xr_25 ._inner_1y8xr_12{color:#fff}
+._skipNewsletter_1y8xr_28 ._inner_1y8xr_12{border-radius:0!important}
+._skipCta_1y8xr_31 ._inner_1y8xr_12{padding-top:80px}
+@media screen and (width>=1025px){._skipCta_1y8xr_31 ._inner_1y8xr_12{padding-top:100px}}
+@media screen and (width>=1025px){._inner_1y8xr_12{border-bottom-right-radius:80px;border-bottom-left-radius:80px;padding:160px 20px 98px}}
+@media screen and (width>=1441px){._inner_1y8xr_12{padding:220px 0 140px}}
+@media screen and (width>=1729px){._inner_1y8xr_12{padding:280px 0 140px}}
+._grid_1y8xr_57{flex-direction:column;display:flex}
+@media screen and (width>=1025px){._grid_1y8xr_57{gap:120px}}
+@media screen and (width>=1441px){._grid_1y8xr_57{gap:160px}}
+._top_1y8xr_72{flex-direction:column;align-items:center;gap:20px;display:flex}
+@media screen and (width<=1024px){._top_1y8xr_72{max-width:560px;margin:0 auto 120px}}
+@media screen and (width>=1025px){._top_1y8xr_72{gap:30px}}
+._title_1y8xr_90{letter-spacing:-2.4px;text-align:center;font:800 60px/95% "Agimon Footer Lausanne",sans-serif}
+._title_1y8xr_90 b{font-weight:inherit}
+@media screen and (width>=1025px){._title_1y8xr_90{letter-spacing:-3.2px;font:800 72px/95% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1441px){._title_1y8xr_90{letter-spacing:-3.6px;font:800 90px/95% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1729px){._title_1y8xr_90{letter-spacing:-3.84px;font:800 96px/95% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width<=1024px){._title_1y8xr_90{line-height:1}}
+@media screen and (width>=1025px){._title_1y8xr_90{letter-spacing:-2.4px;font:800 60px/95% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px){._title_1y8xr_90 b{font-weight:inherit}}
+@media screen and (width>=1025px) and (width>=1025px){._title_1y8xr_90{letter-spacing:-2.4px;font:800 80px/95% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px) and (width>=1441px){._title_1y8xr_90{letter-spacing:-3.6px;font:800 115px/95% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px) and (width>=1729px){._title_1y8xr_90{letter-spacing:-4.5px;font:800 140px/95% "Agimon Footer Lausanne",sans-serif}}
+._light_1y8xr_25 ._title_1y8xr_90{color:#fff}
+._text_1y8xr_152{color:#1e1e1e;text-align:center;letter-spacing:-0.396px;margin-bottom:10px;padding:0 20px;font:400 18px/150% Inter,sans-serif}
+._light_1y8xr_25 ._text_1y8xr_152{color:#fff}
+._text_1y8xr_152 b,._text_1y8xr_152 strong{font-weight:600}
+._text_1y8xr_152 a{font-weight:600;text-decoration:none}
+@media screen and (width>=1441px){._text_1y8xr_152{letter-spacing:-0.4px;font:400 20px/150% Inter,sans-serif}}
+@media screen and (width>=1025px){._text_1y8xr_152{max-width:350px;margin:0}}
+@media screen and (width>=1441px){._text_1y8xr_152{max-width:400px}}
+@media screen and (width>=1025px){._buttonContainer_1y8xr_190{padding-top:20px}}
+._center_1y8xr_195{flex-wrap:wrap;justify-content:space-between;gap:50px 40px;margin-bottom:80px;display:flex}
+._center_1y8xr_195 .link{display:inline-flex}
+@media screen and (width>=1025px){._center_1y8xr_195{flex-wrap:nowrap;column-gap:22px;margin-bottom:0;padding:0 34px}}
+._column_1y8xr_214{flex-direction:column;width:calc(50% - 20px);display:flex}
+@media screen and (width>=1025px){._column_1y8xr_214{width:24%}}
+@media screen and (width>=1025px){._column_1y8xr_214:nth-child(5){flex:1 0 0}}
+@media screen and (width>=1441px){._column_1y8xr_214{width:20.8%}}
+@media screen and (width<=1024px){._column_1y8xr_214:first-child{order:1}}
+@media screen and (width<=1024px){._column_1y8xr_214:nth-child(2){order:2}}
+@media screen and (width<=1024px){._column_1y8xr_214:nth-child(3){order:4}}
+@media screen and (width<=1024px){._column_1y8xr_214:nth-child(4){order:3}}
+@media screen and (width<=1024px){._column_1y8xr_214:nth-child(5){order:5}}
+._columnTitle_1y8xr_250{color:#19171c;letter-spacing:-0.4px;margin-bottom:10px;font-family:"Agimon Footer Lausanne",sans-serif;font-size:20px;font-weight:600;line-height:150%}
+._light_1y8xr_25 ._columnTitle_1y8xr_250{color:#fff}
+@media screen and (width>=1025px){._columnTitle_1y8xr_250{letter-spacing:-0.36px;margin-bottom:24px;font-size:18px}}
+._columnTitle_1y8xr_250 a:hover{opacity:.54}
+._links_1y8xr_273{flex-direction:column;gap:5px;display:flex}
+._centerLinks_1y8xr_279{padding:5px 0;line-height:1.5;transition:opacity .2s cubic-bezier(.25,.46,.45,.94)}
+._centerLinks_1y8xr_279:hover{opacity:.54}
+._centerLinks_1y8xr_279 span{display:inline-block}
+._socialContainer_1y8xr_291{letter-spacing:-0.352px;justify-content:space-between;font:400 16px/150% Inter,sans-serif;display:flex}
+@media screen and (width<=1024px){._socialContainer_1y8xr_291{flex-direction:column;align-items:center;gap:20px;display:flex}}
+@media screen and (width<=1024px){._copyright_1y8xr_307{order:1}}
+._social_1y8xr_291{align-items:center;gap:30px;display:flex}
+@media screen and (width<=1024px){._social_1y8xr_291{order:0;margin-bottom:10px}}
+._social_1y8xr_291 .link svg{transition:transform .3s cubic-bezier(.25,.46,.45,.94)}
+._social_1y8xr_291 .link:hover svg{transform:scale(1.2)}
+._socialLink_1y8xr_330{letter-spacing:-0.352px;font:400 16px/150% Inter,sans-serif}
+._notice_1y8xr_335{color:#97979b;letter-spacing:-0.2px;margin-top:60px;font-size:12px;font-style:normal;font-weight:400;line-height:150%}
+._icon_1y8xr_345{width:24px;height:24px;display:flex}
+._icon_1y8xr_345 path{fill:#19171c}
+._light_1y8xr_25 ._icon_1y8xr_345 path{fill:#fff}
+._section_1wo4v_1{margin:140px 0;position:relative}
+._section_1wo4v_1 *,._section_1wo4v_1 :before,._section_1wo4v_1 :after{box-sizing:border-box}
+@media screen and (width>=1025px){._section_1wo4v_1{margin:180px 0}}
+@media screen and (width>=1729px){._section_1wo4v_1{margin:220px 0}}
+._title_1wo4v_21{text-wrap:balance;display:block}
+@media screen and (width>=1025px){._title_1wo4v_21{white-space:pre-line}}
+._groups_1wo4v_31{flex-direction:column;gap:80px;margin-top:80px;display:flex}
+@media screen and (width>=1025px){._groups_1wo4v_31{width:88.136%;margin:80px auto 0}}
+@media screen and (width>=1441px){._groups_1wo4v_31{margin-top:120px}}
+._group_1wo4v_31{flex-direction:column;gap:40px;display:flex}
+@media screen and (width>=1025px){._group_1wo4v_31{grid-template-columns:minmax(0,36fr) minmax(0,64fr);display:grid}}
+._groupTitle_1wo4v_61{letter-spacing:-1.6px;color:#19171c;font:800 40px/100% "Agimon Footer Lausanne",sans-serif}
+._groupTitle_1wo4v_61 b{font-weight:inherit}
+@media screen and (width>=1025px){._groupTitle_1wo4v_61{letter-spacing:-1.92px;font:800 48px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1441px){._groupTitle_1wo4v_61{letter-spacing:-2.4px;font:800 60px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1729px){._groupTitle_1wo4v_61{letter-spacing:-2.88px;font:800 72px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px){._groupTitle_1wo4v_61{letter-spacing:-1.2px;white-space:pre-line;font:750 30px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px){._groupTitle_1wo4v_61 b{font-weight:inherit}}
+@media screen and (width>=1025px) and (width>=1025px){._groupTitle_1wo4v_61{letter-spacing:-1.6px;font:800 40px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px) and (width>=1441px){._groupTitle_1wo4v_61{letter-spacing:-2px;font:800 50px/100% "Agimon Footer Lausanne",sans-serif}}
+@media screen and (width>=1025px) and (width>=1729px){._groupTitle_1wo4v_61{letter-spacing:-2.24px;font:800 56px/100% "Agimon Footer Lausanne",sans-serif}}
+._item_1wo4v_116{border-bottom:1px solid #c3c3c6}
+@media screen and (width>=1025px){._item_1wo4v_116{border-bottom-color:#d7d7db}}
+._item_1wo4v_116[open] ._chevron_1wo4v_124{transform:rotate(180deg)}
+._question_1wo4v_128{letter-spacing:-0.396px;letter-spacing:0;color:#19171c;cursor:pointer;justify-content:space-between;align-items:center;gap:24px;padding:24px 0;font:600 18px/150% Inter,sans-serif;list-style:none;display:flex}
+._question_1wo4v_128 b,._question_1wo4v_128 strong{font-weight:600}
+._question_1wo4v_128 a{font-weight:600;text-decoration:none}
+@media screen and (width>=1441px){._question_1wo4v_128{letter-spacing:-0.4px;font:400 20px/150% Inter,sans-serif}}
+._question_1wo4v_128::-webkit-details-marker{display:none}
+._question_1wo4v_128:focus-visible{outline-offset:2px;outline:2px solid #19171c}
+@media screen and (width>=1025px){._question_1wo4v_128{padding:32px 8px 32px 0}}
+@media screen and (width>=1441px){._question_1wo4v_128{letter-spacing:0;font-weight:600}}
+._chevron_1wo4v_124{flex-shrink:0;justify-content:center;align-items:center;width:40px;height:40px;transition:transform .3s cubic-bezier(.25,.46,.45,.94);display:flex}
+@media (prefers-reduced-motion:reduce){._chevron_1wo4v_124{transition:none}}
+._chevron_1wo4v_124 svg{width:12px}
+._answer_1wo4v_193{letter-spacing:-0.32px;color:#6e6e73;text-wrap:pretty;padding:0 64px 24px 0;font:400 16px/150% Inter,sans-serif}
+._answer_1wo4v_193 .faq-demo-link{color:#176452;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.faq-demo-link:hover{text-decoration-thickness:2px}.faq-demo-link:focus-visible{outline:2px solid #176452;outline-offset:3px}
+@media screen and (width>=1025px){._answer_1wo4v_193{padding:0 72px 32px 0}}
+
+/* Content-specific adaptations: original floating artwork, local preview, RTL. */
+._grid_1fzgv_13{direction:ltr}.signup-form{direction:inherit}.mascot-stage,[data-footer-mascot]{width:100%;aspect-ratio:1}.mascot-stage svg{display:block;width:100%;height:100%;overflow:visible}
+.signup-fields{position:relative}.form-status{font:400 13px/1.5 Inter,Arial,sans-serif;color:#fff;margin-top:8px}.form-status:empty{display:none}.form-status[data-state=error]{color:#ffb5a7}
+._input_1b020_65[aria-invalid=true]{border-color:#ffb5a7}._submit_1b020_111:hover ._inner_ruopi_21{transform:scale(1.03)}._submit_1b020_111:focus-visible{outline:2px solid #fff;outline-offset:5px;border-radius:50px}
+.legal-links{display:flex;gap:24px;flex-wrap:wrap;align-items:center;font-size:14px}.legal-links a:hover{opacity:.54}.legal-links a:focus-visible{outline:2px solid currentColor;outline-offset:4px}.copyright{direction:ltr;unicode-bidi:isolate}
+footer:lang(ar) .signup-form,footer:lang(ur) .signup-form{direction:rtl}footer:lang(ar) :is(h2,summary,._answer_1wo4v_193,.form-status,.legal-links,._input_1b020_65,._inner_ruopi_21),footer:lang(ur) :is(h2,summary,._answer_1wo4v_193,.form-status,.legal-links,._input_1b020_65,._inner_ruopi_21){font-family:'Noto Sans Arabic',sans-serif;letter-spacing:0;line-height:1.5}
+footer:lang(hi) :is(h2,summary,._answer_1wo4v_193,.form-status,.legal-links,._input_1b020_65,._inner_ruopi_21){font-family:'Noto Sans Devanagari',sans-serif;letter-spacing:0;line-height:1.4}
+@media(min-width:1025px){footer[dir=rtl] ._input_1b020_65{padding-left:210px;padding-right:24px;margin-right:0;margin-left:-20px;border-radius:50px}footer[dir=rtl] ._submit_1b020_111{margin-left:0;margin-right:auto}footer[dir=rtl] ._answer_1wo4v_193{padding-right:0;padding-left:72px}}
+@media(max-width:1024px){._socialContainer_1y8xr_291{margin-top:80px}.legal-links{justify-content:center;gap:16px 22px}.copyright{text-align:center}footer[dir=rtl] ._answer_1wo4v_193{padding-left:64px;padding-right:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* The single FAQ now lives immediately before this footer. */
+footer[data-faq-consolidated] ._inner_1y8xr_12 { padding-top: 0; background-color: #f3f2ed; }
+footer[data-faq-consolidated] ._socialContainer_1y8xr_291 { margin-top: 0; }
+
+/* Footer legal actions open native dialogs. */
+.legal-links button { appearance: none; border: 0; background: transparent; color: inherit; padding: 0; font: inherit; line-height: inherit; }
+.legal-links button:hover { opacity: .54; }
+.legal-links button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }

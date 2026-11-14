@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="c64d4528-9bac-566b-99c8-f2d828ded463")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{t as e}from"./jsx-runtime-xcbuSnkB.js";import{n as t,o as n}from"./components-B6052cZc.js";import"./route-admin-BGTzAExM.js";import"./route-admin-DXSC5byX.js";var r=e();function i(){return!0}var a=n(function(){return(0,r.jsx)(t,{"data-sentry-element":`Outlet`,"data-sentry-component":`AdminRoute`,"data-sentry-source-file":`route-admin.tsx?route-chunk=main`})});export{a as default,i as shouldRevalidate};
+//# debugId=c64d4528-9bac-566b-99c8-f2d828ded463

@@ -1,0 +1,58 @@
+/* Retain the template's main panel and two-card grid, with one sales link. */
+.agimon-team.background-gray .agimon-calm-panel{
+  display:block;background:#f3f4ef;padding:44px 36px 24px;margin-bottom:20px;
+}
+.agimon-calm-heading{max-width:660px;margin:0 auto 24px;text-align:center}
+.agimon-calm-heading h2{
+  margin:0;color:#193e31;font:800 clamp(30px,3.2vw,44px)/1.08 "TWK Lausanne",sans-serif;
+  letter-spacing:-.045em;text-wrap:balance;
+}
+.agimon-calm-panel>agimon-team-scene{display:block;width:100%;min-width:0;min-height:440px}
+.agimon-team-scene-fallback{margin:110px auto;max-width:440px;text-align:center;font:400 16px/1.6 Inter,sans-serif;color:#57675f}
+.agimon-next-steps .agimon-teamwork-card{height:100%;cursor:default;color:#193e31;background:#f2f2e9}
+.agimon-next-steps .agimon-teamwork-card:hover{transform:none}
+.agimon-next-steps .agimon-teamwork-card ._title_1ivbs_143{font-size:clamp(28px,2.5vw,36px);line-height:1.07;text-wrap:balance}
+.agimon-teamwork-body{max-width:34ch;margin:0;font:400 16px/1.5 Inter,sans-serif;letter-spacing:-.02em;color:#52675c;text-wrap:pretty}
+.agimon-next-steps #pricing ._title_1ivbs_143{text-wrap:balance}
+.agimon-team[dir=rtl] .agimon-next-steps{text-align:right}
+.agimon-team[dir=rtl] h2,.agimon-team[dir=rtl] h3,.agimon-team[dir=rtl] p{letter-spacing:0;line-height:1.4}
+.agimon-team[lang^=ar],.agimon-team[lang^=ur]{font-family:"Agimon Arabic","Noto Sans Arabic",Arial,sans-serif}
+.agimon-team[lang^=hi] h2,.agimon-team[lang^=hi] h3{font-family:"Agimon Devanagari","Noto Sans Devanagari",sans-serif;letter-spacing:0;line-height:1.25}
+.agimon-team[dir=rtl] h2,.agimon-team[dir=rtl] h3,.agimon-team[dir=rtl] p,.agimon-team[dir=rtl] .pill-tag{font-family:"Agimon Arabic","Noto Sans Arabic",Arial,sans-serif}
+@media(min-width:1729px){
+  .agimon-team.background-gray .agimon-calm-panel{padding:56px 64px 32px}
+  .agimon-calm-heading h2{font-size:52px}
+}
+@media(max-width:700px){
+  .agimon-team.background-gray .agimon-calm-panel{padding:32px 18px 18px;margin-bottom:16px}
+  .agimon-calm-heading{margin-bottom:24px}
+  .agimon-calm-heading h2{font-size:32px}
+  .agimon-calm-panel>agimon-team-scene{min-height:610px}
+  .agimon-next-steps .agimon-teamwork-card ._title_1ivbs_143{font-size:30px}
+  .agimon-teamwork-body{font-size:15px}
+}
+
+/* Agimon single-line team headline v1 */
+.agimon-calm-heading {
+  max-width: none;
+  container-type: inline-size;
+  --team-headline-fit: 6.9cqw;
+}
+.agimon-team:lang(es) .agimon-calm-heading { --team-headline-fit: 5.9cqw; }
+.agimon-team:lang(pt) .agimon-calm-heading { --team-headline-fit: 6.1cqw; }
+.agimon-team:lang(id) .agimon-calm-heading { --team-headline-fit: 7.9cqw; }
+.agimon-team:lang(hi) .agimon-calm-heading { --team-headline-fit: 6.0cqw; }
+.agimon-team:lang(ar) .agimon-calm-heading { --team-headline-fit: 5.9cqw; }
+.agimon-team:lang(ms) .agimon-calm-heading { --team-headline-fit: 5.6cqw; }
+.agimon-team:lang(ur) .agimon-calm-heading { --team-headline-fit: 5.9cqw; }
+.agimon-team:lang(fr) .agimon-calm-heading { --team-headline-fit: 5.7cqw; }
+.agimon-team:lang(de) .agimon-calm-heading { --team-headline-fit: 6.1cqw; }
+.agimon-team .agimon-calm-heading h2 {
+  font-size: clamp(14px, var(--team-headline-fit), 44px);
+  white-space: nowrap;
+  text-wrap: nowrap;
+}
+@media (min-width: 1729px) {
+  .agimon-team .agimon-calm-heading h2 { font-size: clamp(14px, var(--team-headline-fit), 52px); }
+}
+/* End Agimon single-line team headline v1 */

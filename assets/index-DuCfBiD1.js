@@ -1,0 +1,3 @@
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{n as e,r as t}from"./config-2025-4b4eYC2I.js";export{e as default,t as meta};
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4ed8723b-2b21-520b-8867-bfe387a25e6b")}catch(e){}}();
+//# debugId=4ed8723b-2b21-520b-8867-bfe387a25e6b

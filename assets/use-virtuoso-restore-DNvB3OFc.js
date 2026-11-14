@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="097fef2a-4930-5295-af72-2a2f87289ee7")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{o as e}from"./rolldown-runtime-5JLZCTB7.js";import{n as t}from"./jsx-runtime-xcbuSnkB.js";import{E as n}from"./errorTracking-CHeGO-1R.js";var r=e(t());function i(e,t,n){return`${e}/_search/${n?`${n}/`:``}${t}`}var a=e=>{let t=e&&n()?window.sessionStorage.getItem(e):void 0;return[t?JSON.parse(t):void 0,(0,r.useCallback)(t=>{!e||!n()||window.sessionStorage.setItem(e,JSON.stringify(t))},[e])]};export{a as n,i as t};
+//# debugId=097fef2a-4930-5295-af72-2a2f87289ee7

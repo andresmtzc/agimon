@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="42268c6c-7d86-5ca7-92d2-c054a35ac57f")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{y as e}from"./utils-OGRw9hWR.js";function t(e){return e.startsWith(`https://templates-dashboard.s3.amazonaws.com/`)}function n(e){return e.startsWith(`https://templates-dashboard.s3.amazonaws.com/prod/`)}function r(n,r){if(!t(n))return n;let i=new URL(n);return i.host=`zi0cfgcfnbmu5rvi.imgix.net`,e(i.toString(),{w:r,h:r,fit:`max`,auto:`format, compress`})}export{n,r as t};
+//# debugId=42268c6c-7d86-5ca7-92d2-c054a35ac57f

@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="189e0adf-c9c8-5903-8b18-f717b167c609")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{Vd as e}from"./stores-BEyVHYqF.js";import{a as t,i as n}from"./aws-CkJYh2wo.js";import{s as r,v as i}from"./project-n9m2MOAo.js";import{t as a}from"./queryString-CbMt0ZTH.js";var o=async({request:o})=>{let s=a(new URL(o.url).search),c=s.id,l=s.bucket?t(s.bucket):n();if(!c)return;let u=await r(c,l);if(u)return{immutableConf:e((await i(u)).tree),fileId:c,bucket:l}};export{o as t};
+//# debugId=189e0adf-c9c8-5903-8b18-f717b167c609

@@ -1,0 +1,75 @@
+/* Standalone scene styles stay inside this shadow root. Only the retained
+   landing section's spacing and heading levels differ from the study. */
+:host {
+  display:block;
+  position:relative;
+  margin:140px 0;
+  color-scheme:light;
+  font:400 16px/1.2 Lausanne,Arial,sans-serif;
+  color:#1a1d18;
+  direction:ltr;
+  text-align:left;
+  -webkit-font-smoothing:antialiased;
+  --paper:#faf9f6;
+  --ink:#1a1d18;
+  --pad:48px;
+  --card-width:460px;
+  --card-height:580px;
+  --sticky-base:0px;
+}
+#customer-proof-section { width:100%; }
+.section-intro { padding-top:0; }
+.section-intro h2 {
+  font-weight:800;
+  font-size:72px;
+  line-height:.95;
+  letter-spacing:-3.2px;
+  max-width:700px;
+  margin:0;
+}
+.section-eyebrow { display:flex;align-items:center;justify-content:center;gap:11px; }
+#proof-motion-toggle {
+  width:31px;height:31px;padding:0;border:1px solid #dcded5;border-radius:50%;
+  display:none;place-items:center;background:transparent;color:var(--ink);
+}
+#proof-motion-toggle svg { width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.3; }
+#proof-motion-toggle .play-icon { display:none;fill:currentColor;stroke:none; }
+#proof-motion-toggle.is-paused .play-icon { display:block; }
+#proof-motion-toggle.is-paused .pause-icon { display:none; }
+.card-copy h3 { font-size:22px;line-height:1.05;letter-spacing:-.65px;font-weight:600;margin:0 0 11px; }
+.card-stack { padding-bottom:0; }
+:host(.is-sticky) .proof-card { position:sticky;top:calc(var(--sticky-base) + var(--index)*25px); }
+@media(min-width:1025px) { :host { margin:200px 0; } }
+@media(min-width:1441px) {
+  :host { margin:280px 0;--card-width:510px;--card-height:640px; }
+  .section-intro h2 { font-size:90px;letter-spacing:-3.6px;max-width:850px; }
+}
+@media(min-width:1729px) {
+  :host { --card-width:560px;--card-height:700px;--pad:64px; }
+  .section-intro h2 { font-size:96px;letter-spacing:-3.84px; }
+}
+@media(max-width:1024px) {
+  :host { --pad:28px;--card-width:400px;--card-height:550px; }
+  .section-intro h2 { font-size:56px;letter-spacing:-2.3px;max-width:600px; }
+  .card-copy h3 { font-size:20px; }
+}
+@media(max-width:600px) {
+  :host { --pad:20px;--card-width:min(100%,400px);--card-height:550px; }
+  .section-intro h2 { font-size:46px;line-height:.99;letter-spacing:-2px;max-width:370px; }
+  .section-eyebrow { gap:9px; }
+  #proof-motion-toggle { width:28px;height:28px; }
+  .card-copy h3 { font-size:20px; }
+}
+@media(max-width:360px) { .section-intro h2 { font-size:40px;letter-spacing:-1.7px; } }
+
+/* Agimon customer story captions v1 */
+@media (max-width: 600px) {
+  /* Allow the English subtitle its full line without reducing its text size.
+     Narrow phones still wrap naturally, without an orphaned final word. */
+  #customer-proof-section:lang(en) .section-intro > p {
+    width: min(335px, calc(100vw - 20px));
+    max-width: none;
+    text-wrap: balance;
+  }
+}
+/* End Agimon customer story captions v1 */

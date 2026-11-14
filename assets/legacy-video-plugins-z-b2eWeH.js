@@ -1,0 +1,5 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="653f680a-0ca9-5c23-b30f-b3c1983adaf1")}catch(e){}}();
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index.umd-DR1Sk-y0.js","assets/rolldown-runtime-5JLZCTB7.js"])))=>i.map(i=>d[i]);
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{o as e}from"./rolldown-runtime-5JLZCTB7.js";import{t}from"./preload-helper-uOguwKaA.js";import{i as n,n as r}from"./tslib.es6-B3SRP4Od.js";function i(i){return r(this,void 0,void 0,function(){var r;return n(this,function(n){switch(n.label){case 0:return[4,t(()=>import(`./index.umd-DR1Sk-y0.js`).then(t=>e(t.default)),__vite__mapDeps([0,1]))];case 1:return r=n.sent(),i._plugins=r,[2]}})})}export{i as loadLegacyVideoPlugins};
+//# debugId=653f680a-0ca9-5c23-b30f-b3c1983adaf1

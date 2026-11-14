@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="da60540a-a67d-5e96-87f5-a4088ff32b69")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();var e=e=>{let t=3600,n=24*t,r=365.25*n,i=r/12;return e===0||e===1?`${e} second`:e<60?`${e} seconds`:e<120?`${Math.floor(e/60)} minute`:e<t?`${Math.floor(e/60)} minutes`:e<2*t?`${Math.floor(e/t)} hour`:e<n?`${Math.floor(e/t)} hours`:e<2*n?`${Math.floor(e/n)} day`:e<i?`${Math.floor(e/n)} days`:e<2*i?`${Math.floor(e/i)} month`:e<r?`${Math.floor(e/i)} months`:e<2*r?`${Math.floor(e/r)} year`:`${Math.floor(e/r)} years`};export{e as t};
+//# debugId=da60540a-a67d-5e96-87f5-a4088ff32b69

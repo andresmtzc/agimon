@@ -1,0 +1,22 @@
+Jitter landing-page reference copy
+Source: https://jitter.video/
+Captured: 2026-11-13
+Purpose: Private visual baseline before any Agimon personalization.
+
+Original page markup, styles, fonts, artwork, hero animation, header transitions,
+dropdowns and video sources are preserved. Jitter and the featured creators
+retain their respective names, artwork and other original materials.
+
+Local adaptations are limited to reference-runtime.js, the noindex/CSP metadata,
+disabling optional telemetry/billing bootstraps in five compiled modules,
+and disabling route prefetch in the shared Link/NavLink wrappers. This reference
+hosts the landing page only; hovering or focusing navigation must not load
+the original application’s Templates/Pricing route modules.
+Navigation and signup/login links open the original Jitter site. The newsletter
+control opens the original site; this copy does not collect form submissions.
+MP4 previews are still served by https://assets.jitter.video/.
+
+Build the separate Sites checkout with:
+node scripts/build-jitter-carbon-copy.cjs
+
+The previous personalized page lives separately in design-preview/landing-page.

@@ -1,0 +1,22 @@
+/* The movie owns its tabs, introductory copy and responsive presentations.
+   Let those flow naturally instead of clipping them into the old video ratio. */
+.agimon-product-movie-shell {
+  margin-top: 7rem;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 700px;
+}
+.agimon-product-movie-shell > agimon-booking-movie {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+}
+@media (min-width: 1025px) {
+  .agimon-product-movie-shell { margin-top: 18rem; }
+}
+/* A readable product workspace needs more room than the template's abstract video. */
+@media (min-width: 701px) {
+  .container.agimon-product-movie { width: calc(100% - 64px); max-width: 132rem; }
+}

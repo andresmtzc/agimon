@@ -1,0 +1,86 @@
+{
+  "retrieved": "2026-11-14",
+  "icons": [
+    {
+      "file": "whatsapp.svg",
+      "name": "WhatsApp",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "whatsapp",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "instagram.svg",
+      "name": "Instagram",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "instagram",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "email.svg",
+      "name": "Email",
+      "source": "https://zernio.com/email-api",
+      "source_selector": "svg.lucide-mail",
+      "geometry": "Exact Lucide Mail path and rectangle from Zernio rendered page; root sizing/classes removed.",
+      "upstream": "https://lucide.dev/icons/mail"
+    },
+    {
+      "file": "sms.svg",
+      "name": "SMS",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "sms",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "telegram.svg",
+      "name": "Telegram",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "telegram",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "facebook.svg",
+      "name": "Facebook",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "facebook",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "x.svg",
+      "name": "X (Twitter)",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "twitter",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "tiktok.svg",
+      "name": "TikTok",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "tiktok",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "imessage.svg",
+      "name": "iMessage",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "imessage",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    },
+    {
+      "file": "wechat.svg",
+      "name": "WeChat",
+      "source": "https://zernio.com/landings-static/_next/static/immutable/chunks/112toylnpls0m.js",
+      "source_key": "wechat",
+      "geometry": "Exact path and viewBox from Zernio platform icon component.",
+      "source_sha256": "ff569852ef148cfad89d4d309a4372662d29cd80a4e699f1e267548d5ce8af40"
+    }
+  ],
+  "notes": "All ten glyphs sourced from Zernio. SMS intentionally uses the phone silhouette in their sms platform entry. LINE omitted per selected twelve-item set; Codex and Claude Code provided separately."
+}
