@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="eae56562-9bf2-5dee-a54c-b0a9cbd149e6")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{n as e,t}from"./oauth-DofU2m9p.js";async function n({request:n}){let r=new URL(n.url).searchParams;try{return await t(`continue`,r.toString(),{postLogin:!0}),{failed:!1,metadata:{name:void 0,logoUrl:void 0}}}catch{return{failed:!0,metadata:await e(r.get(`client_id`)).catch(()=>({name:void 0,logoUrl:void 0}))}}}export{n as t};
+//# debugId=eae56562-9bf2-5dee-a54c-b0a9cbd149e6

@@ -1,0 +1,28 @@
+/* Portrait links belong to the answer, without adding another card treatment. */
+.agimon-faq .agimon-founders {
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 12px;
+  margin:0 0 30px;padding:0;list-style:none;
+}
+.agimon-faq .agimon-founders li { min-width:0; }
+.agimon-faq .agimon-founder {
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  color:#193e31;text-align:center;text-decoration:none;
+  font:500 13px/1.35 Inter,Arial,sans-serif;letter-spacing:-.015em;
+}
+.agimon-faq .agimon-founder img {
+  display:block;width:64px;height:64px;object-fit:cover;border-radius:50%;
+  background:#e4e7e2;box-shadow:0 0 0 1px #193e3110;filter:grayscale(1);
+}
+.agimon-faq .agimon-founder-name { max-width:100%; }
+.agimon-faq .agimon-founder:hover .agimon-founder-name {
+  text-decoration:underline;text-underline-offset:3px;
+}
+.agimon-faq .agimon-founder:focus-visible {
+  outline:2px solid #167a60;outline-offset:6px;border-radius:4px;
+}
+.agimon-faq[dir=rtl] .agimon-founder { font-family:Inter,Arial,sans-serif; }
+@media(max-width:480px){
+  .agimon-faq .agimon-founders { grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px; }
+  .agimon-faq .agimon-founder { font-size:14px; }
+  .agimon-faq .agimon-founder img { width:68px;height:68px; }
+}

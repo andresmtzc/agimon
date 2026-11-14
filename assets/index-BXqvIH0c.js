@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="98aeeb64-21ce-5a9f-b04a-d42a1296b504")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{t as e}from"./jsx-runtime-xcbuSnkB.js";import{o as t}from"./components-B6052cZc.js";import{n}from"./pageMeta-BRb5o3UF.js";import{t as r}from"./redirect-p97iqFdf.js";var i=e(),a=()=>(0,i.jsx)(r,{replace:!0,to:`/admin/backoffice/users`,"data-sentry-element":`Redirect`,"data-sentry-component":`BackofficePage`,"data-sentry-source-file":`index.tsx`}),o=n({robotsNoIndex:!0,title:`Backoffice`}),s=t(a);export{s as default,o as meta};
+//# debugId=98aeeb64-21ce-5a9f-b04a-d42a1296b504

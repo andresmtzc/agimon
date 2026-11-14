@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="c6af5371-4044-528d-a496-aef4eb17a1ce")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{t as e}from"./jsx-runtime-xcbuSnkB.js";import{t}from"./link-Cv9L_12x.js";var n=`_backButton_1w868_65`,r=e(),i=()=>(0,r.jsx)(t,{url:`/account/`,variant:`link1`,className:n,flex:!1,"data-sentry-element":`Link`,"data-sentry-component":`BackButton`,"data-sentry-source-file":`backButton.tsx`,children:`<- Back`});export{i as t};
+//# debugId=c6af5371-4044-528d-a496-aef4eb17a1ce

@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4ca9dc5b-7fa7-5445-a3fd-525545756f99")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{n as e,t}from"./match-sorter.esm-DF-C4yuJ.js";var n=new Intl.Segmenter(`en`,{granularity:`word`});function r(r,i,a,{sorter:o}={}){let s=Array.from(n.segment(i)).filter(({isWordLike:e})=>e).map(({segment:e})=>e);return s.length===0?[]:s.reduceRight((n,r)=>t(n,r,{keys:a,threshold:e.CONTAINS,sorter:o}),r)}export{r as t};
+//# debugId=4ca9dc5b-7fa7-5445-a3fd-525545756f99

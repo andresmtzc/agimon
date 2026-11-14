@@ -1,0 +1,4 @@
+
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="88937949-9004-5efe-a8ca-f16efb4b6561")}catch(e){}}();
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();var e={title:`Templates`,metaTitle:`Free animated templates`,description:`Browse hundreds of free animated templates for videos, social media, UI, websites, apps, stories, ads and more. They are fully customizable in Jitter and incredibly easy to use.`};export{e as t};
+//# debugId=88937949-9004-5efe-a8ca-f16efb4b6561

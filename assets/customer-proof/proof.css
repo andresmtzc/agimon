@@ -1,0 +1,12 @@
+/* Localize copy without mirroring the editorial illustration coordinates. */
+#customer-proof-section .card-copy, #customer-proof-section .customer { text-align: start; }
+#customer-proof-section .section-intro h2 { overflow-wrap: break-word; text-wrap: balance; }
+#customer-proof-section[dir=rtl] .customer .outbound { margin-left: 0; margin-right: auto; }
+#customer-proof-section[dir=rtl] .customer strong { align-self: flex-start; unicode-bidi: isolate; }
+.card-art { direction: ltr; }
+:host([data-proof-locale]:not([data-proof-locale="en"])) .proof-card { height: auto; min-height: var(--card-height); }
+#customer-proof-section:is(:lang(ar),:lang(ur)) :is(h2,h3,p,strong,small,.pill) { font-family: 'Noto Sans Arabic',Arial,sans-serif; letter-spacing: 0; }
+#customer-proof-section:lang(hi) :is(h2,h3,p,strong,small,.pill) { font-family: 'Noto Sans Devanagari',Arial,sans-serif; letter-spacing: 0; }
+#customer-proof-section:is(:lang(ar),:lang(ur),:lang(hi)) :is(h2,h3) { line-height: 1.35; }
+#customer-proof-section:is(:lang(ar),:lang(ur),:lang(hi)) .card-copy p { line-height: 1.65; }
+#customer-proof-section .customer strong[dir=ltr] { font-family: Lausanne,Arial,sans-serif; }

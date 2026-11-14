@@ -1,0 +1,6 @@
+/* Keep the existing FAQ layout; support the consolidated translated copy. */
+.agimon-faq__header h2 { white-space: pre-line; }
+.agimon-faq summary b { font-weight: inherit; }
+.agimon-faq[dir=rtl] details p { margin-right: 0; margin-left: 3rem; }
+.agimon-faq:is(:lang(ar),:lang(ur)) :is(h2,summary,p,a) { font-family: 'Noto Sans Arabic',sans-serif; letter-spacing: 0; line-height: 1.5; }
+.agimon-faq:lang(hi) :is(h2,summary,p,a) { font-family: 'Noto Sans Devanagari',sans-serif; letter-spacing: 0; line-height: 1.4; }

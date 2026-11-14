@@ -1,0 +1,65 @@
+/* Hide unavailable choices before the JS sizing observer runs. */
+@media (max-width:700px) {
+  :host .view-switch { display:none; }
+}
+@container (max-width:700px) {
+  :host .view-switch { display:none; }
+}
+
+/* Only the film narrows in compact mode. Introductory copy keeps its own layout. */
+:host([data-phone-only][view=mobile]) .view-switch { display:none; }
+:host([data-phone-only][view=mobile]) .movie-presentation > .film {
+  width:100%;
+  max-width:460px;
+  container-type:inline-size;
+  align-self:center;
+  height:auto;
+  padding:12px 10px 8px;
+  border-radius:20px;
+}
+:host([data-phone-only][view=mobile]) .phone-track {
+  display:flex;
+  gap:16px;
+  max-width:none;
+  overflow-x:auto;
+  overflow-y:hidden;
+  overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+}
+:host([data-phone-only][view=mobile]) .phone-track::-webkit-scrollbar { display:none; }
+:host([data-phone-only][view=mobile]) .phone-panel {
+  flex:0 0 100%;
+  width:100%;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  gap:10px;
+}
+:host([data-phone-only][view=mobile]) .phone-caption { font-size:12px; }
+:host([data-phone-only][view=mobile]) .phone-screen { height:600px; border-radius:17px; box-shadow:none; }
+:host([data-phone-only][view=mobile]) .phone-nav {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  padding:12px 0 0;
+  min-width:0;
+}
+:host([data-phone-only][view=mobile]) .phone-nav > button {
+  display:block;
+  flex:1;
+  min-width:0;
+  max-width:140px;
+  min-height:44px;
+  padding:8px 6px;
+  border-radius:999px;
+  background:transparent;
+  color:#758078;
+  font-size:11px;
+  font-weight:500;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+:host([data-phone-only][view=mobile]) .phone-nav > button[aria-current=true] { background:#e4eee7; color:#2a7e65; }
+:host([data-phone-only][view=mobile]) .phone-nav > button:focus-visible { outline:2px solid #2f9d86; outline-offset:1px; }
+:host([data-phone-only][view=mobile]) .movie-controls { padding-top:4px; margin-bottom:0; }

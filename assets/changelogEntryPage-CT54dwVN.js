@@ -1,0 +1,3 @@
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{i as e,r as t}from"./changelogEntryPage-yBaf3kgB.js";export{t as default,e as meta};
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="bcef4b16-55ea-5a65-8df1-0a6a359723ae")}catch(e){}}();
+//# debugId=bcef4b16-55ea-5a65-8df1-0a6a359723ae

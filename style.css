@@ -1,0 +1,140 @@
+@font-face{font-family:Agimon Hand;src:url('/assets/caveat-700.ttf') format('truetype');font-weight:700;font-style:normal;font-display:block}
+/* The reference logo had its own optical offset. Our SVG fills its viewBox. */
+._header_1ctqk_2 ._logo_1ctqk_44{top:0}
+.agimon-header-brand{display:flex;align-items:center;gap:8px;line-height:1;white-space:nowrap}
+.agimon-header-brand .brand-wordmark{display:block!important;width:auto!important;height:28px!important;max-width:none}
+.agimon-header-brand .brand-blob{--face-reference-size:24px;display:block;width:28px;height:28px;flex:none;transform-origin:center;will-change:transform}
+._logo_1ctqk_44 .brand-blob svg{width:100%!important;height:100%!important;transform:none!important;display:block}
+/* Keep the reference announcement pill's space, without displaying a pill. */
+.agimon-hero .intro-spacer{height:35px;min-height:35px;display:block;pointer-events:none;transform:none}
+@media(min-width:1441px){.agimon-hero .intro-spacer{height:38px;min-height:38px}}
+@media(min-width:1729px){.agimon-hero .intro-spacer{height:36px;min-height:36px}}
+.agimon-hero ._text_15cvm_35{opacity:1}
+.agimon-hero .agimon-headline{opacity:1!important;overflow:visible;isolation:isolate}
+.agimon-headline .headline-line{display:block;white-space:nowrap;will-change:transform,opacity}
+.intro-word{position:relative;display:inline-block;opacity:0;transform-origin:50% 80%;will-change:transform,opacity}
+.works-label{position:relative}
+.works-highlight{position:absolute;inset:.18em -.07em .015em;background:rgb(249 226 75 / .65);clip-path:polygon(3% 4%,29% 1%,56% 4%,79% 0%,100% 5%,97% 96%,73% 100%,48% 97%,23% 100%,0% 94%);transform-origin:left center;opacity:0;pointer-events:none}
+.chat-word,.you-word{position:relative;display:inline-block;vertical-align:baseline}
+.chat-normal{display:inline-block;opacity:0;will-change:opacity,transform}
+.chat-bubble{position:absolute;z-index:1;inset:-.075em -.10em -.025em;display:flex;align-items:center;justify-content:center;background:#d7f0d0;border-radius:.23em .26em .23em .045em;opacity:0;transform:rotate(-4deg);transform-origin:50% 75%;pointer-events:none;will-change:transform,opacity}
+.chat-cursive{font-family:Agimon Hand,cursive;font-size:1.18em;line-height:.85;font-weight:700;letter-spacing:-.035em;color:#273a2b;transform:translate(-.015em,-.04em)}
+.you-strokes{position:absolute;left:-3%;top:calc(100% - .02em);width:108%;height:.35em;overflow:visible;pointer-events:none;opacity:0;will-change:transform,opacity}
+.you-strokes path{stroke:#19171c;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.you-strokes .stroke-two{stroke-width:2.6}
+.mobile-break{display:none}
+.agimon-hero [data-sentry-component=ClientsLogo]{pointer-events:none}
+.agimon-hero ._clients_qcur3_32{opacity:1}
+.agimon-hero ._clientsItems_qcur3_103:not(:first-child){display:none}
+/* The opening statement gets its own breathing room; channels introduce the carousel. */
+._main_1pbcf_1 .agimon-hero{padding-top:clamp(230px,25svh,320px);padding-bottom:0;margin-bottom:0}
+.agimon-hero ._headerWrapper_15cvm_48{padding-bottom:clamp(184px,22svh,240px)}
+._main_1pbcf_1 .agimon-hero+[data-sentry-component=TemplatesCarousel]{margin-top:72px}
+@media(max-width:1024px){
+ .agimon-header-brand{gap:7px}.agimon-header-brand .brand-wordmark{height:24px!important}.agimon-header-brand .brand-blob{--face-reference-size:20px;width:24px;height:24px}
+ .agimon-hero h1.agimon-headline{font-size:clamp(43px,14.25vw,64px)!important;line-height:.98!important;letter-spacing:-.035em!important}
+ .agimon-hero .mobile-break{display:block;height:.045em}
+ .agimon-hero .intro-spacer{height:47px;min-height:47px}
+ .agimon-hero .section-centered-header .container{row-gap:35px!important}
+ ._main_1pbcf_1 .agimon-hero{padding-top:clamp(164px,22svh,224px)}
+ .agimon-hero ._headerWrapper_15cvm_48{padding-bottom:clamp(144px,20svh,208px)}
+ ._main_1pbcf_1 .agimon-hero+[data-sentry-component=TemplatesCarousel]{margin-top:56px}
+ .you-strokes{height:.32em;top:calc(100% - .035em)}
+}
+@media(prefers-reduced-motion:reduce){.agimon-header-brand .brand-blob{transform:none!important}.headline-line,.intro-word{opacity:1!important;transform:none!important}.chat-normal{opacity:1!important;transform:none!important}.chat-bubble,.works-highlight,.you-strokes{opacity:0!important}}
+/* The original template shows one row: desktop swaps two sets; mobile scrolls. */
+.agimon-hero .channel-logo-viewport{position:relative;height:36px;outline-offset:8px}
+.agimon-hero .channel-logo-track{display:grid;width:100%;height:100%}
+.agimon-hero .channel-logo-set{grid-area:1/1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px;padding:0;margin:0;list-style:none}
+.agimon-hero .channel-logo-set li{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;transform-origin:center}
+.agimon-hero .channel-logo-set:nth-child(2) li{transform:scale(0)}
+.agimon-hero .channel-logo-set img{display:block;flex:none;width:28px;height:28px;object-fit:contain;filter:brightness(0) invert(29.4%)}
+.agimon-hero .channel-strip ._middle_15cvm_239{margin-bottom:24px}
+.agimon-hero .channel-logo-viewport:focus-visible{outline:2px solid #2f9d86;border-radius:4px}
+@keyframes channel-marquee{to{transform:translateX(-50%)}}
+@media(max-width:1024px){
+ .agimon-hero .channel-logo-viewport{height:33px;overflow:hidden;mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent)}
+ .agimon-hero .channel-logo-track{display:flex;width:max-content;height:100%;will-change:transform}
+ .agimon-hero .channel-logo-track.is-marquee{animation:channel-marquee 90s linear infinite;animation-play-state:paused}
+ .agimon-hero .channel-logo-set{display:flex;gap:0;width:480px;flex:none}
+ .agimon-hero .channel-logo-set li{width:80px;flex:none;transform:none!important}
+ .agimon-hero .channel-logo-set img{width:23px;height:23px}
+ .agimon-hero .channel-strip ._middle_15cvm_239{margin-bottom:22px}
+}
+@media(prefers-reduced-motion:reduce){
+ .agimon-hero .channel-logo-viewport{height:48px;overflow-x:auto;overflow-y:hidden;mask-image:none}
+ .agimon-hero .channel-logo-track{display:flex;width:max-content;animation:none!important;transform:none!important}
+ .agimon-hero .channel-logo-set{display:flex;gap:0;width:auto;flex:none}
+ .agimon-hero .channel-logo-set li{width:80px;flex:none;transform:none!important}
+}
+/* Agimon stable entrance v1 */
+/* The custom word animation owns the headline; avoid a second template bounce. */
+.agimon-hero h1.agimon-headline { animation: none !important; transform: none !important; }
+.agimon-hero .intro-spacer,.agimon-hero ._text_15cvm_35 { animation: none !important; }
+/* Readable before enhancement, after a failed import, and with JavaScript off. */
+.intro-word,.chat-normal { opacity: 1; }
+/* Only the outer header entrance is replaced. Its sticky CTA/menu transforms stay. */
+._header_1ctqk_2._hasAppearIn_1ctqk_34:not(._animateIn_1ctqk_34):not(._mobileMenuOpen_1ctqk_34) { transform: none !important; }
+
+
+/* Reserve the carousel before its custom element upgrades. */
+agimon-work-carousel {
+  display: block;
+  min-height: 650px;
+  margin: 140px 0;
+}
+agimon-work-carousel:not([data-ready="true"]) { visibility: hidden; }
+@media (min-width: 1025px) { agimon-work-carousel { margin: 180px 0; } }
+@media (min-width: 1729px) { agimon-work-carousel { min-height: 730px; } }
+@media (max-width: 1100px) { agimon-work-carousel { min-height: 610px; } }
+@media (max-width: 700px) {
+  /* Real card width + the largest measured caption in all ten locales + controls.
+     Keep this reservation after readiness, so translated two-line copy cannot
+     shift the page when the carousel appears or its language changes. */
+  agimon-work-carousel { min-height: calc(100vw + 130px); margin: 100px 0; }
+}
+agimon-work-carousel[data-carousel-state="error"] {
+  display: none;
+  min-height: 0;
+  margin: 0;
+}
+
+/* End Agimon stable entrance v1 */
+
+/* Keep the next-step cards in Agimon’s jade and warm neutral palette. */
+.agimon-next-steps #getting-started > ._link_1ivbs_48{background:#f2f2e9;color:#193e31}
+.agimon-next-steps #pricing > ._link_1ivbs_48{background:#e4eee7;color:#193e31}
+.agimon-next-steps #pricing ._pillTag_1hr1d_1{color:#fff}
+.agimon-next-steps #pricing ._pillTag_1hr1d_1::before{background-color:#167a60}
+
+/* Agimon channel captions v1 */
+@media (max-width: 700px) {
+  .channel-strip ._text_15cvm_35 > strong,
+  .channel-strip .channel-caption-end {
+    display: block;
+    text-wrap: balance;
+  }
+  html:lang(en) .channel-strip ._middle_15cvm_239 {
+    overflow: visible;
+  }
+  html:lang(en) .channel-strip ._text_15cvm_35 {
+    flex-shrink: 0;
+    width: calc(100vw - 20px);
+    max-width: none;
+    font-size: clamp(13px, 4vw, 15px);
+  }
+}
+/* End Agimon channel captions v1 */
+
+/* Agimon warm section captions v1 */
+#team.agimon-team.background-gray {
+  background-color: transparent;
+}
+#faq.agimon-faq {
+  background-color: #f3f2ed;
+}
+/* End Agimon warm section captions v1 */
+
+/* Leave a clear gap below the sticky header for section navigation. */
+#customer-stories,#pricing{scroll-margin-top:16rem}
+@media(max-width:1024px){#customer-stories,#pricing{scroll-margin-top:12rem}}

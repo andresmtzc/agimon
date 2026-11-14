@@ -1,0 +1,10 @@
+/* The same 800ms overshoot used by Get a demo and the header hamburger. */
+.view-switch[data-view-motion]{--view-switch-spring:cubic-bezier(.33,1.42,.05,.96);position:relative;isolation:isolate}
+.view-switch-track{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;visibility:hidden}
+.view-switch[data-view-motion=ready]>.view-switch-track{visibility:visible}
+.view-switch-pill{position:absolute;top:0;left:0;display:block;border-radius:999px;background:#fff;box-shadow:0 1px 5px #29483312;transition:transform .8s cubic-bezier(.33,1.42,.05,.96),width .8s cubic-bezier(.33,1.42,.05,.96),height .8s cubic-bezier(.33,1.42,.05,.96)}
+.view-switch[data-view-motion]>button{position:relative;z-index:1;background:transparent;box-shadow:none;transform:scale(1);transition:transform .8s var(--view-switch-spring),color .25s cubic-bezier(.25,.46,.45,.94);-webkit-tap-highlight-color:transparent}
+.view-switch[data-view-motion]>button[aria-selected=true]{background:transparent;box-shadow:none}
+.view-switch[data-view-motion]>button:active{transform:scale(.94);transition-duration:.1s;transition-timing-function:linear}
+@media(hover:hover){.view-switch[data-view-motion]>button:hover{color:#233c35}}
+@media(prefers-reduced-motion:reduce){.view-switch[data-view-motion]>button,.view-switch[data-view-motion] .view-switch-pill{transition:none!important}.view-switch[data-view-motion]>button:active{transform:none}}

@@ -1,0 +1,3 @@
+(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`v2026-11-13-62d0a3b`}}catch{}})();import{t as e}from"./fullPageLoader-Wj59trYc.js";import"./route-admin-DXSC5byX.js";export{e as HydrateFallback};
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="546f4894-43b0-5faf-92fc-6881a7460c3d")}catch(e){}}();
+//# debugId=546f4894-43b0-5faf-92fc-6881a7460c3d
