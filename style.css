@@ -1,6 +1,8 @@
 @font-face{font-family:Agimon Hand;src:url('/assets/caveat-700.ttf') format('truetype');font-weight:700;font-style:normal;font-display:block}
 /* The reference logo had its own optical offset. Our SVG fills its viewBox. */
 ._header_1ctqk_2 ._logo_1ctqk_44{top:0}
+/* Keep the hamburger consistent over every page section and menu state. */
+._header_1ctqk_2 ._burgerButton_1ctqk_60 .button-inner{background-color:#19171c!important;color:#fff}
 .agimon-header-brand{display:flex;align-items:center;gap:8px;line-height:1;white-space:nowrap}
 .agimon-header-brand .brand-wordmark{display:block!important;width:auto!important;height:28px!important;max-width:none}
 .agimon-header-brand .brand-blob{--face-reference-size:24px;display:block;width:28px;height:28px;flex:none;transform-origin:center;will-change:transform}
@@ -32,7 +34,7 @@
 ._main_1pbcf_1 .agimon-hero+[data-sentry-component=TemplatesCarousel]{margin-top:72px}
 @media(max-width:1024px){
  .agimon-header-brand{gap:7px}.agimon-header-brand .brand-wordmark{height:24px!important}.agimon-header-brand .brand-blob{--face-reference-size:20px;width:24px;height:24px}
- .agimon-hero h1.agimon-headline{font-size:clamp(43px,14.25vw,64px)!important;line-height:.98!important;letter-spacing:-.035em!important}
+ .agimon-hero h1.agimon-headline{width:100%;max-width:none;font-size:clamp(43px,14.25vw,64px)!important;line-height:.98!important;letter-spacing:-.035em!important}
  .agimon-hero .mobile-break{display:block;height:.045em}
  .agimon-hero .intro-spacer{height:47px;min-height:47px}
  .agimon-hero .section-centered-header .container{row-gap:35px!important}
