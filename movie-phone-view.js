@@ -2,6 +2,7 @@
 export const PHONE_MOVIE_QUERY = '(max-width:700px)';
 
 export function isPhoneMovie(host, media = matchMedia(PHONE_MOVIE_QUERY)) {
+  if (host.hasAttribute('data-desktop-preview')) return false;
   const width = host.getBoundingClientRect().width;
   return media.matches || (width > 0 && width <= 700);
 }
