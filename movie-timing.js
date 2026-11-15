@@ -1,10 +1,21 @@
 // The artwork fades inside a persistent sand stage; transport controls stay usable.
-export const MOVIE_FADE_END = 52;
+export const MOVIE_FADE_END = 115.5;
 export const MOVIE_RESET_HOLD = 1.75;
 export const MOVIE_DURATION = MOVIE_FADE_END + MOVIE_RESET_HOLD;
 export const MOBILE_REQUEST_AT = 2.4;
 export const MOBILE_READING_HOLD_AT = 2.95;
 export const MOBILE_READING_HOLD = 2;
+
+// The hourglass uses playback seconds 49–52. Delay subsequent storyboard
+// actions by two seconds: first cursor at 52.8, Calendar opens at 54.
+export function movieStoryTime(time) {
+  const story = time < 49 ? time : Math.max(49, time - 2);
+  // Slow the composer beat to show slash filtering, item selection and the
+  // editable quantity. Everything after it keeps the same relative timing.
+  if (story <= 63) return story;
+  if (story < 71) return 63 + (story - 63) / 2;
+  return story - 4;
+}
 
 export function movieStageOpacity(time, reducedMotion = false) {
   if (reducedMotion) return 1;

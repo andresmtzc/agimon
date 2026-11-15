@@ -531,3 +531,15 @@ export const movieCopy = {
     panelChat: 'چیٹ',
   },
 };
+
+import { sceneTwoCopy } from './booking-scene-two-copy.mjs';
+for (const [language, copy] of Object.entries(movieCopy)) {
+  if (!sceneTwoCopy[language]) throw new Error(`Missing scene-two locale: ${language}`);
+  Object.assign(copy, sceneTwoCopy[language]);
+}
+
+import { summaryCopy } from './booking-summary-copy.mjs';
+for (const [language, copy] of Object.entries(movieCopy)) {
+  if (!summaryCopy[language]) throw new Error(`Missing summary locale: ${language}`);
+  Object.assign(copy, summaryCopy[language]);
+}
