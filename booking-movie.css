@@ -2,6 +2,7 @@
 @import url("./movie-view-motion.css");
 @import url("./booking-dashboard.css");
 @import url("./booking-inventory.css");
+@import url("./booking-receipts.css?artwork=independent-header-v4");
 :host{display:block;width:100%;height:100%;min-width:0;container-type:inline-size;color:#223c35;font-family:Inter,Arial,sans-serif;font-size:clamp(11px,1.1cqw,15px);line-height:1.5;letter-spacing:-.025em;font-weight:400;-webkit-font-smoothing:antialiased}
 :host([lang^=ar]),:host([lang^=ur]){font-family:'Agimon Arabic','Noto Sans Arabic',Arial,sans-serif;letter-spacing:0;line-height:1.65}
 :host([lang^=hi]){font-family:'Agimon Devanagari','Noto Sans Devanagari',Arial,sans-serif;letter-spacing:0;line-height:1.6}

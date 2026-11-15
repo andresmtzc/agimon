@@ -1,4 +1,4 @@
-import { isPhoneMovie, mountPhoneMovieView } from './movie-phone-view.js';
+import { isPhoneMovie, mountPhoneMovieView } from './movie-phone-view.js?preview=independent-header-v4';
 // Agimon product movie: persistent sand and a readable mobile opening.
 import { MOVIE_DURATION, MOBILE_REQUEST_AT, MOBILE_READING_HOLD_AT, MOBILE_READING_HOLD, movieStageOpacity, movieStoryTime, advanceMovieClock } from './movie-timing.js';
 import { mountViewSwitchMotion } from './movie-view-motion.js';
@@ -46,7 +46,7 @@ class AgimonBookingMovie extends HTMLElement {
     if (this.root) return;
     this.root = this.shadowRoot || this.attachShadow({mode:'open'});
     this.viewMode=isPhoneMovie(this)?'mobile':this.viewMode||'desktop';
-    this.manualPhone=false;this.activePhonePanel='inbox';this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;
+    this.manualPhone=false;this.activePhonePanel='inbox';this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;this.receiptDetail=null;
     this.openingReadRemaining = MOBILE_READING_HOLD;
     this.t = 0; this.playing = false; this.started = false; this.inView = false; this.raf = 0; this.loops = 0;
     this.motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -120,7 +120,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.setAttribute('view',this.viewMode);
     this.setAttribute('lang',loc); this.setAttribute('dir',this.language.dir);
     this.avatarStylesheet?.removeEventListener('load',this.onAvatarStylesheetLoad);
-    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css"><div class="movie-presentation">
+    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=independent-header-v4"><div class="movie-presentation">
       <div class="view-switch" role="tablist" aria-label="${this.text('viewOptions')}">${['desktop','mobile'].map(view=>`<button type="button" role="tab" id="view-${view}" data-view="${view}" aria-controls="movie-screen" aria-selected="${view===this.viewMode}" tabindex="${view===this.viewMode?0:-1}">${this.text(view==='desktop'?'viewDesktop':'viewMobile')}</button>`).join('')}</div>
       <div class="mobile-intro"><h3>${this.text('mobileHeadline')}</h3><p>${this.text('mobileBody')}</p></div>
       <div class="film" id="movie-screen" role="tabpanel" aria-label="${escape(this.copy.loopDescription+" "+this.copy.sceneDescription+" "+this.copy.summaryDescription)}">
@@ -143,6 +143,13 @@ class AgimonBookingMovie extends HTMLElement {
     // Small transport buttons sit outside the product UI. Tapping the picture
     // also pauses/resumes, without introducing a timeline or seeking controls.
     this.$('.app-stage').addEventListener('click',event=>{
+      const receiptOpen=event.target.closest('[data-target=receipt]');
+      const receiptClose=event.target.closest('[data-receipt-close]');
+      if(receiptOpen||receiptClose){
+        this.receiptDetail=Boolean(receiptOpen);this.playing=false;this.manualPhone=this.viewMode==='mobile';
+        if(this.manualPhone)this.activePhonePanel='work';
+        this.render(true);this.syncPlayback();return;
+      }
       const itemOpen=event.target.closest('[data-inventory-open]');
       const itemClose=event.target.closest('[data-inventory-close]');
       if(itemOpen||itemClose){
@@ -368,10 +375,17 @@ class AgimonBookingMovie extends HTMLElement {
       ${booked?`<div class="booked-event" data-target="event" data-duration="30">${this.avatar('mia','','event-avatar')}<strong>${this.text('customerName')}${icon('check')}</strong><span>${this.text('treatment')} · ${this.text('duration')}</span><small><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></small></div>`:`<div class="slot slot-one ${first?'chosen':''}" data-target="slot-one" data-duration="30"><span>${this.text('slotDuration',{start:this.values.firstTime,end:this.values.firstEnd})}</span>${first?icon('check'):icon('plus')}</div><div class="slot slot-two ${second?'chosen':''}" data-target="slot-two" data-duration="30"><span>${this.text('slotDuration',{start:this.values.time,end:this.values.end})}</span>${second?icon('check'):icon('plus')}</div>`}</div>${detail?`<div class="appointment-detail"><div class="appointment-person">${this.avatar('mia')}<strong>${this.text('customerName')}</strong></div><span>${this.text('treatment')} · ${this.text('duration')}</span><span><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></span><span>${this.text('nurse')}</span><span class="arrival-action ${arrived?'is-arrived':''}" data-target="arrived">${icon('check')}${this.text(arrived?'arrived':'markArrived')}</span></div>`:''}</div><div class="calendar-bottom">${booked?`<span>${icon('check')}${this.text('eventNote')} · ${this.text(this.storyTime>=39.8?'depositVerified':'depositPending')}</span>`:`<div><strong>${this.text('treatment')}</strong><span>${second?this.text('selectedTimes'):this.text('chooseTimes')}</span></div><span class="forward-action ${second?'enabled':''}" data-target="forward">${this.text('forward')}${icon('arrow')}</span>`}</div>`;
   }
   receipts() {
-    const detail=this.storyTime>=35&&this.summaryRecord!=='receipts', verified=this.storyTime>=39.8, hasMia=this.storyTime>=29.1;
+    const detail=this.receiptDetail??(this.storyTime>=35&&this.summaryRecord!=='receipts');
+    const verified=this.storyTime>=39.8,hasMia=this.storyTime>=29.1;
     const pending=hasMia&&!verified?3:2;
     const miaRow=`<div class="receipt-row active ${verified?'is-verified':''}" data-target="receipt"><span class="verify-box ${verified?'checked':''}">${verified?icon('check'):''}</span>${this.avatar('mia')}<div><strong>${this.text('customerName')}</strong><span>${this.text('treatment')}</span><small>${escape(this.values.shortDay)}</small></div><b>${escape(this.values.amount)}</b></div>`;
-    return this.header(this.text('receipts'),this.text('receiptCount',{count:pending}),`<span class="tool-avatar">${icon('receipt')}</span>`)+`<div class="receipts-body"><div class="receipt-section-title"><h3>${this.text('pending')}</h3><span>${pending}</span></div><div class="receipt-layout ${detail?'detail-open':''}"><div class="receipt-queue">${hasMia&&!verified?miaRow:''}${['luna','daniel'].map((person,i)=>`<div class="receipt-row subdued"><span class="verify-box"></span>${this.avatar(person)}<div><strong>${i?'Daniel Kim':'Luna Piel'}</strong><span>${this.text('previousReceipt')}</span></div><b>${new Intl.NumberFormat(this.language.locale,{style:'currency',currency:'MXN',currencyDisplay:'code',maximumFractionDigits:0}).format(i?300:400)}</b></div>`).join('')}<div class="history-row">${icon('chevron')}${this.text('verifiedHistory')}</div>${verified?miaRow:''}</div><div class="receipt-detail"><div class="detail-customer"><span class="verify-box receipt-checkbox ${verified?'checked':''}" data-target="verify" title="${this.text('verifyPayment')}">${verified?icon('check'):''}</span>${this.avatar('mia')}<div><strong class="receipt-customer-link" data-target="receipt-customer">${this.text('customerName')}</strong><span>${this.text('receiptCaption')}</span></div><span class="source-icon">${icon('arrow')}</span></div>${this.paper()}<div class="review-state ${verified?'verified':''}">${icon(verified?'check':'clock')}<span>${verified?this.text('verifiedBy',{name:this.copy.teamMember}):this.text('needsReview')}</span></div><div class="detail-source">${icon('attachment')}${this.text('source')} · WhatsApp</div></div></div></div>`;
+    const queue=`<div class="receipt-section-title"><h3>${this.text('pending')}</h3><span>${pending}</span></div><div class="receipt-queue">${hasMia&&!verified?miaRow:''}${['luna','daniel'].map((person,i)=>`<div class="receipt-row subdued"><span class="verify-box"></span>${this.avatar(person)}<div><strong>${i?'Daniel Kim':'Luna Piel'}</strong><span>${this.text('previousReceipt')}</span></div><b>${new Intl.NumberFormat(this.language.locale,{style:'currency',currency:'MXN',currencyDisplay:'code',maximumFractionDigits:0}).format(i?300:400)}</b></div>`).join('')}<div class="history-row">${icon('chevron')}${this.text('verifiedHistory')}</div>${verified?miaRow:''}</div>`;
+    const pane=`<aside class="receipt-detail" data-receipt-pane aria-label="${this.text('receiptSelected')}">
+      <header class="work-header receipt-detail-heading"><button type="button" class="receipt-back" data-receipt-close aria-label="${this.text('receipts')}" title="${this.text('receipts')}">${icon('back')}</button><div><strong>${this.text('receiptFile')}</strong><span><bdi>AG — 2048</bdi></span></div><span class="header-more">${icon('more')}</span></header>
+      <div class="receipt-detail-content"><div class="receipt-artwork"><div class="detail-customer"><span class="verify-box receipt-checkbox ${verified?'checked':''}" data-target="verify" title="${this.text('verifyPayment')}">${verified?icon('check'):''}</span>${this.avatar('mia')}<div><strong class="receipt-customer-link" data-target="receipt-customer">${this.text('customerName')}</strong><span>${this.text('receiptCaption')}</span></div><span class="source-icon">${icon('arrow')}</span></div>${this.paper()}<div class="review-state ${verified?'verified':''}">${icon(verified?'check':'clock')}<span>${verified?this.text('verifiedBy',{name:this.copy.teamMember}):this.text('needsReview')}</span></div><div class="detail-source">${icon('attachment')}${this.text('source')} · WhatsApp</div></div></div>
+    </aside>`;
+    const listHeader=this.header(this.text('receipts'),this.text('receiptCount',{count:pending}),`<span class="tool-avatar">${icon('receipt')}</span>`);
+    return `<div class="receipts-workspace receipt-layout ${detail?'detail-open':''}"><section class="receipt-list-pane">${listHeader}<div class="receipts-body"><div class="receipt-main">${queue}</div></div></section>${pane}</div>`;
   }
   ops() {
     const t=this.storyTime,draft=t>=63&&t<67,picked=t>=STOCK_COMPOSE.pick;
@@ -568,6 +582,10 @@ class AgimonBookingMovie extends HTMLElement {
       const settle=reduced?1:progress(t,39.8,.3);
       verified.style.transform=`scale(${1+Math.sin(settle*Math.PI)*.12})`;
     }
+    this.root.querySelectorAll('.workspace .detail-open [data-receipt-pane]').forEach(pane=>{
+      const reveal=reduced||this.receiptDetail===true?1:easeOut(progress(t,35,.4));
+      pane.style.opacity=String(reveal);pane.style.transform=`translateX(${(this.language.dir==='rtl'?-1:1)*(1-reveal)*18}px)`;
+    });
     this.root.querySelectorAll('.inventory-detail-pane').forEach(pane=>{
       const reveal=reduced||this.inventoryDetail===true?1:easeOut(progress(t,77,.4));
       pane.style.opacity=String(reveal);pane.style.transform=`translateX(${(this.language.dir==='rtl'?-1:1)*(1-reveal)*18}px)`;
@@ -651,7 +669,7 @@ class AgimonBookingMovie extends HTMLElement {
     pointer.style.top=`${bounds.top-stage.top+bounds.height*.57}px`;
   }
   seek(t) {
-    this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;
+    this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;this.receiptDetail=null;
     this.t=Math.max(0,Math.min(MOVIE_DURATION,t));
     this.openingReadRemaining=this.t<MOBILE_READING_HOLD_AT?MOBILE_READING_HOLD:0;
     this.lastFrame=0;this.render(true);this.syncPlayback();
@@ -666,7 +684,7 @@ class AgimonBookingMovie extends HTMLElement {
         this.t=clock.time;this.openingReadRemaining=clock.holdRemaining;
       }
       this.lastFrame=now;this.render();
-      if(this.t>=MOVIE_DURATION){this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;this.t=0;this.openingReadRemaining=MOBILE_READING_HOLD;this.loops++;this.dataset.movieLoops=String(this.loops);this.lastState='';this.lastAvatarFrame=-1;this.render(true);}
+      if(this.t>=MOVIE_DURATION){this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;this.receiptDetail=null;this.t=0;this.openingReadRemaining=MOBILE_READING_HOLD;this.loops++;this.dataset.movieLoops=String(this.loops);this.lastState='';this.lastAvatarFrame=-1;this.render(true);}
       this.raf=requestAnimationFrame(tick);
     };
     this.raf=requestAnimationFrame(tick);
