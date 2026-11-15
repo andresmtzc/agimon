@@ -1,4 +1,4 @@
-import { isPhoneMovie, mountPhoneMovieView } from './movie-phone-view.js?preview=independent-header-v4';
+import { isPhoneMovie, mountPhoneMovieView } from './movie-phone-view.js?preview=event-anchor-v5';
 // Agimon product movie: persistent sand and a readable mobile opening.
 import { MOVIE_DURATION, MOBILE_REQUEST_AT, MOBILE_READING_HOLD_AT, MOBILE_READING_HOLD, movieStageOpacity, movieStoryTime, advanceMovieClock } from './movie-timing.js';
 import { mountViewSwitchMotion } from './movie-view-motion.js';
@@ -9,6 +9,7 @@ import { renderSVG } from './renderer.js';
 import { renderDashboard } from './booking-dashboard.mjs';
 import { renderInventoryBody } from './booking-inventory.mjs';
 import { STOCK_DEMO } from './booking-demo-stock.mjs';
+import { appointmentPosition } from './booking-calendar-position.mjs';
 
 // The same source of truth as the approved header/logo lab, including optical sizes.
 const presetResponse = await fetch(new URL('./assets/selected-logo-preset.json', import.meta.url));
@@ -120,7 +121,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.setAttribute('view',this.viewMode);
     this.setAttribute('lang',loc); this.setAttribute('dir',this.language.dir);
     this.avatarStylesheet?.removeEventListener('load',this.onAvatarStylesheetLoad);
-    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=independent-header-v4"><div class="movie-presentation">
+    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=event-anchor-v5"><div class="movie-presentation">
       <div class="view-switch" role="tablist" aria-label="${this.text('viewOptions')}">${['desktop','mobile'].map(view=>`<button type="button" role="tab" id="view-${view}" data-view="${view}" aria-controls="movie-screen" aria-selected="${view===this.viewMode}" tabindex="${view===this.viewMode?0:-1}">${this.text(view==='desktop'?'viewDesktop':'viewMobile')}</button>`).join('')}</div>
       <div class="mobile-intro"><h3>${this.text('mobileHeadline')}</h3><p>${this.text('mobileBody')}</p></div>
       <div class="film" id="movie-screen" role="tabpanel" aria-label="${escape(this.copy.loopDescription+" "+this.copy.sceneDescription+" "+this.copy.summaryDescription)}">
@@ -372,7 +373,7 @@ class AgimonBookingMovie extends HTMLElement {
     const arrival=this.storyTime>=52, detail=arrival&&this.storyTime>=54, arrived=this.storyTime>=57;
     const cols=this.copy.weekDays.map((name,i)=>`<div class="weekday ${i===4?'active':''}"><span>${escape(name)}</span><strong>${16+i}</strong></div>`).join('');
     return this.header(this.text('calendar'),this.text('room'),`<span class="tool-avatar">${icon('calendar')}</span>`)+`<div class="calendar-body"><div class="calendar-title"><strong>${escape(this.values.shortDay)}</strong><span class="calendar-arrows">${icon('back')}${icon('chevron')}</span></div><div class="week-strip">${cols}</div><div class="room-strip">${[1,2,3].map(n=>`<span>${this.text('room')} ${n}</span>`).join('')}</div><div class="calendar-grid"><div class="hour-labels">${[12,13,14,15,16].map((h,i)=>`<span style="top:${i*25}%">${h}:00</span>`).join('')}</div><div class="grid-columns"><div></div><div></div><div></div></div><div class="other-event"><span>Daniel Kim</span><small>${this.text('otherService')}</small></div><div class="other-event second"><span>Luna Piel</span><small>${this.text('otherService')}</small></div>
-      ${booked?`<div class="booked-event" data-target="event" data-duration="30">${this.avatar('mia','','event-avatar')}<strong>${this.text('customerName')}${icon('check')}</strong><span>${this.text('treatment')} · ${this.text('duration')}</span><small><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></small></div>`:`<div class="slot slot-one ${first?'chosen':''}" data-target="slot-one" data-duration="30"><span>${this.text('slotDuration',{start:this.values.firstTime,end:this.values.firstEnd})}</span>${first?icon('check'):icon('plus')}</div><div class="slot slot-two ${second?'chosen':''}" data-target="slot-two" data-duration="30"><span>${this.text('slotDuration',{start:this.values.time,end:this.values.end})}</span>${second?icon('check'):icon('plus')}</div>`}</div>${detail?`<div class="appointment-detail"><div class="appointment-person">${this.avatar('mia')}<strong>${this.text('customerName')}</strong></div><span>${this.text('treatment')} · ${this.text('duration')}</span><span><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></span><span>${this.text('nurse')}</span><span class="arrival-action ${arrived?'is-arrived':''}" data-target="arrived">${icon('check')}${this.text(arrived?'arrived':'markArrived')}</span></div>`:''}</div><div class="calendar-bottom">${booked?`<span>${icon('check')}${this.text('eventNote')} · ${this.text(this.storyTime>=39.8?'depositVerified':'depositPending')}</span>`:`<div><strong>${this.text('treatment')}</strong><span>${second?this.text('selectedTimes'):this.text('chooseTimes')}</span></div><span class="forward-action ${second?'enabled':''}" data-target="forward">${this.text('forward')}${icon('arrow')}</span>`}</div>`;
+      ${booked?`<div class="booked-event ${detail?'is-open':''}" data-target="event" data-duration="30">${this.avatar('mia','','event-avatar')}<strong>${this.text('customerName')}${icon('check')}</strong><span>${this.text('treatment')} · ${this.text('duration')}</span><small><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></small></div>`:`<div class="slot slot-one ${first?'chosen':''}" data-target="slot-one" data-duration="30"><span>${this.text('slotDuration',{start:this.values.firstTime,end:this.values.firstEnd})}</span>${first?icon('check'):icon('plus')}</div><div class="slot slot-two ${second?'chosen':''}" data-target="slot-two" data-duration="30"><span>${this.text('slotDuration',{start:this.values.time,end:this.values.end})}</span>${second?icon('check'):icon('plus')}</div>`}</div>${detail?`<div class="appointment-detail"><div class="appointment-person">${this.avatar('mia')}<strong>${this.text('customerName')}</strong></div><span>${this.text('treatment')} · ${this.text('duration')}</span><span><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></span><span>${this.text('nurse')}</span><span class="arrival-action ${arrived?'is-arrived':''}" data-target="arrived">${icon('check')}${this.text(arrived?'arrived':'markArrived')}</span></div>`:''}</div><div class="calendar-bottom">${booked?`<span>${icon('check')}${this.text('eventNote')} · ${this.text(this.storyTime>=39.8?'depositVerified':'depositPending')}</span>`:`<div><strong>${this.text('treatment')}</strong><span>${second?this.text('selectedTimes'):this.text('chooseTimes')}</span></div><span class="forward-action ${second?'enabled':''}" data-target="forward">${this.text('forward')}${icon('arrow')}</span>`}</div>`;
   }
   receipts() {
     const detail=this.receiptDetail??(this.storyTime>=35&&this.summaryRecord!=='receipts');
@@ -578,6 +579,7 @@ class AgimonBookingMovie extends HTMLElement {
       event.style.opacity=String(.35+.65*reveal);
       event.style.transform=`translateY(${(1-reveal)*6}px)`;
     }
+    this.positionAppointmentDetails();
     for(const verified of this.root.querySelectorAll('.receipt-checkbox.checked')){
       const settle=reduced?1:progress(t,39.8,.3);
       verified.style.transform=`scale(${1+Math.sin(settle*Math.PI)*.12})`;
@@ -595,6 +597,19 @@ class AgimonBookingMovie extends HTMLElement {
       chat.scrollTop=chat.scrollHeight;
       if(target){const a=target.getBoundingClientRect(),b=chat.getBoundingClientRect();chat.scrollTop+=a.top-b.top-(b.height-a.height)/2;}
     });
+  }
+  positionAppointmentDetails() {
+    for(const card of this.root.querySelectorAll('.appointment-detail')){
+      const body=card.closest('.calendar-body'),event=body.querySelector('[data-target=event]');
+      if(!event||!body.clientWidth||!body.clientHeight)continue;
+      const bounds=body.getBoundingClientRect(),anchor=event.getBoundingClientRect();
+      const position=appointmentPosition({
+        event:{left:anchor.left-bounds.left,right:anchor.right-bounds.left,top:anchor.top-bounds.top,bottom:anchor.bottom-bounds.top},
+        card:{width:card.offsetWidth,height:card.offsetHeight},bounds:{width:body.clientWidth,height:body.clientHeight},rtl:this.language.dir==='rtl',
+      });
+      card.style.left=`${position.x}px`;card.style.top=`${position.y}px`;
+      card.dataset.placement=position.side;
+    }
   }
   updatePlaybackState() {
     if(!this.$)return;
