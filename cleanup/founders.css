@@ -17,6 +17,8 @@
 .agimon-faq .agimon-founder--pepito img {
   object-fit:contain;border-radius:0;background:transparent;box-shadow:none;filter:none;
 }
+.agimon-faq agimon-pepito { display:block;width:64px;height:64px;flex:none; }
+.agimon-faq agimon-pepito svg { display:block;width:100%;height:100%;overflow:visible; }
 .agimon-faq a.agimon-founder:hover .agimon-founder-name {
   text-decoration:underline;text-underline-offset:3px;
 }
@@ -34,4 +36,5 @@
   .agimon-faq .agimon-founders { gap:22px 16px; }
   .agimon-faq .agimon-founder { font-size:14px; }
   .agimon-faq .agimon-founder img { width:68px;height:68px; }
+  .agimon-faq agimon-pepito { width:68px;height:68px; }
 }
