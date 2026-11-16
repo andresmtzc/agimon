@@ -4,10 +4,10 @@
 export const languages = [
   {
     id: 'en', code: 'EN', flag: 'us', name: 'English', locale: 'en-US', dir: 'ltr',
-    headline: 'The chat app that works for you.',
+    headline: "The chat app that runs your business.",
     lines: [
-      [{ text: 'The' }, { text: 'chat', accent: 'chat' }, { text: 'app' }],
-      [{ text: 'that' }, { text: 'works', accent: 'works' }, { text: 'for', mobileBreakBefore: true }, { text: 'you.', accent: 'you' }],
+      [{"text":"The"},{"text":"chat","accent":"chat"},{"text":"app"}],
+      [{"text":"that"},{"text":"runs","accent":"works"},{"text":"your"},{"text":"business.","accent":"you","mobileBreakBefore":true}],
     ],
     captionLead: 'Your customers keep using the apps they know.',
     captionEnd: 'Your team works in Agimon.',
@@ -17,10 +17,10 @@ export const languages = [
   },
   {
     id: 'es', code: 'ES', flag: 'mx', name: 'Español', locale: 'es-MX', dir: 'ltr',
-    headline: 'La app de chat que trabaja para ti.',
+    headline: "La app de chat que maneja tu negocio.",
     lines: [
-      [{ text: 'La' }, { text: 'app' }, { text: 'de' }, { text: 'chat', accent: 'chat' }],
-      [{ text: 'que' }, { text: 'trabaja', accent: 'works' }, { text: 'para' }, { text: 'ti.', accent: 'you' }],
+      [{"text":"La"},{"text":"app"},{"text":"de"},{"text":"chat","accent":"chat"}],
+      [{"text":"que"},{"text":"maneja","accent":"works"},{"text":"tu"},{"text":"negocio.","accent":"you","mobileBreakBefore":true}],
     ],
     captionLead: 'Tus clientes siguen usando las apps que conocen.',
     captionEnd: 'Tu equipo trabaja en Agimon.',
@@ -30,10 +30,10 @@ export const languages = [
   },
   {
     id: 'pt', code: 'PT', flag: 'br', name: 'Português', locale: 'pt-BR', dir: 'ltr',
-    headline: 'O app de chat que trabalha para você.',
+    headline: "O app de chat que gerencia seu negócio.",
     lines: [
-      [{ text: 'O' }, { text: 'app' }, { text: 'de' }, { text: 'chat', accent: 'chat' }],
-      [{ text: 'que' }, { text: 'trabalha', accent: 'works' }, { text: 'para' }, { text: 'você.', accent: 'you' }],
+      [{"text":"O"},{"text":"app"},{"text":"de"},{"text":"chat","accent":"chat"}],
+      [{"text":"que"},{"text":"gerencia","accent":"works"},{"text":"seu","mobileBreakBefore":true},{"text":"negócio.","accent":"you"}],
     ],
     captionLead: 'Seus clientes continuam usando os apps que já conhecem.',
     captionEnd: 'Sua equipe trabalha no Agimon.',
@@ -43,10 +43,10 @@ export const languages = [
   },
   {
     id: 'id', code: 'ID', flag: 'id', name: 'Bahasa Indonesia', locale: 'id-ID', dir: 'ltr',
-    headline: 'Aplikasi chat yang bekerja untuk Anda.',
+    headline: "Aplikasi chat yang mengelola bisnis Anda.",
     lines: [
-      [{ text: 'Aplikasi' }, { text: 'chat', accent: 'chat' }],
-      [{ text: 'yang' }, { text: 'bekerja', accent: 'works' }, { text: 'untuk' }, { text: 'Anda.', accent: 'you' }],
+      [{"text":"Aplikasi"},{"text":"chat","accent":"chat"}],
+      [{"text":"yang"},{"text":"mengelola","accent":"works"},{"text":"bisnis","accent":"you","mobileBreakBefore":true},{"text":"Anda."}],
     ],
     captionLead: 'Pelanggan Anda tetap menggunakan aplikasi yang mereka kenal.',
     captionEnd: 'Tim Anda bekerja di Agimon.',
@@ -56,10 +56,10 @@ export const languages = [
   },
   {
     id: 'hi', code: 'HI', flag: 'in', name: 'हिन्दी', locale: 'hi-IN', dir: 'ltr',
-    headline: 'चैट ऐप जो आपके लिए काम करता है।',
+    headline: "चैट ऐप जो आपका कारोबार चलाता है।",
     lines: [
-      [{ text: 'चैट', accent: 'chat' }, { text: 'ऐप' }],
-      [{ text: 'जो' }, { text: 'आपके', accent: 'you' }, { text: 'लिए' }, { text: 'काम', accent: 'works' }, { text: 'करता है।' }],
+      [{"text":"चैट","accent":"chat"},{"text":"ऐप"}],
+      [{"text":"जो"},{"text":"आपका"},{"text":"कारोबार","accent":"you","mobileBreakBefore":true},{"text":"चलाता","accent":"works"},{"text":"है।"}],
     ],
     captionLead: 'आपके ग्राहक अपने परिचित ऐप्स का इस्तेमाल जारी रखते हैं।',
     captionEnd: 'आपकी टीम Agimon में काम करती है।',
@@ -69,10 +69,10 @@ export const languages = [
   },
   {
     id: 'ar', code: 'AR', flag: 'sa', name: 'العربية', locale: 'ar-SA', dir: 'rtl',
-    headline: 'تطبيق الدردشة الذي يعمل من أجلك.',
+    headline: "تطبيق الدردشة الذي يدير أعمالك.",
     lines: [
-      [{ text: 'تطبيق' }, { text: 'الدردشة', accent: 'chat' }],
-      [{ text: 'الذي' }, { text: 'يعمل', accent: 'works' }, { text: 'من' }, { text: 'أجلك.', accent: 'you' }],
+      [{"text":"تطبيق"},{"text":"الدردشة","accent":"chat"}],
+      [{"text":"الذي"},{"text":"يدير","accent":"works"},{"text":"أعمالك.","accent":"you","mobileBreakBefore":true}],
     ],
     captionLead: 'يواصل عملاؤك استخدام التطبيقات التي يعرفونها.',
     captionEnd: 'يعمل فريقك داخل Agimon.',
@@ -82,10 +82,10 @@ export const languages = [
   },
   {
     id: 'ms', code: 'MS', flag: 'my', name: 'Bahasa Melayu', locale: 'ms-MY', dir: 'ltr',
-    headline: 'Aplikasi sembang yang bekerja untuk anda.',
+    headline: "Aplikasi sembang yang mengurus bisnes anda.",
     lines: [
-      [{ text: 'Aplikasi' }, { text: 'sembang', accent: 'chat' }],
-      [{ text: 'yang' }, { text: 'bekerja', accent: 'works' }, { text: 'untuk' }, { text: 'anda.', accent: 'you' }],
+      [{"text":"Aplikasi"},{"text":"sembang","accent":"chat"}],
+      [{"text":"yang"},{"text":"mengurus","accent":"works"},{"text":"bisnes","accent":"you","mobileBreakBefore":true},{"text":"anda."}],
     ],
     captionLead: 'Pelanggan anda terus menggunakan aplikasi yang mereka kenali.',
     captionEnd: 'Pasukan anda bekerja dalam Agimon.',
@@ -95,10 +95,10 @@ export const languages = [
   },
   {
     id: 'ur', code: 'UR', flag: 'pk', name: 'اردو', locale: 'ur-PK', dir: 'rtl',
-    headline: 'چیٹ ایپ جو آپ کے لیے کام کرتی ہے۔',
+    headline: "چیٹ ایپ جو آپ کا کاروبار چلاتی ہے۔",
     lines: [
-      [{ text: 'چیٹ', accent: 'chat' }, { text: 'ایپ' }],
-      [{ text: 'جو' }, { text: 'آپ', accent: 'you' }, { text: 'کے لیے' }, { text: 'کام', accent: 'works' }, { text: 'کرتی ہے۔' }],
+      [{"text":"چیٹ","accent":"chat"},{"text":"ایپ"}],
+      [{"text":"جو"},{"text":"آپ کا"},{"text":"کاروبار","accent":"you","mobileBreakBefore":true},{"text":"چلاتی","accent":"works"},{"text":"ہے۔"}],
     ],
     captionLead: 'آپ کے گاہک وہی ایپس استعمال کرتے رہتے ہیں جن سے وہ واقف ہیں۔',
     captionEnd: 'آپ کی ٹیم Agimon میں کام کرتی ہے۔',
@@ -108,10 +108,10 @@ export const languages = [
   },
   {
     id: 'fr', code: 'FR', flag: 'fr', name: 'Français', locale: 'fr-FR', dir: 'ltr',
-    headline: 'L’app de chat qui travaille pour vous.',
+    headline: "L’app de chat qui gère votre entreprise.",
     lines: [
-      [{ text: 'L’app' }, { text: 'de' }, { text: 'chat', accent: 'chat' }],
-      [{ text: 'qui' }, { text: 'travaille', accent: 'works' }, { text: 'pour' }, { text: 'vous.', accent: 'you' }],
+      [{"text":"L’app"},{"text":"de"},{"text":"chat","accent":"chat"}],
+      [{"text":"qui"},{"text":"gère","accent":"works"},{"text":"votre"},{"text":"entreprise.","accent":"you","mobileBreakBefore":true}],
     ],
     captionLead: 'Vos clients continuent d’utiliser les applications qu’ils connaissent.',
     captionEnd: 'Votre équipe travaille dans Agimon.',
@@ -121,10 +121,10 @@ export const languages = [
   },
   {
     id: 'de', code: 'DE', flag: 'de', name: 'Deutsch', locale: 'de-DE', dir: 'ltr',
-    headline: 'Die Chat-App, die für dich arbeitet.',
+    headline: "Die Chat-App, die dein Geschäft führt.",
     lines: [
-      [{ text: 'Die' }, { text: 'Chat-App,', accent: 'chat' }],
-      [{ text: 'die' }, { text: 'für' }, { text: 'dich', accent: 'you' }, { text: 'arbeitet', accent: 'works' }, { text: '.' }],
+      [{"text":"Die"},{"text":"Chat-App,","accent":"chat"}],
+      [{"text":"die"},{"text":"dein"},{"text":"Geschäft","accent":"you","mobileBreakBefore":true},{"text":"führt.","accent":"works"}],
     ],
     captionLead: 'Deine Kunden nutzen weiter die Apps, die sie kennen.',
     captionEnd: 'Dein Team arbeitet in Agimon.',
