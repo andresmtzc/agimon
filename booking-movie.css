@@ -286,3 +286,16 @@
 /* The booked-event peek returns directly to the customer conversation. */
 .calendar-back{display:grid;place-items:center;flex:none;width:2em;height:2em;padding:.25em;background:transparent;color:#2f8068;border-radius:50%}
 .calendar-back:hover{background:#e6f2eb}.phone-screen .calendar-back{width:24px;height:32px;padding:3px}:host([dir=rtl]) .calendar-back{transform:scaleX(-1)}
+
+/* Prioritize readable conversation names over the utility dock. */
+.conversation-copy>strong{font-size:1.03em}
+.dock{height:50px;padding:3px 5px;border-radius:16px}
+.dock-item{font-size:9px;gap:3px;padding:3px 2px}
+.dock-item>.icon{width:19px;height:19px}
+.phone-screen>.inbox .conversation-copy>strong{font-size:13px}
+.phone-screen>.inbox .dock{height:50px}
+.phone-screen .mobile-dock .dock{height:48px}
+.phone-screen .mobile-dock .dock-item>.icon{width:17px;height:17px}
+/* Earlier team context stays compact while new activity remains prominent. */
+.ops-chat .bubble-row[data-arrived-at^="-"] .bubble{padding:.5em .85em .35em;line-height:1.4}
+.ops-chat .bubble-row[data-arrived-at^="-"] .bubble-label{margin-bottom:.2em}

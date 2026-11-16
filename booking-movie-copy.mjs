@@ -532,7 +532,7 @@ export const movieCopy = {
   },
 };
 
-import { sceneTwoCopy } from './booking-scene-two-copy.mjs';
+import { sceneTwoCopy } from './booking-scene-two-copy.mjs?release=chat-context-v10';
 for (const [language, copy] of Object.entries(movieCopy)) {
   if (!sceneTwoCopy[language]) throw new Error(`Missing scene-two locale: ${language}`);
   Object.assign(copy, sceneTwoCopy[language]);
