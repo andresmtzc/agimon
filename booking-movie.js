@@ -636,9 +636,9 @@ class AgimonBookingMovie extends HTMLElement {
       const time=pinned||this.motion.matches?0:this.storyTime;
       const frame=`${format}:${size}:${Math.floor(time*24)}`;
       if(frame===host.dataset.avatarFrame)return;
-      // Keep the saved face geometry and its 32px optical cutoff unchanged.
-      // The pinned inbox avatar only disables motion.
-      const preset=pinned ? {...avatarPreset,motion:false} : avatarPreset;
+      // Use the same approved face proportions at every inbox size.
+      // Tiny-icon enlargement crowds the eyes in the mobile circle crop.
+      const preset=pinned ? {...avatarPreset,motion:false,opticalEnabled:false} : avatarPreset;
       host.innerHTML=renderSVG(preset,{format,size,time,id:`booking-avatar-${index}`,animated:!pinned&&!this.motion.matches}).replace('aria-label="Agimon tomato"','aria-label="Agimon"');
       host.dataset.avatarFrame=frame;
     });
