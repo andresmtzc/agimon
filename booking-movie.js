@@ -121,7 +121,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.setAttribute('view',this.viewMode);
     this.setAttribute('lang',loc); this.setAttribute('dir',this.language.dir);
     this.avatarStylesheet?.removeEventListener('load',this.onAvatarStylesheetLoad);
-    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=event-anchor-v5"><div class="movie-presentation">
+    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=calendar-back-v6"><div class="movie-presentation">
       <div class="view-switch" role="tablist" aria-label="${this.text('viewOptions')}">${['desktop','mobile'].map(view=>`<button type="button" role="tab" id="view-${view}" data-view="${view}" aria-controls="movie-screen" aria-selected="${view===this.viewMode}" tabindex="${view===this.viewMode?0:-1}">${this.text(view==='desktop'?'viewDesktop':'viewMobile')}</button>`).join('')}</div>
       <div class="mobile-intro"><h3>${this.text('mobileHeadline')}</h3><p>${this.text('mobileBody')}</p></div>
       <div class="film" id="movie-screen" role="tabpanel" aria-label="${escape(this.copy.loopDescription+" "+this.copy.sceneDescription+" "+this.copy.summaryDescription)}">
@@ -144,6 +144,9 @@ class AgimonBookingMovie extends HTMLElement {
     // Small transport buttons sit outside the product UI. Tapping the picture
     // also pauses/resumes, without introducing a timeline or seeking controls.
     this.$('.app-stage').addEventListener('click',event=>{
+      if(event.target.closest('[data-target=calendar-back]')){
+        this.playing=false;this.manualPhone=false;this.seek(28);return;
+      }
       const receiptOpen=event.target.closest('[data-target=receipt]');
       const receiptClose=event.target.closest('[data-receipt-close]');
       if(receiptOpen||receiptClose){
@@ -343,8 +346,9 @@ class AgimonBookingMovie extends HTMLElement {
     return 'chat';
   }
   stateKey() { return `${this.scene()}:${[1,1.9,MOBILE_REQUEST_AT,5.3,6.9,9.2,12,13.8,BOOKING_CHOICE_AT,18.5,23,29.1,33,35,39.8,42.8,44.4,49,52,54,57,57.8,59,61.5,63,...Object.values(STOCK_COMPOSE),67,69,71.2,73,77,82,85,86,90,91.5,96].filter(at=>this.storyTime>=at).length}`; }
-  header(title,sub,avatar) {
-    return `<header class="work-header"><span class="phone-inbox-back" data-target="inbox-back" title="${this.text('inbox')}">${icon('back')}</span>${avatar}<div><strong>${title}</strong><span>${sub}</span></div><span class="header-more">${icon('more')}</span></header>`;
+  header(title,sub,avatar,backToChat=false) {
+    const back=backToChat?`<button type="button" class="calendar-back" data-target="calendar-back" title="${this.text('viewSource')}" aria-label="${this.text('viewSource')}">${icon('back')}</button>`:`<span class="phone-inbox-back" data-target="inbox-back" title="${this.text('inbox')}">${icon('back')}</span>`;
+    return `<header class="work-header">${back}${avatar}<div><strong>${title}</strong><span>${sub}</span></div><span class="header-more">${icon('more')}</span></header>`;
   }
   bubble(body,kind='incoming',label='',minute='01',arrivedAt=1,highlightAt=null) {
     return `<div class="bubble-row ${kind}" data-arrived-at="${arrivedAt}"${highlightAt===null?'':` data-source-highlight="${highlightAt}"`}><div class="bubble">${label?`<div class="bubble-label">${label}</div>`:''}${body}<span class="message-time" dir="ltr">${arrivedAt>=57?'15':'10'}:${minute}${kind==='human'||kind==='automated'?`<span class=delivery-check>${icon('check')}</span>`:''}</span></div>${arrivedAt===57?`<span class="reply-affordance">${icon('reply')}</span>`:''}</div>`;
@@ -371,8 +375,9 @@ class AgimonBookingMovie extends HTMLElement {
   calendar(booked=this.storyTime>=BOOKING_CHOICE_AT) {
     const first=this.storyTime>=5.3, second=this.storyTime>=6.9;
     const arrival=this.storyTime>=52, detail=arrival&&this.storyTime>=54, arrived=this.storyTime>=57;
+    const backToChat=this.storyTime>=23&&this.storyTime<28&&!this.summaryRecord;
     const cols=this.copy.weekDays.map((name,i)=>`<div class="weekday ${i===4?'active':''}"><span>${escape(name)}</span><strong>${16+i}</strong></div>`).join('');
-    return this.header(this.text('calendar'),this.text('room'),`<span class="tool-avatar">${icon('calendar')}</span>`)+`<div class="calendar-body"><div class="calendar-title"><strong>${escape(this.values.shortDay)}</strong><span class="calendar-arrows">${icon('back')}${icon('chevron')}</span></div><div class="week-strip">${cols}</div><div class="room-strip">${[1,2,3].map(n=>`<span>${this.text('room')} ${n}</span>`).join('')}</div><div class="calendar-grid"><div class="hour-labels">${[12,13,14,15,16].map((h,i)=>`<span style="top:${i*25}%">${h}:00</span>`).join('')}</div><div class="grid-columns"><div></div><div></div><div></div></div><div class="other-event"><span>Daniel Kim</span><small>${this.text('otherService')}</small></div><div class="other-event second"><span>Luna Piel</span><small>${this.text('otherService')}</small></div>
+    return this.header(this.text('calendar'),this.text('room'),`<span class="tool-avatar">${icon('calendar')}</span>`,backToChat)+`<div class="calendar-body"><div class="calendar-title"><strong>${escape(this.values.shortDay)}</strong><span class="calendar-arrows">${icon('back')}${icon('chevron')}</span></div><div class="week-strip">${cols}</div><div class="room-strip">${[1,2,3].map(n=>`<span>${this.text('room')} ${n}</span>`).join('')}</div><div class="calendar-grid"><div class="hour-labels">${[12,13,14,15,16].map((h,i)=>`<span style="top:${i*25}%">${h}:00</span>`).join('')}</div><div class="grid-columns"><div></div><div></div><div></div></div><div class="other-event"><span>Daniel Kim</span><small>${this.text('otherService')}</small></div><div class="other-event second"><span>Luna Piel</span><small>${this.text('otherService')}</small></div>
       ${booked?`<div class="booked-event ${detail?'is-open':''}" data-target="event" data-duration="30">${this.avatar('mia','','event-avatar')}<strong>${this.text('customerName')}${icon('check')}</strong><span>${this.text('treatment')} · ${this.text('duration')}</span><small><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></small></div>`:`<div class="slot slot-one ${first?'chosen':''}" data-target="slot-one" data-duration="30"><span>${this.text('slotDuration',{start:this.values.firstTime,end:this.values.firstEnd})}</span>${first?icon('check'):icon('plus')}</div><div class="slot slot-two ${second?'chosen':''}" data-target="slot-two" data-duration="30"><span>${this.text('slotDuration',{start:this.values.time,end:this.values.end})}</span>${second?icon('check'):icon('plus')}</div>`}</div>${detail?`<div class="appointment-detail"><div class="appointment-person">${this.avatar('mia')}<strong>${this.text('customerName')}</strong></div><span>${this.text('treatment')} · ${this.text('duration')}</span><span><bdi>${escape(this.values.time)}–${escape(this.values.end)}</bdi></span><span>${this.text('nurse')}</span><span class="arrival-action ${arrived?'is-arrived':''}" data-target="arrived">${icon('check')}${this.text(arrived?'arrived':'markArrived')}</span></div>`:''}</div><div class="calendar-bottom">${booked?`<span>${icon('check')}${this.text('eventNote')} · ${this.text(this.storyTime>=39.8?'depositVerified':'depositPending')}</span>`:`<div><strong>${this.text('treatment')}</strong><span>${second?this.text('selectedTimes'):this.text('chooseTimes')}</span></div><span class="forward-action ${second?'enabled':''}" data-target="forward">${this.text('forward')}${icon('arrow')}</span>`}</div>`;
   }
   receipts() {
@@ -649,6 +654,7 @@ class AgimonBookingMovie extends HTMLElement {
     if(t>=7.6&&t<9.2)target='[data-target=forward]';
     if(t>=10.9&&t<12)target='[data-target=send]';
     if(t>=22&&t<23)target='[data-dock=calendar]';
+    if(t>=26.8&&t<28)target='[data-target=calendar-back]';
     if(t>=31.2&&t<33)target='[data-dock=receipt]';
     if(t>=33.5&&t<35)target='[data-target=receipt]';
     if(t>=38.2&&t<40.4)target='[data-target=verify]';
@@ -679,7 +685,7 @@ class AgimonBookingMovie extends HTMLElement {
     pointer.classList.add('visible');
     pointer.classList.toggle('dragging',t>=61.6&&t<62.65);
     const dragRelease=t>=62.65&&t<63?Number(node.dataset.dragDistance||0)-Number(node.dataset.dragOffset||0):0;
-    pointer.classList.toggle('clicking',[1.9,5.3,6.9,9.2,12,23,33,35,39.8,42.8,52,54,57,57.8,59,63,STOCK_COMPOSE.pick,STOCK_COMPOSE.edit,67,71.2,73,77,82,85,86,90,96].some(at=>t>=at-.13&&t<at+.25));
+    pointer.classList.toggle('clicking',[1.9,5.3,6.9,9.2,12,23,28,33,35,39.8,42.8,52,54,57,57.8,59,63,STOCK_COMPOSE.pick,STOCK_COMPOSE.edit,67,71.2,73,77,82,85,86,90,96].some(at=>t>=at-.13&&t<at+.25));
     pointer.style.left=`${bounds.left-stage.left+bounds.width*.65+dragRelease}px`;
     pointer.style.top=`${bounds.top-stage.top+bounds.height*.57}px`;
   }
