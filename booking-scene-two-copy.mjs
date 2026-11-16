@@ -1,6 +1,10 @@
 // Every scene-two label is explicit in all ten landing languages.
 export const sceneTwoCopy = {
   en: {
+    opsRoomReady:"Room 2 is ready.",
+    opsStockReady:"Supplies are restocked.",
+    opsTeamReady:"All set for today.",
+
     panelWork:"Work",
     stockQuantity:"Quantity",
     slashHint:"Use stock",
@@ -20,6 +24,10 @@ export const sceneTwoCopy = {
     sceneDescription:"On appointment day, Mia is marked as arrived. Auto notifies Ops. Sofía replies, selects a stock item with a slash command and enters the quantity. Auto records the stock use, and the inventory detail links back to her message.",
   },
   es: {
+    opsRoomReady:"La sala 2 está lista.",
+    opsStockReady:"Ya repusimos los insumos.",
+    opsTeamReady:"Todo listo para hoy.",
+
     panelWork:"Trabajo",
     stockQuantity:"Cantidad",
     slashHint:"Usar insumos",
@@ -39,6 +47,10 @@ export const sceneTwoCopy = {
     sceneDescription:"El día de la cita, se registra la llegada de Mia. Auto avisa a Operaciones. Sofía responde, selecciona un insumo con un comando de barra y escribe la cantidad. Auto registra el consumo y el detalle del inventario enlaza a su mensaje.",
   },
   pt: {
+    opsRoomReady:"A sala 2 está pronta.",
+    opsStockReady:"Os materiais foram repostos.",
+    opsTeamReady:"Tudo pronto para hoje.",
+
     panelWork:"Trabalho",
     stockQuantity:"Quantidade",
     slashHint:"Usar insumos",
@@ -58,6 +70,10 @@ export const sceneTwoCopy = {
     sceneDescription:"No dia do atendimento, a chegada de Mia é registrada. Auto avisa Operações. Sofía responde, seleciona um insumo com um comando de barra e informa a quantidade. Auto registra o consumo, e o detalhe do estoque leva à mensagem dela.",
   },
   fr: {
+    opsRoomReady:"La salle 2 est prête.",
+    opsStockReady:"Les fournitures ont été réapprovisionnées.",
+    opsTeamReady:"Tout est prêt pour aujourd’hui.",
+
     panelWork:"Travail",
     stockQuantity:"Quantité",
     slashHint:"Utiliser le stock",
@@ -77,6 +93,10 @@ export const sceneTwoCopy = {
     sceneDescription:"Le jour du rendez-vous, l’arrivée de Mia est enregistrée. Auto prévient les Opérations. Sofía répond, sélectionne un article avec une commande slash et saisit la quantité. Auto enregistre la consommation, et le détail du stock renvoie à son message.",
   },
   de: {
+    opsRoomReady:"Raum 2 ist bereit.",
+    opsStockReady:"Die Vorräte sind aufgefüllt.",
+    opsTeamReady:"Alles bereit für heute.",
+
     panelWork:"Arbeit",
     stockQuantity:"Menge",
     slashHint:"Material verwenden",
@@ -96,6 +116,10 @@ export const sceneTwoCopy = {
     sceneDescription:"Am Termintag wird Mias Ankunft bestätigt. Auto informiert das Betriebsteam. Sofía antwortet, wählt mit einem Slash-Befehl einen Lagerartikel aus und gibt die Menge ein. Auto erfasst den Verbrauch. Die Bestandsdetails verlinken auf ihre Nachricht.",
   },
   id: {
+    opsRoomReady:"Ruang 2 sudah siap.",
+    opsStockReady:"Persediaan sudah diisi ulang.",
+    opsTeamReady:"Semuanya siap untuk hari ini.",
+
     panelWork:"Kerja",
     stockQuantity:"Jumlah",
     slashHint:"Gunakan stok",
@@ -115,6 +139,10 @@ export const sceneTwoCopy = {
     sceneDescription:"Pada hari janji temu, kedatangan Mia dicatat. Otomatis memberi tahu tim Operasional. Sofía membalas, memilih barang dari stok dengan perintah garis miring, lalu memasukkan jumlahnya. Otomatis mencatat pemakaian stok, dan detail inventaris tertaut ke pesannya.",
   },
   ms: {
+    opsRoomReady:"Bilik 2 sudah sedia.",
+    opsStockReady:"Bekalan sudah ditambah.",
+    opsTeamReady:"Semuanya sedia untuk hari ini.",
+
     panelWork:"Kerja",
     stockQuantity:"Kuantiti",
     slashHint:"Gunakan stok",
@@ -134,6 +162,10 @@ export const sceneTwoCopy = {
     sceneDescription:"Pada hari janji temu, ketibaan Mia direkodkan. Auto memaklumkan Operasi. Sofía membalas, memilih item stok dengan arahan garis miring dan memasukkan kuantiti. Auto merekodkan penggunaan stok, dan butiran inventori dipautkan kepada mesejnya.",
   },
   hi: {
+    opsRoomReady:"कमरा 2 तैयार है।",
+    opsStockReady:"सामान फिर से भर दिया है।",
+    opsTeamReady:"आज के लिए सब तैयार है।",
+
     panelWork:"काम",
     stockQuantity:"मात्रा",
     slashHint:"स्टॉक इस्तेमाल करें",
@@ -153,6 +185,10 @@ export const sceneTwoCopy = {
     sceneDescription:"अपॉइंटमेंट के दिन मिया का आगमन दर्ज होता है। ऑटो संचालन टीम को सूचित करता है। सोफ़िया जवाब देती हैं, स्लैश कमांड से स्टॉक की वस्तु चुनती हैं और मात्रा दर्ज करती हैं। ऑटो स्टॉक का इस्तेमाल दर्ज करता है और इन्वेंटरी विवरण से उनके संदेश पर वापस जा सकते हैं।",
   },
   ar: {
+    opsRoomReady:"الغرفة 2 جاهزة.",
+    opsStockReady:"تم تجديد المخزون.",
+    opsTeamReady:"كل شيء جاهز لليوم.",
+
     panelWork:"العمل",
     stockQuantity:"الكمية",
     slashHint:"استخدام المخزون",
@@ -172,6 +208,10 @@ export const sceneTwoCopy = {
     sceneDescription:"في يوم الموعد، يُسجَّل وصول ميا. يُبلغ الإرسال التلقائي فريق العمليات. ترد صوفيا، وتختار صنفًا من المخزون بأمر يبدأ بشرطة مائلة، ثم تُدخل الكمية. يسجّل الإرسال التلقائي الاستخدام، وترتبط تفاصيل المخزون برسالتها.",
   },
   ur: {
+    opsRoomReady:"کمرہ 2 تیار ہے۔",
+    opsStockReady:"سامان دوبارہ بھر دیا گیا ہے۔",
+    opsTeamReady:"آج کے لیے سب تیار ہے۔",
+
     panelWork:"کام",
     stockQuantity:"مقدار",
     slashHint:"اسٹاک استعمال کریں",

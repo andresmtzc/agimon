@@ -3,7 +3,7 @@ import { isPhoneMovie, mountPhoneMovieView } from './movie-phone-view.js?preview
 import { MOVIE_DURATION, MOBILE_REQUEST_AT, MOBILE_READING_HOLD_AT, MOBILE_READING_HOLD, movieStageOpacity, movieStoryTime, advanceMovieClock } from './movie-timing.js';
 import { mountViewSwitchMotion } from './movie-view-motion.js';
 import { getActiveLanguage } from './language-selector.js';
-import { movieCopy } from './booking-movie-copy.mjs';
+import { movieCopy } from './booking-movie-copy.mjs?release=chat-context-v10';
 import { movieIcons } from './booking-movie-icons.mjs';
 import { renderSVG } from './renderer.js';
 import { renderDashboard } from './booking-dashboard.mjs';
@@ -20,6 +20,7 @@ export { MOVIE_DURATION } from './movie-timing.js';
 export const MOVIE_CHAPTERS = [0, 3.5, 12, 18, 23, 28, 33, 42.8, 49, 54, 61, 79, 88, 92, 102];
 const BOOKING_CHOICE_AT = 15.3;
 const STOCK_COMPOSE = {prefix:63.05,query:63.85,filter:64.35,pick:64.8,edit:65.15,clear:65.35,quantity:65.55,editEnd:65.8,suffix:65.85,ready:66.5};
+const OPS_HISTORY = [{speaker:'Emma',key:'opsRoomReady',minute:'40'},{speaker:'Lucas',key:'opsStockReady',minute:'42'},{speaker:'Emma',key:'opsTeamReady',minute:'43'}];
 const PHONE_FOCUS = [[0,'inbox'],[1.9,'chat'],[3.5,'work'],[9.2,'chat'],[23,'work'],[28,'chat'],[33,'work'],[42.8,'chat'],[52,'work'],[57.8,'inbox'],[59,'chat'],[71.2,'inbox'],[73,'work'],[82,'chat'],[85,'inbox'],[86,'chat'],[96,'work']];
 const progress = (time,start,duration) => Math.max(0,Math.min(1,(time-start)/duration));
 const easeOut = value => 1-Math.pow(1-value,3);
@@ -121,7 +122,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.setAttribute('view',this.viewMode);
     this.setAttribute('lang',loc); this.setAttribute('dir',this.language.dir);
     this.avatarStylesheet?.removeEventListener('load',this.onAvatarStylesheetLoad);
-    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=circle-avatar-v7"><div class="movie-presentation">
+    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?release=chat-context-v10"><div class="movie-presentation">
       <div class="view-switch" role="tablist" aria-label="${this.text('viewOptions')}">${['desktop','mobile'].map(view=>`<button type="button" role="tab" id="view-${view}" data-view="${view}" aria-controls="movie-screen" aria-selected="${view===this.viewMode}" tabindex="${view===this.viewMode?0:-1}">${this.text(view==='desktop'?'viewDesktop':'viewMobile')}</button>`).join('')}</div>
       <div class="mobile-intro"><h3>${this.text('mobileHeadline')}</h3><p>${this.text('mobileBody')}</p></div>
       <div class="film" id="movie-screen" role="tabpanel" aria-label="${escape(this.copy.loopDescription+" "+this.copy.sceneDescription+" "+this.copy.summaryDescription)}">
@@ -317,11 +318,17 @@ class AgimonBookingMovie extends HTMLElement {
     const file={mia:'mia-torres',luna:'luna-piel',daniel:'daniel-kim',team:'studio-team'}[name];
     return `<span class="avatar ${klass}">${file?`<img src="/assets/booking-movie/${file}.jpg" alt="">`:name==='agimon'?'<span class=approved-avatar></span>':icon(name)}${channel?`<span class="channel-badge"><img src="/assets/channels/${channel}.svg" alt=""></span>`:''}</span>`;
   }
+  groupAvatar(person) {
+    if(person==='agimon')return '<span class="avatar group-message-avatar group-agimon-avatar"><span class="approved-avatar" data-avatar-format="circle"></span></span>';
+    const file={Emma:5,Lucas:53,sofia:44}[person];
+    return `<span class="avatar group-message-avatar"><img src="/assets/team-scene/people/person-${file}.jpg" alt=""></span>`;
+  }
+  opsUnreadCount() { return this.storyTime>=59 ? 0 : OPS_HISTORY.length+(this.storyTime>=57?1:0); }
   sidebar() {
-    const c=this.copy;
-    const rows=[['mia',c.customerName,c.request,'whatsapp'],['team',c.studio,c.studioPreview,''],['luna','Luna Piel',c.lunaPreview,'instagram'],['box',c.inventory,c.inventoryPreview,''],['sparkle',c.website,c.websitePreview,'codex'],['mail','hello@studio.example',c.emailPreview,'email'],['daniel','Daniel Kim',c.danielPreview,'whatsapp']];
+    const c=this.copy,unread={team:this.opsUnreadCount(),luna:1,box:4};
+    const rows=[['mia',c.customerName,c.request,'whatsapp'],['team',c.studio,`Emma: ${c.opsTeamReady}`,''],['luna','Luna Piel',c.lunaPreview,'instagram'],['box',c.inventory,c.inventoryPreview,''],['sparkle',c.website,c.websitePreview,'codex'],['mail','hello@studio.example',c.emailPreview,'email'],['daniel','Daniel Kim',c.danielPreview,'whatsapp']];
     const pinned=`<div class="conversation-row pinned-conversation" data-person="agimon"><span class="avatar agimon-circle-avatar"><span class="approved-avatar" data-avatar-format="circle"></span></span><span class="conversation-copy"><strong>Agimon</strong><span>${this.text('agimonPreview')}</span></span><span class="conversation-pin" aria-hidden="true"><svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path transform="rotate(35 8 8)" d="M5 2h6v1H10v4l2 2v1H8.6v3.8L8 15l-.6-1.2V10H4V9l2-2V3H5z"></path></svg></span></div>`;
-    return `<div class="inbox-header">${icon('menu')}<strong>${this.text('inbox')}</strong><span class="member-avatar">S</span></div><div class="inbox-search">${icon('search')}<span>${this.text('search')}</span><span class=search-sort title="${this.text('searchSort')}">${icon('sort')}</span></div><div class="conversations">${pinned}${rows.map(([id,title,preview,channel])=>`<div class="conversation-row ${id==='mia'?'selected':''}" data-person="${id}">${this.avatar(id,channel)}<span class="conversation-copy"><strong>${escape(title)}</strong><span>${escape(preview)}</span></span>${({team:3,luna:1,box:4})[id]?`<span class=unread-badge>${({team:3,luna:1,box:4})[id]}</span>`:''}</div>`).join('')}</div>${this.dock()}`;
+    return `<div class="inbox-header">${icon('menu')}<strong>${this.text('inbox')}</strong><span class="member-avatar">S</span></div><div class="inbox-search">${icon('search')}<span>${this.text('search')}</span><span class=search-sort title="${this.text('searchSort')}">${icon('sort')}</span></div><div class="conversations">${pinned}${rows.map(([id,title,preview,channel])=>`<div class="conversation-row ${id==='mia'?'selected':''}" data-person="${id}">${this.avatar(id,channel)}<span class="conversation-copy"><strong>${escape(title)}</strong><span>${escape(preview)}</span></span>${unread[id]?`<span class=unread-badge>${unread[id]}</span>`:''}</div>`).join('')}</div>${this.dock()}`;
   }
   dock() {
     return `<div class="dock">${[['calendar','calendar'],['auto','autoMessages'],['receipt','receipts'],['todo','todo']].map(([i,key])=>`<div class="dock-item" data-dock="${i}">${icon(i)}<span>${this.text(key)}</span>${i==='receipt'?'<i class="dock-count">1</i>':''}</div>`).join('')}</div>`;
@@ -350,8 +357,8 @@ class AgimonBookingMovie extends HTMLElement {
     const back=backToChat?`<button type="button" class="calendar-back" data-target="calendar-back" title="${this.text('viewSource')}" aria-label="${this.text('viewSource')}">${icon('back')}</button>`:`<span class="phone-inbox-back" data-target="inbox-back" title="${this.text('inbox')}">${icon('back')}</span>`;
     return `<header class="work-header">${back}${avatar}<div><strong>${title}</strong><span>${sub}</span></div><span class="header-more">${icon('more')}</span></header>`;
   }
-  bubble(body,kind='incoming',label='',minute='01',arrivedAt=1,highlightAt=null) {
-    return `<div class="bubble-row ${kind}" data-arrived-at="${arrivedAt}"${highlightAt===null?'':` data-source-highlight="${highlightAt}"`}><div class="bubble">${label?`<div class="bubble-label">${label}</div>`:''}${body}<span class="message-time" dir="ltr">${arrivedAt>=57?'15':'10'}:${minute}${kind==='human'||kind==='automated'?`<span class=delivery-check>${icon('check')}</span>`:''}</span></div>${arrivedAt===57?`<span class="reply-affordance">${icon('reply')}</span>`:''}</div>`;
+  bubble(body,kind='incoming',label='',minute='01',arrivedAt=1,highlightAt=null,avatar='') {
+    return `<div class="bubble-row ${kind}" data-arrived-at="${arrivedAt}"${highlightAt===null?'':` data-source-highlight="${highlightAt}"`}>${kind==='human'?'':avatar}<div class="bubble">${label?`<div class="bubble-label">${label}</div>`:''}${body}<span class="message-time" dir="ltr">${arrivedAt<0?'09':arrivedAt>=57?'15':'10'}:${minute}${kind==='human'||kind==='automated'&&!avatar?`<span class=delivery-check>${icon('check')}</span>`:''}</span></div>${kind==='human'?avatar:''}${arrivedAt===57?`<span class="reply-affordance">${icon('reply')}</span>`:''}</div>`;
   }
   paper(compact=false) {
     return `<div class="receipt-paper ${compact?'compact':''}"><div class="paper-top">${icon('receipt')}<span>${this.text('receiptDocument')}</span></div><strong class="paper-amount" dir="auto">${escape(this.values.amount)}</strong><div class="paper-rule"></div><dl><div><dt>${this.text('customer')}</dt><dd>${this.text('customerName')}</dd></div><div><dt>${this.text('paymentFor')}</dt><dd>${this.text('receiptCaption')}</dd></div><div><dt>${this.text('appointment')}</dt><dd>${escape(this.values.shortDay)} · <bdi>${escape(this.values.time)}</bdi></dd></div></dl><div class="paper-bottom"><span class="barcode"></span><span>AG — 2048</span></div></div>`;
@@ -360,7 +367,7 @@ class AgimonBookingMovie extends HTMLElement {
     const t=this.storyTime, draft=this.scene()==='draft';
     const requestAt=this.viewMode==='mobile'?MOBILE_REQUEST_AT:1;
     let bubbles=t>=requestAt?this.bubble(this.text('request'),'incoming','','01',requestAt):'';
-    if(t>=12)bubbles+=this.bubble(this.text('offer'),'human',this.text('teamMember'),'01',12);
+    if(t>=12)bubbles+=this.bubble(this.text('offer'),'human','','01',12);
     if(t>=BOOKING_CHOICE_AT)bubbles+=this.bubble(this.text('choice'),'incoming','','02',BOOKING_CHOICE_AT);
     if(t>=18.5)bubbles+=this.bubble(`<strong>${this.text('booking')}</strong><p>${this.text('depositRequest')}</p>`,'automated',`${icon('auto')}${this.text('autoMessages')}`,'03',18.5);
     if(t>=29.1)bubbles+=this.bubble(`<p>${this.text('paymentSent')}</p><div class="receipt-attachment">${icon('receipt')}<div><strong>${this.text('receiptFile')}</strong><span>${escape(this.values.amount)} · PDF</span></div>${icon('attachment')}</div>`,'incoming','','04',29.1,42.8);
@@ -395,10 +402,11 @@ class AgimonBookingMovie extends HTMLElement {
   }
   ops() {
     const t=this.storyTime,draft=t>=63&&t<67,picked=t>=STOCK_COMPOSE.pick;
-    const quote=`<div class="reply-quote"><strong>${this.text('autoMessages')}</strong><span>${this.text('arrivalMessage')}</span></div>`;
-    let bubbles=t>=57?this.bubble(this.text('arrivalMessage'),'automated',`${icon('auto')}${this.text('autoMessages')}`,'00',57):'';
-    if(t>=67)bubbles+=this.bubble(`${quote}<span data-nurse-comment>${this.text('usedItem')}</span>`,'human',this.text('teamMember'),'30',67,82);
-    if(t>=69)bubbles+=this.bubble(this.text('stockRecorded'),'automated',`${icon('auto')}${this.text('autoMessages')}`,'30',69);
+    const quote=`<div class="reply-quote"><strong>Agimon</strong><span>${this.text('arrivalMessage')}</span></div>`;
+    let bubbles=OPS_HISTORY.map(({speaker,key,minute},index)=>this.bubble(this.text(key),'incoming',escape(speaker),minute,index-OPS_HISTORY.length,null,this.groupAvatar(speaker))).join('');
+    if(t>=57)bubbles+=this.bubble(this.text('arrivalMessage'),'automated',`${icon('auto')}Agimon`,'00',57,null,this.groupAvatar('agimon'));
+    if(t>=67)bubbles+=this.bubble(`${quote}<span data-nurse-comment>${this.text('usedItem')}</span>`,'human',this.text('teamMember'),'30',67,82,this.groupAvatar('sofia'));
+    if(t>=69)bubbles+=this.bubble(this.text('stockRecorded'),'automated',`${icon('auto')}Agimon`,'30',69,null,this.groupAvatar('agimon'));
     const suggestions=draft&&!picked&&t>=STOCK_COMPOSE.query?`<div class="stock-suggestions" aria-label="${this.text('inventory')}">${(t<STOCK_COMPOSE.filter?['tip','gloves','gauze']:['tip']).map(key=>`<button type="button" tabindex="-1" class="stock-suggestion ${key==='tip'&&t>=STOCK_COMPOSE.filter?'is-focused':''}" ${key==='tip'?'data-target="stock-picker"':''}>${this.text('slashChoice',{item:this.copy[key]})}</button>`).join('')}</div>`:'';
     const editing=t>=STOCK_COMPOSE.edit&&t<STOCK_COMPOSE.editEnd,selecting=t>=STOCK_COMPOSE.edit&&t<STOCK_COMPOSE.clear;
     const quantity=t>=STOCK_COMPOSE.clear&&t<STOCK_COMPOSE.quantity?'':new Intl.NumberFormat(this.language.locale).format(t>=STOCK_COMPOSE.quantity?STOCK_DEMO.used:1);
@@ -419,8 +427,8 @@ class AgimonBookingMovie extends HTMLElement {
     // Illustrative weekly totals for this fictional studio, not live analytics.
     const amount=new Intl.NumberFormat(this.language.locale,{style:'currency',currency:'MXN',currencyDisplay:'code',maximumFractionDigits:0}).format(24500);
     const reference=(record,body)=>`<button type="button" class="summary-reference" data-summary-record="${record}" aria-label="${this.text('summaryRecords',{record:this.copy[record]})}">${body}</button>`;
-    let bubbles=t>=90?this.bubble(this.text('summaryPrompt'),'human',this.text('teamMember'),'31',90):'';
-    if(t>=91.5)bubbles+=this.bubble(`<div class="weekly-summary"><p>${this.text('summaryIntro')}</p><p>${reference('calendar',this.text('summaryAppointments',{count:number(32)}))}<br>${this.text('summaryPopular')}</p><p><strong>${this.text('summaryPayments',{amount})}</strong><br>${reference('receipts',this.text('summaryPending',{count:number(2)}))}</p><p><strong>${this.text('summaryUsage',{count:number(STOCK_DEMO.weeklyUsed)})}</strong> ${reference('inventory',this.text('summaryRemaining',{count:number(STOCK_DEMO.remaining)}))}</p><p class="summary-next">${this.text('summaryNext')}</p><p class="summary-dashboard"><button type="button" class="summary-reference summary-dashboard-link" data-dashboard-open>${this.text('summaryDashboardOffer')}</button></p></div>`,'assistant','Agimon','31',91.5);
+    let bubbles=t>=90?this.bubble(this.text('summaryPrompt'),'human','','31',90):'';
+    if(t>=91.5)bubbles+=this.bubble(`<div class="weekly-summary"><p>${this.text('summaryIntro')}</p><p>${reference('calendar',this.text('summaryAppointments',{count:number(32)}))}<br>${this.text('summaryPopular')}</p><p><strong>${this.text('summaryPayments',{amount})}</strong><br>${reference('receipts',this.text('summaryPending',{count:number(2)}))}</p><p><strong>${this.text('summaryUsage',{count:number(STOCK_DEMO.weeklyUsed)})}</strong> ${reference('inventory',this.text('summaryRemaining',{count:number(STOCK_DEMO.remaining)}))}</p><p class="summary-next">${this.text('summaryNext')}</p><p class="summary-dashboard"><button type="button" class="summary-reference summary-dashboard-link" data-dashboard-open>${this.text('summaryDashboardOffer')}</button></p></div>`,'assistant','','31',91.5);
     const composer=draft?`<div class="prepared"><p class="draft-copy"><span class="summary-draft-text"></span><i class="draft-caret" aria-hidden="true"></i></p></div>`:`<span class="composer-placeholder">${icon('plus')}${this.text('message')}</span>`;
     return this.header('Agimon',this.text('summarySubtitle'),'')+`<div class="chat-body summary-chat"><div class="day-separator">${escape(this.values.shortDay)}</div><div class="message-list">${bubbles}</div></div><div class="composer-row"><div class="composer ${draft?'has-draft':''}">${composer}</div><span class="send-circle" data-target="send">${icon('send')}</span></div>`;
   }
@@ -459,7 +467,13 @@ class AgimonBookingMovie extends HTMLElement {
       });
       this.root.querySelectorAll('[data-person]').forEach(row=>row.classList.toggle('selected',row.dataset.person===(['summary','dashboard'].includes(this.currentScene)?'agimon':this.summaryRecord==='inventory'?'box':this.currentScene.startsWith('ops')?'team':this.currentScene==='inventory'?'box':!selectedTool?'mia':'')));
       this.root.querySelectorAll('[data-person=team] .conversation-copy>strong').forEach(el=>el.textContent=this.copy.ops);
-      if(this.storyTime>=57)this.root.querySelectorAll('[data-person=team] .conversation-copy>span').forEach(el=>el.textContent=this.rawText(this.storyTime>=69?'stockRecorded':this.storyTime>=67?'usedItem':'arrivalMessage'));
+      this.root.querySelectorAll('[data-person=team] .conversation-copy>span').forEach(el=>el.textContent=this.storyTime>=57?this.rawText(this.storyTime>=69?'stockRecorded':this.storyTime>=67?'usedItem':'arrivalMessage'):`Emma: ${this.rawText('opsTeamReady')}`);
+      this.root.querySelectorAll('[data-person=team]').forEach(row=>{
+        const count=this.opsUnreadCount();let badge=row.querySelector('.unread-badge');
+        if(!count){badge?.remove();return;}
+        if(!badge){badge=document.createElement('span');badge.className='unread-badge';row.append(badge);}
+        badge.textContent=new Intl.NumberFormat(this.language.locale).format(count);
+      });
       if(this.storyTime>=90)this.root.querySelectorAll('[data-person=agimon] .conversation-copy>span').forEach(el=>el.textContent=this.rawText(this.storyTime>=91.5?'summaryIntro':'summaryPrompt'));
       const preview=this.$('.typing')?this.copy.typing:this.storyTime>=44.4?this.copy.paymentThanks.replace(/\{(\w+)\}/g,(_,k)=>this.values[k]):this.storyTime>=29.1?this.copy.paymentSent:this.storyTime>=18.5?this.copy.booking.replace(/\{(\w+)\}/g,(_,k)=>this.values[k]):this.storyTime>=BOOKING_CHOICE_AT?this.copy.choice.replace('{time}',this.values.time):this.copy.request;
       this.root.querySelectorAll('[data-person=mia] .conversation-copy>span').forEach(el=>el.textContent=preview);
@@ -632,7 +646,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.root.querySelectorAll('.approved-avatar').forEach((host,index)=>{
       const size=Math.round(host.getBoundingClientRect().width)||32;
       const format=host.dataset.avatarFormat||'circle';
-      const pinned=Boolean(host.closest('.agimon-circle-avatar'));
+      const pinned=Boolean(host.closest('.agimon-circle-avatar,.group-agimon-avatar'));
       const time=pinned||this.motion.matches?0:this.storyTime;
       const frame=`${format}:${size}:${Math.floor(time*24)}`;
       if(frame===host.dataset.avatarFrame)return;
