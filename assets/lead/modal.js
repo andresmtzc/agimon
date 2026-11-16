@@ -2,9 +2,9 @@ import { COUNTRY_OPTIONS } from './countries.js';
 import { EMPLOYEE_COLORS } from './colors.js';
 import { modalCopy } from './modal-copy.js';
 import { normalize, sendLead } from './notify.js';
-import { createMascot } from '/mascot.js';
+import { createMarketingMascot, MARKETING_JADE } from '/marketing-mascot.mjs';
 
-const colors = [['Jade','Jade','#2da88e','#72cbb0'], ...EMPLOYEE_COLORS];
+const colors = [['Jade','Jade',...MARKETING_JADE], ...EMPLOYEE_COLORS];
 const escape = value => String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const flag = code => code === 'other' ? '🌐' : String.fromCodePoint(...[...code].map(c => 127397 + c.charCodeAt(0)));
 
@@ -135,7 +135,7 @@ class AgimonDemoModal extends HTMLElement {
       const response=await fetch('/assets/selected-logo-preset.json');
       if (!response.ok) throw new Error('Mascot preset unavailable');
       const preset=await response.json();
-      this.mascot=createMascot(this.shadowRoot.querySelector('.mascot'),{...(preset.settings||preset),iconFill:100,opticalEnabled:false});
+      this.mascot=createMarketingMascot(this.shadowRoot.querySelector('.mascot'),preset);
       this.updateColor(); this.syncAnimation();
     })().catch(error=>{this.mascotPromise=null;console.error('Demo mascot failed',error);});
     await this.mascotPromise;

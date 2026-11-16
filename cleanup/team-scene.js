@@ -1,5 +1,5 @@
 import { teamPortraits } from './team-scene-portraits.mjs';
-import { createMascot } from '../mascot.js';
+import { createMarketingMascot } from '../marketing-mascot.mjs';
 import { getActiveLanguage } from '../language-selector.js';
 import { teamCopy } from './team-scene-copy.mjs';
 
@@ -135,8 +135,7 @@ export class AgimonTeamScene extends HTMLElement {
     if (!response.ok) throw new Error('Approved Jade mascot preset unavailable');
     const preset = await response.json();
     await stylesReady;
-    // Keep the approved face fill instead of centering a reduced face here.
-    this.mascot = createMascot(this.$('.mascot'), preset.settings ?? preset);
+    this.mascot = createMarketingMascot(this.$('.mascot'), preset);
     this.mascot.svg.setAttribute('aria-hidden', 'true');
     this.mascot.svg.removeAttribute('role');
     this.mascot.svg.removeAttribute('aria-label');
