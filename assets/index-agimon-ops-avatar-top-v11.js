@@ -1,5 +1,5 @@
 import { LocalizedIntro } from './landing-localization/intro.js';
-import { CustomerProof, TeamSection, FaqSection } from '../cleanup-sections.js';
+import { CustomerProof, TeamSection, FaqSection } from '../cleanup-sections.js?release=ops-avatar-top-v11';
 import { ProductMovie } from "../product-movie.js?release=ops-avatar-top-v11";
 
 !function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e3dde1b9-2cae-5585-8243-33a5fa3756e6")}catch(e){}}();
