@@ -636,11 +636,9 @@ class AgimonBookingMovie extends HTMLElement {
       const time=pinned||this.motion.matches?0:this.storyTime;
       const frame=`${format}:${size}:${Math.floor(time*24)}`;
       if(frame===host.dataset.avatarFrame)return;
-      // This inbox-sized character always uses the approved tiny face cut.
-      // Its CSS box is ~40px, above the lab's automatic 32px cutoff.
-      const preset=pinned
-        ? {...avatarPreset,motion:false,opticalEnabled:true,opticalThreshold:Math.max(size,avatarPreset.opticalThreshold)}
-        : avatarPreset;
+      // Keep the saved face geometry and its 32px optical cutoff unchanged.
+      // The pinned inbox avatar only disables motion.
+      const preset=pinned ? {...avatarPreset,motion:false} : avatarPreset;
       host.innerHTML=renderSVG(preset,{format,size,time,id:`booking-avatar-${index}`,animated:!pinned&&!this.motion.matches}).replace('aria-label="Agimon tomato"','aria-label="Agimon"');
       host.dataset.avatarFrame=frame;
     });
