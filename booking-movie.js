@@ -121,7 +121,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.setAttribute('view',this.viewMode);
     this.setAttribute('lang',loc); this.setAttribute('dir',this.language.dir);
     this.avatarStylesheet?.removeEventListener('load',this.onAvatarStylesheetLoad);
-    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=calendar-back-v6"><div class="movie-presentation">
+    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?receipt=circle-avatar-v7"><div class="movie-presentation">
       <div class="view-switch" role="tablist" aria-label="${this.text('viewOptions')}">${['desktop','mobile'].map(view=>`<button type="button" role="tab" id="view-${view}" data-view="${view}" aria-controls="movie-screen" aria-selected="${view===this.viewMode}" tabindex="${view===this.viewMode?0:-1}">${this.text(view==='desktop'?'viewDesktop':'viewMobile')}</button>`).join('')}</div>
       <div class="mobile-intro"><h3>${this.text('mobileHeadline')}</h3><p>${this.text('mobileBody')}</p></div>
       <div class="film" id="movie-screen" role="tabpanel" aria-label="${escape(this.copy.loopDescription+" "+this.copy.sceneDescription+" "+this.copy.summaryDescription)}">
@@ -320,7 +320,7 @@ class AgimonBookingMovie extends HTMLElement {
   sidebar() {
     const c=this.copy;
     const rows=[['mia',c.customerName,c.request,'whatsapp'],['team',c.studio,c.studioPreview,''],['luna','Luna Piel',c.lunaPreview,'instagram'],['box',c.inventory,c.inventoryPreview,''],['sparkle',c.website,c.websitePreview,'codex'],['mail','hello@studio.example',c.emailPreview,'email'],['daniel','Daniel Kim',c.danielPreview,'whatsapp']];
-    const pinned=`<div class="conversation-row pinned-conversation" data-person="agimon"><span class="avatar agimon-blob-avatar"><span class="approved-avatar" data-avatar-format="floating"></span></span><span class="conversation-copy"><strong>Agimon</strong><span>${this.text('agimonPreview')}</span></span><span class="conversation-pin" aria-hidden="true"><svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path transform="rotate(35 8 8)" d="M5 2h6v1H10v4l2 2v1H8.6v3.8L8 15l-.6-1.2V10H4V9l2-2V3H5z"></path></svg></span></div>`;
+    const pinned=`<div class="conversation-row pinned-conversation" data-person="agimon"><span class="avatar agimon-circle-avatar"><span class="approved-avatar" data-avatar-format="circle"></span></span><span class="conversation-copy"><strong>Agimon</strong><span>${this.text('agimonPreview')}</span></span><span class="conversation-pin" aria-hidden="true"><svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path transform="rotate(35 8 8)" d="M5 2h6v1H10v4l2 2v1H8.6v3.8L8 15l-.6-1.2V10H4V9l2-2V3H5z"></path></svg></span></div>`;
     return `<div class="inbox-header">${icon('menu')}<strong>${this.text('inbox')}</strong><span class="member-avatar">S</span></div><div class="inbox-search">${icon('search')}<span>${this.text('search')}</span><span class=search-sort title="${this.text('searchSort')}">${icon('sort')}</span></div><div class="conversations">${pinned}${rows.map(([id,title,preview,channel])=>`<div class="conversation-row ${id==='mia'?'selected':''}" data-person="${id}">${this.avatar(id,channel)}<span class="conversation-copy"><strong>${escape(title)}</strong><span>${escape(preview)}</span></span>${({team:3,luna:1,box:4})[id]?`<span class=unread-badge>${({team:3,luna:1,box:4})[id]}</span>`:''}</div>`).join('')}</div>${this.dock()}`;
   }
   dock() {
@@ -632,7 +632,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.root.querySelectorAll('.approved-avatar').forEach((host,index)=>{
       const size=Math.round(host.getBoundingClientRect().width)||32;
       const format=host.dataset.avatarFormat||'circle';
-      const pinned=Boolean(host.closest('.agimon-blob-avatar'));
+      const pinned=Boolean(host.closest('.agimon-circle-avatar'));
       const time=pinned||this.motion.matches?0:this.storyTime;
       const frame=`${format}:${size}:${Math.floor(time*24)}`;
       if(frame===host.dataset.avatarFrame)return;
