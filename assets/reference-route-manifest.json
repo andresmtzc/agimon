@@ -283,7 +283,7 @@
     "hasClientMiddleware": false,
     "hasDefaultExport": true,
     "hasErrorBoundary": false,
-    "module": "/assets/index-agimon-chat-context-v10.js",
+    "module": "/assets/index-agimon-ops-avatar-top-v11.js",
     "imports": [
       "/assets/rolldown-runtime-5JLZCTB7.js",
       "/assets/jsx-runtime-xcbuSnkB.js",
