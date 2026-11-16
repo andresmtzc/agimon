@@ -1,7 +1,7 @@
 import { languages } from './language-data.mjs';
 
 const escape = value => value.replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-const strokes = '<svg class="you-strokes" viewBox="0 0 124 34" fill="none" aria-hidden="true"><path class="stroke-one" d="M4 14C31 9 49 14 73 9S102 7 119 4" pathLength="1"/><path class="stroke-two" d="M9 22C35 19 56 22 78 23S101 26 114 27" pathLength="1"/></svg>';
+const strokes = '<svg class="you-strokes" viewBox="0 0 124 34" preserveAspectRatio="none" fill="none" aria-hidden="true"><path class="stroke-one" d="M4 14C31 9 49 14 73 9S102 7 119 4" pathLength="1"/><path class="stroke-two" d="M9 22C35 19 56 22 78 23S101 26 114 27" pathLength="1"/></svg>';
 
 export function renderHeadline(language) {
   return language.lines.map(line => '<span class="headline-line" aria-hidden="true">' + line.map((token, index) => {
