@@ -551,12 +551,16 @@ class AgimonBookingMovie extends HTMLElement {
       const swipe=reduced?0:pull*release;
       const offset=(this.language.dir==='rtl'?-1:1)*swipe*distance;
       const bubble=row.querySelector('.bubble');
+      const cue=row.querySelector('.reply-affordance');
+      // Anchor behind the unshifted bubble, leaving the avatar column clear.
+      const origin=this.language.dir==='rtl'
+        ?row.clientWidth-bubble.offsetLeft-bubble.offsetWidth
+        :bubble.offsetLeft;
+      cue.style.insetInlineStart=`${origin+4}px`;
       bubble.style.translate=`${offset}px 0`;
       bubble.dataset.dragOffset=String(offset);
       bubble.dataset.dragDistance=String((this.language.dir==='rtl'?-1:1)*distance);
-      const cue=row.querySelector('.reply-affordance');
       cue.style.opacity=String(progress(swipe,0,.65));
-      cue.style.transform=`translateY(-50%) scale(${.7+.3*swipe})`;
 
     }
     const jump=this.$('.time-jump');
