@@ -284,3 +284,7 @@
 
 .booked-event.is-open{border-color:#2f9d86;box-shadow:0 0 0 2px #2f9d8626}
 .appointment-detail::-webkit-scrollbar{display:none}
+
+/* The booked-event peek returns directly to the customer conversation. */
+.calendar-back{display:grid;place-items:center;flex:none;width:2em;height:2em;padding:.25em;background:transparent;color:#2f8068;border-radius:50%}
+.calendar-back:hover{background:#e6f2eb}.phone-screen .calendar-back{width:24px;height:32px;padding:3px}:host([dir=rtl]) .calendar-back{transform:scaleX(-1)}
