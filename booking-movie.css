@@ -304,6 +304,20 @@
 .ops-chat .bubble-row{gap:.65em}
 .ops-chat .group-message-avatar{width:30px;height:30px;align-self:flex-end;margin-bottom:.2em}
 .group-agimon-avatar{background:transparent;overflow:hidden}
-.ops-chat .bubble-row.automated>.bubble{background:#f5effb;color:#4f405f}
+.ops-chat .bubble-row.automated>.bubble,.summary-chat .bubble-row.assistant>.bubble{background:#f5effb;color:#4f405f}
 .ops-chat .bubble-row.automated .bubble-label{color:#79598f}
 .phone-screen .ops-chat .group-message-avatar{width:24px;height:24px}
+
+/* Incoming group avatars align with the top edge of their message. */
+.ops-chat .bubble-row:not(.human)>.group-message-avatar{align-self:flex-start;margin-top:0;margin-bottom:0}
+
+/* Keep timestamps and unread counts in their own quiet column. */
+.conversation-copy{flex:1}
+.conversation-meta{display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-start;align-self:stretch;gap:.35em;padding-top:.3em;min-width:2.25em;margin-inline-start:auto;flex:none}
+.conversation-time{font-size:.61em;line-height:1.35;color:#8c9c93;white-space:nowrap;font-variant-numeric:tabular-nums}
+.conversation-meta .unread-badge{width:16px;height:16px;min-width:16px;font-size:9px;margin:0;transform:none}
+.conversation-meta .conversation-pin{width:12px;height:12px;margin:0;align-self:flex-end;transform:none}
+.conversation-meta .conversation-pin>svg{width:11px;height:11px}
+.member-avatar{width:28px;height:28px;overflow:hidden}
+.member-avatar>img{width:100%;height:100%;border-radius:50%}
+.phone-screen .conversation-time{font-size:9px}

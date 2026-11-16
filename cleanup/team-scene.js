@@ -1,3 +1,4 @@
+import { teamPortraits } from './team-scene-portraits.mjs';
 import { createMascot } from '../mascot.js';
 import { getActiveLanguage } from '../language-selector.js';
 import { teamCopy } from './team-scene-copy.mjs';
@@ -17,7 +18,7 @@ const smooth = value => { const p = clamp(value); return p * p * (3 - 2 * p); };
 const progress = (time, start, duration) => smooth((time - start) / duration);
 const pop = value => { const t = clamp(value) - 1; return 1 + 2.2 * t * t * t + 1.2 * t * t; };
 const checkIcon = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>';
-const asset = file => new URL(`../assets/team-scene/people/${file}`, import.meta.url).href;
+const asset = file => teamPortraits[file] || new URL(`../assets/team-scene/people/${file}`, import.meta.url).href;
 
 export class AgimonTeamScene extends HTMLElement {
   constructor() {
@@ -134,9 +135,8 @@ export class AgimonTeamScene extends HTMLElement {
     if (!response.ok) throw new Error('Approved Jade mascot preset unavailable');
     const preset = await response.json();
     await stylesReady;
-    // Bleed magnifies clipped app icons; this illustration uses the complete
-    // approved floating silhouette and face at their un-cropped proportions.
-    this.mascot = createMascot(this.$('.mascot'), { ...(preset.settings ?? preset), iconFill: 100 });
+    // Keep the approved face fill instead of centering a reduced face here.
+    this.mascot = createMascot(this.$('.mascot'), preset.settings ?? preset);
     this.mascot.svg.setAttribute('aria-hidden', 'true');
     this.mascot.svg.removeAttribute('role');
     this.mascot.svg.removeAttribute('aria-label');

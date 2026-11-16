@@ -91,6 +91,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.copy = movieCopy[this.language.id];
     if (!this.copy) throw new Error(`Missing movie language: ${this.language.id}`);
     const loc = this.language.locale;
+    this.inboxTimeFormat=new Intl.DateTimeFormat(loc,{hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'UTC'});
     const date = new Date('2026-11-20T15:00:00Z');
     this.values = {
       day:new Intl.DateTimeFormat(loc,{weekday:'long',month:'short',day:'numeric',timeZone:'UTC'}).format(date),
@@ -122,7 +123,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.setAttribute('view',this.viewMode);
     this.setAttribute('lang',loc); this.setAttribute('dir',this.language.dir);
     this.avatarStylesheet?.removeEventListener('load',this.onAvatarStylesheetLoad);
-    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?release=chat-context-v10"><div class="movie-presentation">
+    this.root.innerHTML = `<link rel="stylesheet" href="/booking-movie.css?release=ops-avatar-top-v11"><div class="movie-presentation">
       <div class="view-switch" role="tablist" aria-label="${this.text('viewOptions')}">${['desktop','mobile'].map(view=>`<button type="button" role="tab" id="view-${view}" data-view="${view}" aria-controls="movie-screen" aria-selected="${view===this.viewMode}" tabindex="${view===this.viewMode?0:-1}">${this.text(view==='desktop'?'viewDesktop':'viewMobile')}</button>`).join('')}</div>
       <div class="mobile-intro"><h3>${this.text('mobileHeadline')}</h3><p>${this.text('mobileBody')}</p></div>
       <div class="film" id="movie-screen" role="tabpanel" aria-label="${escape(this.copy.loopDescription+" "+this.copy.sceneDescription+" "+this.copy.summaryDescription)}">
@@ -323,12 +324,24 @@ class AgimonBookingMovie extends HTMLElement {
     const file={Emma:5,Lucas:53,sofia:44}[person];
     return `<span class="avatar group-message-avatar"><img src="/assets/team-scene/people/person-${file}.jpg" alt=""></span>`;
   }
+  inboxActivity(person) {
+    const t=this.storyTime;
+    const [hour,minute]=person==='mia'?[10,t>=44.4?5:t>=29.1?4:t>=18.5?3:t>=15.3?2:1]
+      :person==='team'?(t>=67?[15,30]:t>=57?[15,0]:[9,43])
+      :person==='agimon'?(t>=90?[15,31]:[9,18])
+      :person==='box'&&t>=69?[15,30]:({luna:[9,58],box:[9,46],sparkle:[9,52],mail:[9,41],daniel:[9,29]}[person]||[9,0]);
+    return new Date(Date.UTC(2026,10,20,hour,minute));
+  }
+  inboxStamp(person) {
+    const date=this.inboxActivity(person);
+    return `<time class="conversation-time" datetime="${date.toISOString()}" dir="ltr">${escape(this.inboxTimeFormat.format(date))}</time>`;
+  }
   opsUnreadCount() { return this.storyTime>=59 ? 0 : OPS_HISTORY.length+(this.storyTime>=57?1:0); }
   sidebar() {
     const c=this.copy,unread={team:this.opsUnreadCount(),luna:1,box:4};
     const rows=[['mia',c.customerName,c.request,'whatsapp'],['team',c.studio,`Emma: ${c.opsTeamReady}`,''],['luna','Luna Piel',c.lunaPreview,'instagram'],['box',c.inventory,c.inventoryPreview,''],['sparkle',c.website,c.websitePreview,'codex'],['mail','hello@studio.example',c.emailPreview,'email'],['daniel','Daniel Kim',c.danielPreview,'whatsapp']];
-    const pinned=`<div class="conversation-row pinned-conversation" data-person="agimon"><span class="avatar agimon-circle-avatar"><span class="approved-avatar" data-avatar-format="circle"></span></span><span class="conversation-copy"><strong>Agimon</strong><span>${this.text('agimonPreview')}</span></span><span class="conversation-pin" aria-hidden="true"><svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path transform="rotate(35 8 8)" d="M5 2h6v1H10v4l2 2v1H8.6v3.8L8 15l-.6-1.2V10H4V9l2-2V3H5z"></path></svg></span></div>`;
-    return `<div class="inbox-header">${icon('menu')}<strong>${this.text('inbox')}</strong><span class="member-avatar">S</span></div><div class="inbox-search">${icon('search')}<span>${this.text('search')}</span><span class=search-sort title="${this.text('searchSort')}">${icon('sort')}</span></div><div class="conversations">${pinned}${rows.map(([id,title,preview,channel])=>`<div class="conversation-row ${id==='mia'?'selected':''}" data-person="${id}">${this.avatar(id,channel)}<span class="conversation-copy"><strong>${escape(title)}</strong><span>${escape(preview)}</span></span>${unread[id]?`<span class=unread-badge>${unread[id]}</span>`:''}</div>`).join('')}</div>${this.dock()}`;
+    const pinned=`<div class="conversation-row pinned-conversation" data-person="agimon"><span class="avatar agimon-circle-avatar"><span class="approved-avatar" data-avatar-format="circle"></span></span><span class="conversation-copy"><strong>Agimon</strong><span>${this.text('agimonPreview')}</span></span><span class="conversation-meta">${this.inboxStamp('agimon')}<span class="conversation-pin" aria-hidden="true"><svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path transform="rotate(35 8 8)" d="M5 2h6v1H10v4l2 2v1H8.6v3.8L8 15l-.6-1.2V10H4V9l2-2V3H5z"></path></svg></span></span></div>`;
+    return `<div class="inbox-header">${icon('menu')}<strong>${this.text('inbox')}</strong><span class="member-avatar"><img src="/assets/team-scene/people/person-44.jpg" alt="${this.text('teamMember')}"></span></div><div class="inbox-search">${icon('search')}<span>${this.text('search')}</span><span class=search-sort title="${this.text('searchSort')}">${icon('sort')}</span></div><div class="conversations">${pinned}${rows.map(([id,title,preview,channel])=>`<div class="conversation-row ${id==='mia'?'selected':''}" data-person="${id}">${this.avatar(id,channel)}<span class="conversation-copy"><strong>${escape(title)}</strong><span>${escape(preview)}</span></span><span class="conversation-meta">${this.inboxStamp(id)}${unread[id]?`<span class=unread-badge>${unread[id]}</span>`:''}</span></div>`).join('')}</div>${this.dock()}`;
   }
   dock() {
     return `<div class="dock">${[['calendar','calendar'],['auto','autoMessages'],['receipt','receipts'],['todo','todo']].map(([i,key])=>`<div class="dock-item" data-dock="${i}">${icon(i)}<span>${this.text(key)}</span>${i==='receipt'?'<i class="dock-count">1</i>':''}</div>`).join('')}</div>`;
@@ -471,12 +484,16 @@ class AgimonBookingMovie extends HTMLElement {
       this.root.querySelectorAll('[data-person=team]').forEach(row=>{
         const count=this.opsUnreadCount();let badge=row.querySelector('.unread-badge');
         if(!count){badge?.remove();return;}
-        if(!badge){badge=document.createElement('span');badge.className='unread-badge';row.append(badge);}
+        if(!badge){badge=document.createElement('span');badge.className='unread-badge';row.querySelector('.conversation-meta').append(badge);}
         badge.textContent=new Intl.NumberFormat(this.language.locale).format(count);
       });
       if(this.storyTime>=90)this.root.querySelectorAll('[data-person=agimon] .conversation-copy>span').forEach(el=>el.textContent=this.rawText(this.storyTime>=91.5?'summaryIntro':'summaryPrompt'));
       const preview=this.$('.typing')?this.copy.typing:this.storyTime>=44.4?this.copy.paymentThanks.replace(/\{(\w+)\}/g,(_,k)=>this.values[k]):this.storyTime>=29.1?this.copy.paymentSent:this.storyTime>=18.5?this.copy.booking.replace(/\{(\w+)\}/g,(_,k)=>this.values[k]):this.storyTime>=BOOKING_CHOICE_AT?this.copy.choice.replace('{time}',this.values.time):this.copy.request;
       this.root.querySelectorAll('[data-person=mia] .conversation-copy>span').forEach(el=>el.textContent=preview);
+      this.root.querySelectorAll('[data-person] .conversation-time').forEach(stamp=>{
+        const date=this.inboxActivity(stamp.closest('[data-person]').dataset.person);
+        stamp.textContent=this.inboxTimeFormat.format(date);stamp.dateTime=date.toISOString();
+      });
       this.lastState=state;
       // Scene/language changes replace hosts; observe their actual CSS sizes so
       // optical proportions also refresh while the movie is paused.
