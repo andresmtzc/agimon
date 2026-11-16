@@ -85,10 +85,8 @@
  .detail-customer{gap:6px}.detail-customer>.avatar{width:25px;height:25px}.receipt-checkbox{width:19px;height:19px}
  .movie-pointer>span{left:30px;top:29px;font-size:9px}
 }
-/* The assistant keeps its original pinned floating-blob row, above customers. */
-.agimon-blob-avatar{background:transparent;border-radius:0;overflow:visible}
-.agimon-blob-avatar>.approved-avatar{position:relative;border-radius:0;overflow:visible}
-.agimon-blob-avatar>.approved-avatar>svg{position:absolute;width:146.285714%;height:146.285714%;left:-23.142857%;top:-17.285714%}
+/* The pinned assistant uses the approved circle-bleed avatar. */
+.agimon-circle-avatar{background:transparent;border-radius:50%;overflow:hidden}
 .conversation-pin{margin-inline-start:auto;align-self:center;transform:translateY(8px);width:16px;height:20px;color:#758078;display:grid;place-items:center;flex:none}
 .conversation-pin>svg{width:14px;height:14px}
 .conversation-row.selected{background:#eaf5f0}

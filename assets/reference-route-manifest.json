@@ -283,7 +283,7 @@
     "hasClientMiddleware": false,
     "hasDefaultExport": true,
     "hasErrorBoundary": false,
-    "module": "/assets/index-agimon-calendar-back-v6.js",
+    "module": "/assets/index-agimon-circle-avatar-v7.js",
     "imports": [
       "/assets/rolldown-runtime-5JLZCTB7.js",
       "/assets/jsx-runtime-xcbuSnkB.js",
