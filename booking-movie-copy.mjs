@@ -1,6 +1,7 @@
 // Complete visible and accessible copy for the product movie. No English fallbacks.
 export const movieCopy = {
   en: {
+    viewAll: "All", viewMe: "Me", viewClients: "Clients", inboxViews: "Inbox views", viewMore: "More views",
     title: 'From the first hello to the work getting done.',
     walkthrough: 'Product walkthrough',
     play: 'Play the story', pause: 'Pause the story', replay: 'Replay the story',
@@ -54,6 +55,7 @@ export const movieCopy = {
     panelChat: 'Chat',
   },
   es: {
+    viewAll: "Todo", viewMe: "Yo", viewClients: "Clientes", inboxViews: "Vistas de la bandeja", viewMore: "Más vistas",
     title: 'Del primer hola al trabajo hecho.',
     walkthrough: 'Recorrido por el producto',
     play: 'Reproducir la historia', pause: 'Pausar la historia', replay: 'Volver a reproducir la historia',
@@ -107,6 +109,7 @@ export const movieCopy = {
     panelChat: 'Chat',
   },
   pt: {
+    viewAll: "Tudo", viewMe: "Eu", viewClients: "Clientes", inboxViews: "Visualizações da caixa de entrada", viewMore: "Mais visualizações",
     title: 'Do primeiro oi ao trabalho concluído.',
     walkthrough: 'Demonstração do produto',
     play: 'Reproduzir a história', pause: 'Pausar a história', replay: 'Repetir a história',
@@ -160,6 +163,7 @@ export const movieCopy = {
     panelChat: 'Conversa',
   },
   id: {
+    viewAll: "Semua", viewMe: "Saya", viewClients: "Klien", inboxViews: "Tampilan kotak masuk", viewMore: "Tampilan lainnya",
     title: 'Dari sapaan pertama hingga pekerjaan selesai.',
     walkthrough: 'Panduan produk',
     play: 'Putar cerita', pause: 'Jeda cerita', replay: 'Putar ulang cerita',
@@ -213,6 +217,7 @@ export const movieCopy = {
     panelChat: 'Obrolan',
   },
   ms: {
+    viewAll: "Semua", viewMe: "Saya", viewClients: "Pelanggan", inboxViews: "Paparan peti masuk", viewMore: "Lagi paparan",
     title: 'Dari sapaan pertama hingga kerja selesai.',
     walkthrough: 'Panduan produk',
     play: 'Mainkan cerita', pause: 'Jeda cerita', replay: 'Mainkan semula cerita',
@@ -266,6 +271,7 @@ export const movieCopy = {
     panelChat: 'Sembang',
   },
   fr: {
+    viewAll: "Tout", viewMe: "Moi", viewClients: "Clients", inboxViews: "Vues de la boîte de réception", viewMore: "Autres vues",
     title: 'Du premier bonjour au travail accompli.',
     walkthrough: 'Présentation du produit',
     play: 'Lire le scénario', pause: 'Mettre le scénario en pause', replay: 'Revoir le scénario',
@@ -319,6 +325,7 @@ export const movieCopy = {
     panelChat: 'Discussion',
   },
   de: {
+    viewAll: "Alle", viewMe: "Ich", viewClients: "Kunden", inboxViews: "Posteingangsansichten", viewMore: "Weitere Ansichten",
     title: 'Vom ersten Hallo bis zur erledigten Arbeit.',
     walkthrough: 'Produktrundgang',
     play: 'Ablauf abspielen', pause: 'Ablauf pausieren', replay: 'Ablauf erneut abspielen',
@@ -372,6 +379,7 @@ export const movieCopy = {
     panelChat: 'Chat',
   },
   hi: {
+    viewAll: "सभी", viewMe: "मैं", viewClients: "ग्राहक", inboxViews: "इनबॉक्स दृश्य", viewMore: "और दृश्य",
     title: 'पहली बातचीत से काम पूरा होने तक।',
     walkthrough: 'प्रोडक्ट का परिचय',
     play: 'कहानी चलाएँ', pause: 'कहानी रोकें', replay: 'कहानी फिर से चलाएँ',
@@ -425,6 +433,7 @@ export const movieCopy = {
     panelChat: 'चैट',
   },
   ar: {
+    viewAll: "الكل", viewMe: "أنا", viewClients: "العملاء", inboxViews: "طرق عرض الوارد", viewMore: "المزيد من طرق العرض",
     title: 'من أول تحية حتى إنجاز العمل.',
     walkthrough: 'جولة في المنتج',
     play: 'تشغيل القصة', pause: 'إيقاف القصة مؤقتًا', replay: 'إعادة تشغيل القصة',
@@ -478,6 +487,7 @@ export const movieCopy = {
     panelChat: 'دردشة',
   },
   ur: {
+    viewAll: "سب", viewMe: "میں", viewClients: "کلائنٹس", inboxViews: "ان باکس کے مناظر", viewMore: "مزید مناظر",
     title: 'پہلے سلام سے کام مکمل ہونے تک۔',
     walkthrough: 'پروڈکٹ کا تعارف',
     play: 'کہانی چلائیں', pause: 'کہانی روکیں', replay: 'کہانی دوبارہ چلائیں',
@@ -532,7 +542,7 @@ export const movieCopy = {
   },
 };
 
-import { sceneTwoCopy } from './booking-scene-two-copy.mjs?release=chat-context-v10';
+import { sceneTwoCopy } from './booking-scene-two-copy.mjs?release=luma-workspace-v11';
 for (const [language, copy] of Object.entries(movieCopy)) {
   if (!sceneTwoCopy[language]) throw new Error(`Missing scene-two locale: ${language}`);
   Object.assign(copy, sceneTwoCopy[language]);
