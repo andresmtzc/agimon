@@ -299,3 +299,11 @@
 /* Earlier team context stays compact while new activity remains prominent. */
 .ops-chat .bubble-row[data-arrived-at^="-"] .bubble{padding:.5em .85em .35em;line-height:1.4}
 .ops-chat .bubble-row[data-arrived-at^="-"] .bubble-label{margin-bottom:.2em}
+
+/* Group messages identify each sender; Agimon's incoming automation stays soft. */
+.ops-chat .bubble-row{gap:.65em}
+.ops-chat .group-message-avatar{width:30px;height:30px;align-self:flex-end;margin-bottom:.2em}
+.group-agimon-avatar{background:transparent;overflow:hidden}
+.ops-chat .bubble-row.automated>.bubble{background:#f5effb;color:#4f405f}
+.ops-chat .bubble-row.automated .bubble-label{color:#79598f}
+.phone-screen .ops-chat .group-message-avatar{width:24px;height:24px}

@@ -318,6 +318,11 @@ class AgimonBookingMovie extends HTMLElement {
     const file={mia:'mia-torres',luna:'luna-piel',daniel:'daniel-kim',team:'studio-team'}[name];
     return `<span class="avatar ${klass}">${file?`<img src="/assets/booking-movie/${file}.jpg" alt="">`:name==='agimon'?'<span class=approved-avatar></span>':icon(name)}${channel?`<span class="channel-badge"><img src="/assets/channels/${channel}.svg" alt=""></span>`:''}</span>`;
   }
+  groupAvatar(person) {
+    if(person==='agimon')return '<span class="avatar group-message-avatar group-agimon-avatar"><span class="approved-avatar" data-avatar-format="circle"></span></span>';
+    const file={Emma:5,Lucas:53,sofia:44}[person];
+    return `<span class="avatar group-message-avatar"><img src="/assets/team-scene/people/person-${file}.jpg" alt=""></span>`;
+  }
   opsUnreadCount() { return this.storyTime>=59 ? 0 : OPS_HISTORY.length+(this.storyTime>=57?1:0); }
   sidebar() {
     const c=this.copy,unread={team:this.opsUnreadCount(),luna:1,box:4};
@@ -352,8 +357,8 @@ class AgimonBookingMovie extends HTMLElement {
     const back=backToChat?`<button type="button" class="calendar-back" data-target="calendar-back" title="${this.text('viewSource')}" aria-label="${this.text('viewSource')}">${icon('back')}</button>`:`<span class="phone-inbox-back" data-target="inbox-back" title="${this.text('inbox')}">${icon('back')}</span>`;
     return `<header class="work-header">${back}${avatar}<div><strong>${title}</strong><span>${sub}</span></div><span class="header-more">${icon('more')}</span></header>`;
   }
-  bubble(body,kind='incoming',label='',minute='01',arrivedAt=1,highlightAt=null) {
-    return `<div class="bubble-row ${kind}" data-arrived-at="${arrivedAt}"${highlightAt===null?'':` data-source-highlight="${highlightAt}"`}><div class="bubble">${label?`<div class="bubble-label">${label}</div>`:''}${body}<span class="message-time" dir="ltr">${arrivedAt<0?'09':arrivedAt>=57?'15':'10'}:${minute}${kind==='human'||kind==='automated'?`<span class=delivery-check>${icon('check')}</span>`:''}</span></div>${arrivedAt===57?`<span class="reply-affordance">${icon('reply')}</span>`:''}</div>`;
+  bubble(body,kind='incoming',label='',minute='01',arrivedAt=1,highlightAt=null,avatar='') {
+    return `<div class="bubble-row ${kind}" data-arrived-at="${arrivedAt}"${highlightAt===null?'':` data-source-highlight="${highlightAt}"`}>${kind==='human'?'':avatar}<div class="bubble">${label?`<div class="bubble-label">${label}</div>`:''}${body}<span class="message-time" dir="ltr">${arrivedAt<0?'09':arrivedAt>=57?'15':'10'}:${minute}${kind==='human'||kind==='automated'&&!avatar?`<span class=delivery-check>${icon('check')}</span>`:''}</span></div>${kind==='human'?avatar:''}${arrivedAt===57?`<span class="reply-affordance">${icon('reply')}</span>`:''}</div>`;
   }
   paper(compact=false) {
     return `<div class="receipt-paper ${compact?'compact':''}"><div class="paper-top">${icon('receipt')}<span>${this.text('receiptDocument')}</span></div><strong class="paper-amount" dir="auto">${escape(this.values.amount)}</strong><div class="paper-rule"></div><dl><div><dt>${this.text('customer')}</dt><dd>${this.text('customerName')}</dd></div><div><dt>${this.text('paymentFor')}</dt><dd>${this.text('receiptCaption')}</dd></div><div><dt>${this.text('appointment')}</dt><dd>${escape(this.values.shortDay)} · <bdi>${escape(this.values.time)}</bdi></dd></div></dl><div class="paper-bottom"><span class="barcode"></span><span>AG — 2048</span></div></div>`;
@@ -397,11 +402,11 @@ class AgimonBookingMovie extends HTMLElement {
   }
   ops() {
     const t=this.storyTime,draft=t>=63&&t<67,picked=t>=STOCK_COMPOSE.pick;
-    const quote=`<div class="reply-quote"><strong>${this.text('autoMessages')}</strong><span>${this.text('arrivalMessage')}</span></div>`;
-    let bubbles=OPS_HISTORY.map(({speaker,key,minute},index)=>this.bubble(this.text(key),'incoming',escape(speaker),minute,index-OPS_HISTORY.length)).join('');
-    if(t>=57)bubbles+=this.bubble(this.text('arrivalMessage'),'automated',`${icon('auto')}${this.text('autoMessages')}`,'00',57);
-    if(t>=67)bubbles+=this.bubble(`${quote}<span data-nurse-comment>${this.text('usedItem')}</span>`,'human',this.text('teamMember'),'30',67,82);
-    if(t>=69)bubbles+=this.bubble(this.text('stockRecorded'),'automated',`${icon('auto')}${this.text('autoMessages')}`,'30',69);
+    const quote=`<div class="reply-quote"><strong>Agimon</strong><span>${this.text('arrivalMessage')}</span></div>`;
+    let bubbles=OPS_HISTORY.map(({speaker,key,minute},index)=>this.bubble(this.text(key),'incoming',escape(speaker),minute,index-OPS_HISTORY.length,null,this.groupAvatar(speaker))).join('');
+    if(t>=57)bubbles+=this.bubble(this.text('arrivalMessage'),'automated',`${icon('auto')}Agimon`,'00',57,null,this.groupAvatar('agimon'));
+    if(t>=67)bubbles+=this.bubble(`${quote}<span data-nurse-comment>${this.text('usedItem')}</span>`,'human',this.text('teamMember'),'30',67,82,this.groupAvatar('sofia'));
+    if(t>=69)bubbles+=this.bubble(this.text('stockRecorded'),'automated',`${icon('auto')}Agimon`,'30',69,null,this.groupAvatar('agimon'));
     const suggestions=draft&&!picked&&t>=STOCK_COMPOSE.query?`<div class="stock-suggestions" aria-label="${this.text('inventory')}">${(t<STOCK_COMPOSE.filter?['tip','gloves','gauze']:['tip']).map(key=>`<button type="button" tabindex="-1" class="stock-suggestion ${key==='tip'&&t>=STOCK_COMPOSE.filter?'is-focused':''}" ${key==='tip'?'data-target="stock-picker"':''}>${this.text('slashChoice',{item:this.copy[key]})}</button>`).join('')}</div>`:'';
     const editing=t>=STOCK_COMPOSE.edit&&t<STOCK_COMPOSE.editEnd,selecting=t>=STOCK_COMPOSE.edit&&t<STOCK_COMPOSE.clear;
     const quantity=t>=STOCK_COMPOSE.clear&&t<STOCK_COMPOSE.quantity?'':new Intl.NumberFormat(this.language.locale).format(t>=STOCK_COMPOSE.quantity?STOCK_DEMO.used:1);
@@ -641,7 +646,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.root.querySelectorAll('.approved-avatar').forEach((host,index)=>{
       const size=Math.round(host.getBoundingClientRect().width)||32;
       const format=host.dataset.avatarFormat||'circle';
-      const pinned=Boolean(host.closest('.agimon-circle-avatar'));
+      const pinned=Boolean(host.closest('.agimon-circle-avatar,.group-agimon-avatar'));
       const time=pinned||this.motion.matches?0:this.storyTime;
       const frame=`${format}:${size}:${Math.floor(time*24)}`;
       if(frame===host.dataset.avatarFrame)return;
