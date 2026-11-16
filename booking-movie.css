@@ -219,7 +219,7 @@
 /* Press, pull, hold and release are driven by the movie clock. */
 .ops-chat .bubble-row[data-arrived-at="57"]{position:relative;overflow:visible}
 .ops-chat .bubble-row[data-arrived-at="57"]>.bubble{z-index:1}
-.reply-affordance{position:absolute;inset-inline-start:4px;top:50%;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e8f3ee;color:#43836d;opacity:0;pointer-events:none}
+.reply-affordance{position:absolute;inset-inline-start:0;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e8f3ee;color:#43836d;opacity:0;pointer-events:none}
 .reply-affordance>.icon{width:17px;height:17px}
 :host([dir=rtl]) .reply-affordance>.icon{transform:scaleX(-1)}
 .movie-pointer.dragging{transition:none}
