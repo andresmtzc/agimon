@@ -17,23 +17,12 @@ export function initChannelStrip() {
   function syncPlayback() {
     const play = entranceVisible && inView && !document.hidden && !hovered && !focused && !reduced.matches;
     if (timeline) play ? timeline.resume() : timeline.pause();
-    track.style.animationPlayState = play ? 'running' : 'paused';
   }
   function configure() {
     timeline?.kill(); timeline = null;
-    track.querySelectorAll('[data-duplicate]').forEach(node => node.remove());
-    track.classList.remove('is-marquee');
     gsap.set(items.flat(), { clearProps: 'transform' });
     viewport.scrollLeft = 0;
-    if (!reduced.matches && mobile.matches) {
-      sets.forEach(set => {
-        const copy = set.cloneNode(true);
-        copy.dataset.duplicate = 'true';
-        copy.setAttribute('aria-hidden', 'true');
-        track.append(copy);
-      });
-      track.classList.add('is-marquee');
-    } else if (!reduced.matches) {
+    if (!reduced.matches) {
       gsap.set(items[0], { scale: 1 });
       gsap.set(items[1], { scale: 0 });
       // Match the reference: circ easing, half-second scale and 50ms stagger.
@@ -53,7 +42,6 @@ export function initChannelStrip() {
   window.addEventListener('agimon:channels-visible', reveal, { once: true });
   window.addEventListener('agimon:entrance-skip', reveal, { once: true });
   document.addEventListener('visibilitychange', syncPlayback);
-  mobile.addEventListener('change', configure);
   reduced.addEventListener('change', configure);
   new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; syncPlayback(); }, { threshold: .1 }).observe(viewport);
   configure();

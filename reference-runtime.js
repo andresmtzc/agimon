@@ -180,7 +180,7 @@
 
 // Load the brand animation only after React has committed the original document.
 window.addEventListener("jitter:hydrated", () => {
-  const start = () => { void import("/app.js").catch(error => { window.agimonEntrance?.skip('app-failed'); console.error("Agimon overlay failed to load", error); }); };
+  const start = () => { void import("/app.js?release=mobile-pop-v1").catch(error => { window.agimonEntrance?.skip('app-failed'); console.error("Agimon overlay failed to load", error); }); };
   if (window.__agimonHeroReady) start();
   else window.addEventListener('agimon:hero-ready', start, { once: true });
 }, { once: true });
