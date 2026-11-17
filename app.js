@@ -1,6 +1,6 @@
 import { landingMotion } from './landing-motion.js';
 import { createMascot } from './mascot.js';
-import { initChannelStrip } from './channel-strip.js';
+import { initChannelStrip } from './channel-strip.js?release=mobile-pop-v1';
 import { initLanguageSelector } from './language-selector.js';
 
 // Agimon coordinated entrance v1
