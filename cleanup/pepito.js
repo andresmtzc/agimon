@@ -1,3 +1,4 @@
+import { landingMotion } from '../landing-motion.js';
 import { createMarketingMascot, MARKETING_TOMATO } from '../marketing-mascot.mjs';
 
 class AgimonPepito extends HTMLElement {
@@ -7,7 +8,7 @@ class AgimonPepito extends HTMLElement {
     this.frame = 0;
     this.lastTime = 0;
     this.inView = false;
-    this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    this.reduced = landingMotion;
     this.sync = () => {
       cancelAnimationFrame(this.frame);
       this.frame = 0;

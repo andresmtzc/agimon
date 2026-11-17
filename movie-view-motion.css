@@ -7,4 +7,3 @@
 .view-switch[data-view-motion]>button[aria-selected=true]{background:transparent;box-shadow:none}
 .view-switch[data-view-motion]>button:active{transform:scale(.94);transition-duration:.1s;transition-timing-function:linear}
 @media(hover:hover){.view-switch[data-view-motion]>button:hover{color:#233c35}}
-@media(prefers-reduced-motion:reduce){.view-switch[data-view-motion]>button,.view-switch[data-view-motion] .view-switch-pill{transition:none!important}.view-switch[data-view-motion]>button:active{transform:none}}

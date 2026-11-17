@@ -1,3 +1,4 @@
+import { landingMotion } from '../../landing-motion.js';
 import { createMascot } from './mascot.js';
 import { normalizeState } from './renderer.js';
 
@@ -34,7 +35,7 @@ export async function mountMascotStage(stage) {
 
   const document = stage.ownerDocument;
   const view = document.defaultView;
-  const reduced = view.matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = landingMotion;
   const controller = new AbortController();
   const savedProperties = motionProperties.map(name => ({
     name,

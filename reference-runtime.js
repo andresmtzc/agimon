@@ -9,7 +9,6 @@
     carousel: 'agimon-work-carousel',
     rest: 'main > :not(.agimon-hero):not(agimon-work-carousel), agimon-landing-footer',
   };
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const gates = new Set(Object.keys(selectors));
   const shown = new Set(), animations = new Set(), timers = new Set();
   const milestones = {};
@@ -44,7 +43,7 @@
     if (!nodes.length) return;
     shown.add(key); gates.delete(key);
     nodes.forEach((node, index) => {
-      if (!animate || skipped || motion.matches || !node.animate) return;
+      if (!animate || skipped || !node.animate) return;
       const animation = node.animate([
         { opacity: 0, translate: key === 'header' ? '0 -14px' : '0 16px' },
         { opacity: 1, translate: '0 0' },
@@ -95,7 +94,6 @@
   window.agimonEntrance = {
     begin() {
       started = true;
-      if (motion.matches) skip('reduced-motion');
       if (skipped) return false;
       show('hero', false); stamp('intro'); return true;
     },
@@ -111,11 +109,6 @@
   window.addEventListener('jitter:hydrated', () => {
     if (document.querySelector(selectors.carousel)?.dataset.ready !== 'true') carouselWatchdog = setTimeout(failCarousel, 12000);
   }, { once: true });
-  motion.addEventListener('change', () => { if (motion.matches) skip('reduced-motion'); });
-  if (motion.matches) {
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => skip('reduced-motion'), { once: true });
-    else skip('reduced-motion');
-  }
   // Native scrolling and history restoration stay native. Neither cancels the intro.
 })();
 

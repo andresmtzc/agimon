@@ -43,7 +43,7 @@
  ._main_1pbcf_1 .agimon-hero+[data-sentry-component=TemplatesCarousel]{margin-top:56px}
  .you-strokes{height:.32em;top:calc(100% - .035em)}
 }
-@media(prefers-reduced-motion:reduce){.agimon-header-brand .brand-blob{transform:none!important}.headline-line,.intro-word{opacity:1!important;transform:none!important}.chat-normal{opacity:1!important;transform:none!important}.chat-bubble,.works-highlight,.you-strokes{opacity:0!important}}
+
 /* The original template shows one row: desktop swaps two sets; mobile scrolls. */
 .agimon-hero .channel-logo-viewport{position:relative;height:36px;outline-offset:8px}
 .agimon-hero .channel-logo-track{display:grid;width:100%;height:100%}
@@ -63,12 +63,7 @@
  .agimon-hero .channel-logo-set img{width:23px;height:23px}
  .agimon-hero .channel-strip ._middle_15cvm_239{margin-bottom:22px}
 }
-@media(prefers-reduced-motion:reduce){
- .agimon-hero .channel-logo-viewport{height:48px;overflow-x:auto;overflow-y:hidden;mask-image:none}
- .agimon-hero .channel-logo-track{display:flex;width:max-content;animation:none!important;transform:none!important}
- .agimon-hero .channel-logo-set{display:flex;gap:0;width:auto;flex:none}
- .agimon-hero .channel-logo-set li{width:80px;flex:none;transform:none!important}
-}
+
 /* Agimon stable entrance v1 */
 /* The custom word animation owns the headline; avoid a second template bounce. */
 .agimon-hero h1.agimon-headline { animation: none !important; transform: none !important; }

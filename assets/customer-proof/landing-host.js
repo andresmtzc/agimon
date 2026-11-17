@@ -1,3 +1,4 @@
+import { landingMotion } from '../../landing-motion.js';
 import { mountProofLanguage } from './proof.js';
 import { markup } from './embed-markup.js';
 import alejandra from './scenes/alejandra.js';
@@ -68,7 +69,7 @@ class AgimonCustomerProof extends HTMLElement {
     });
     assetUrls(root);
     this.language = mountProofLanguage(this);
-    this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    this.reduced = landingMotion;
     this.paused = this.paused || false;
     this.motionButton = root.querySelector('#proof-motion-toggle');
     this.motionButton.type = 'button';

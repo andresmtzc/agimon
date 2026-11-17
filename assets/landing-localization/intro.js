@@ -1,3 +1,4 @@
+import { landingMotion } from '../../landing-motion.js';
 import { n as getReact, t as getJsxRuntime } from '../jsx-runtime-xcbuSnkB.js';
 import { t as ScrollAppearText } from '../ScrollAppearText-C2YF0ZHJ.js';
 import { languages } from '../../language-data.mjs';
@@ -10,7 +11,7 @@ export function LocalizedIntro() {
   const [id, setId] = useState('en');
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
-    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    const media = landingMotion;
     const change = event => setId(event.detail.id);
     const motion = () => setReduced(media.matches);
     setId(document.documentElement.dataset.agimonLanguage || 'en');

@@ -1,10 +1,11 @@
+import { landingMotion } from '../landing-motion.js';
 /** Native scrolling only. Returns a cleanup function for React useEffect. */
 export function initProof(root = document) {
   const list = root.querySelector('.agimon-proof__cards');
   if (!list) return () => {};
 
   const cards = [...list.querySelectorAll('.agimon-proof__card')];
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reducedMotion = landingMotion;
   let frame = 0;
   let disposed = false;
 

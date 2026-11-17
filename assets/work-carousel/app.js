@@ -1,3 +1,4 @@
+import { landingMotion } from '../../landing-motion.js';
 import faq from './scenes/faq.js';
 import calendar from './scenes/calendar.js';
 import inventory from './scenes/inventory.js';
@@ -23,7 +24,7 @@ if (presentation) {
   controls.append($('#play-toggle')); section.append(controls);
   viewport.tabIndex = 0;
 }
-const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const reduced = landingMotion;
 const smallScreen = matchMedia('(max-width: 700px)');
 const duration = 8000;
 let paused = reduced.matches, grid = false, hovering = false, focused = false, manualUntil = 0, activeIndex = -1;

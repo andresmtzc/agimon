@@ -27,4 +27,3 @@
 }
 @container(max-width:330px){.customers{column-gap:16px}.customer-bubble{padding:7px;font-size:12px}.actors{gap:6px}.actor-reply,.reply-measure{padding:8px 7px;font-size:12px}}
 :host([lang^=ar]) .reply-measure,:host([lang^=ur]) .reply-measure,:host([lang^=hi]) .reply-measure{font-family:inherit;letter-spacing:0;line-height:1.5}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}

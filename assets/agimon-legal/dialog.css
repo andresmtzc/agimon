@@ -83,7 +83,3 @@
   .legal-dialog .legal-dialog__title { font-size: 25px; }
   .legal-dialog__actions { padding-top: 10px; padding-bottom: 10px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .legal-dialog[open], .legal-dialog::backdrop { animation: none; }
-  .legal-dialog *, .legal-dialog *::before, .legal-dialog *::after { transition: none !important; scroll-behavior: auto !important; }
-}
