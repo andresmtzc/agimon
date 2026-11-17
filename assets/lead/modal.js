@@ -1,3 +1,4 @@
+import { landingMotion } from '../../landing-motion.js';
 import { COUNTRY_OPTIONS } from './countries.js';
 import { EMPLOYEE_COLORS } from './colors.js';
 import { modalCopy } from './modal-copy.js';
@@ -13,7 +14,7 @@ class AgimonDemoModal extends HTMLElement {
     super();
     this.attachShadow({ mode:'open' });
     this.busy = false;
-    this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    this.reduced = landingMotion;
     this.locale = 'en';
     this.shadowRoot.innerHTML = `
       <link rel="stylesheet" href="${new URL('./modal.css',import.meta.url).href}">

@@ -1,3 +1,4 @@
+import { landingMotion } from './landing-motion.js';
 import { n as getReact, t as getJsxRuntime } from './assets/jsx-runtime-xcbuSnkB.js';
 import { t as ScrollAppearText } from './assets/ScrollAppearText-C2YF0ZHJ.js';
 import { languages } from './language-data.mjs';
@@ -10,7 +11,7 @@ const subscribe = callback => {
   window.addEventListener('agimon:language', callback);
   return () => window.removeEventListener('agimon:language', callback);
 };
-const motionPreference = typeof window === 'undefined' ? null : window.matchMedia('(prefers-reduced-motion: reduce)');
+const motionPreference = typeof window === 'undefined' ? null : landingMotion;
 const getReducedMotion = () => motionPreference?.matches || false;
 const getServerReducedMotion = () => false;
 const subscribeMotion = callback => {

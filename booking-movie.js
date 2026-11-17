@@ -1,3 +1,4 @@
+import { landingMotion } from './landing-motion.js';
 import { isPhoneMovie, mountPhoneMovieView } from './movie-phone-view.js?preview=event-anchor-v5';
 // Agimon product movie: persistent sand and a readable mobile opening.
 import { MOVIE_DURATION, MOBILE_REQUEST_AT, MOBILE_READING_HOLD_AT, MOBILE_READING_HOLD, movieStageOpacity, movieStoryTime, advanceMovieClock } from './movie-timing.js';
@@ -51,7 +52,7 @@ class AgimonBookingMovie extends HTMLElement {
     this.manualPhone=false;this.activePhonePanel='inbox';this.summaryRecord=null;this.dashboardOpen=null;this.inventoryDetail=null;this.receiptDetail=null;
     this.openingReadRemaining = MOBILE_READING_HOLD;
     this.t = 0; this.playing = false; this.started = false; this.inView = false; this.raf = 0; this.loops = 0;
-    this.motion = matchMedia('(prefers-reduced-motion: reduce)');
+    this.motion = landingMotion;
     if (this.motion.matches) this.t = 36;
     this.onLanguage = () => this.setLanguage();
     this.onVisibility = () => this.syncPlayback();

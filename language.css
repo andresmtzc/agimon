@@ -63,9 +63,7 @@
 [data-sentry-component=ScrollAppearText] .scroll-appear-text-inner{text-align:start}
 [data-sentry-component=ScrollAppearText]:lang(ar) .scroll-appear-text-inner,[data-sentry-component=ScrollAppearText]:lang(ur) .scroll-appear-text-inner{font-family:'Noto Sans Arabic','TWK Lausanne',sans-serif;letter-spacing:0;line-height:1.35}
 [data-sentry-component=ScrollAppearText]:lang(hi) .scroll-appear-text-inner{font-family:'Noto Sans Devanagari','TWK Lausanne',sans-serif;letter-spacing:0;line-height:1.2}
-@media(prefers-reduced-motion:reduce){
- [data-sentry-component=ScrollAppearText] .scroll-appear-text-inner,[data-sentry-component=ScrollAppearText] .scroll-appear-text-inner *{color:#000!important}
-}
+
 @media(max-width:1024px){
  html[data-agimon-language]:not([data-agimon-language=en]) .agimon-hero h1.agimon-headline:lang(ar),html[data-agimon-language]:not([data-agimon-language=en]) .agimon-hero h1.agimon-headline:lang(ur){line-height:1.3!important}
  html[data-agimon-language]:not([data-agimon-language=en]) .agimon-hero h1.agimon-headline:lang(hi){line-height:1.15!important}

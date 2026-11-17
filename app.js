@@ -1,3 +1,4 @@
+import { landingMotion } from './landing-motion.js';
 import { createMascot } from './mascot.js';
 import { initChannelStrip } from './channel-strip.js';
 import { initLanguageSelector } from './language-selector.js';
@@ -5,7 +6,7 @@ import { initLanguageSelector } from './language-selector.js';
 // Agimon coordinated entrance v1
 initChannelStrip();
 
-const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const reduced = landingMotion;
 const DURATION = 3.05;
 const clamp = n => Math.max(0, Math.min(1, n));
 const smooth = n => { const p=clamp(n); return p*p*(3-2*p); };

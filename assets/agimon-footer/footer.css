@@ -160,7 +160,7 @@ h2,h3,p,figure{margin:0}a{color:inherit;text-decoration:none}button,input{font:i
 @media screen and (width>=1025px){._question_1wo4v_128{padding:32px 8px 32px 0}}
 @media screen and (width>=1441px){._question_1wo4v_128{letter-spacing:0;font-weight:600}}
 ._chevron_1wo4v_124{flex-shrink:0;justify-content:center;align-items:center;width:40px;height:40px;transition:transform .3s cubic-bezier(.25,.46,.45,.94);display:flex}
-@media (prefers-reduced-motion:reduce){._chevron_1wo4v_124{transition:none}}
+
 ._chevron_1wo4v_124 svg{width:12px}
 ._answer_1wo4v_193{letter-spacing:-0.32px;color:#6e6e73;text-wrap:pretty;padding:0 64px 24px 0;font:400 16px/150% Inter,sans-serif}
 ._answer_1wo4v_193 .faq-demo-link{color:#176452;font-weight:600;text-decoration:underline;text-underline-offset:3px}
@@ -176,7 +176,7 @@ footer:lang(ar) .signup-form,footer:lang(ur) .signup-form{direction:rtl}footer:l
 footer:lang(hi) :is(h2,summary,._answer_1wo4v_193,.form-status,.legal-links,._input_1b020_65,._inner_ruopi_21){font-family:'Noto Sans Devanagari',sans-serif;letter-spacing:0;line-height:1.4}
 @media(min-width:1025px){footer[dir=rtl] ._input_1b020_65{padding-left:210px;padding-right:24px;margin-right:0;margin-left:-20px;border-radius:50px}footer[dir=rtl] ._submit_1b020_111{margin-left:0;margin-right:auto}footer[dir=rtl] ._answer_1wo4v_193{padding-right:0;padding-left:72px}}
 @media(max-width:1024px){._socialContainer_1y8xr_291{margin-top:80px}.legal-links{justify-content:center;gap:16px 22px}.copyright{text-align:center}footer[dir=rtl] ._answer_1wo4v_193{padding-left:64px;padding-right:0}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
 
 /* The single FAQ now lives immediately before this footer. */
 footer[data-faq-consolidated] ._inner_1y8xr_12 { padding-top: 0; background-color: #f3f2ed; }

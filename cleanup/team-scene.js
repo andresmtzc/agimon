@@ -1,3 +1,4 @@
+import { landingMotion } from '../landing-motion.js';
 import { teamPortraits } from './team-scene-portraits.mjs';
 import { createMarketingMascot } from '../marketing-mascot.mjs';
 import { getActiveLanguage } from '../language-selector.js';
@@ -32,7 +33,7 @@ export class AgimonTeamScene extends HTMLElement {
     this.lastFrame = 0;
     this.visibleCustomers = 9;
     this.compact = false;
-    this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    this.reduced = landingMotion;
     if (this.reduced.matches) this.time = STILL_FRAME;
     this.onLanguage = () => this.setLanguage();
     this.onVisibility = () => this.syncPlayback();

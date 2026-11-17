@@ -1,3 +1,4 @@
+import { landingMotion } from './landing-motion.js';
 // Agimon coordinated entrance v1
 import { c as gsap } from './assets/Header-Dej0fn0W.js';
 
@@ -9,7 +10,7 @@ export function initChannelStrip() {
   const sets = [...track.children];
   const items = sets.map(set => [...set.children]);
   const mobile = matchMedia('(max-width: 1024px)');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = landingMotion;
   let entranceVisible = !window.agimonEntrance || window.agimonEntrance.isVisible('channels') || window.agimonEntrance.isSkipped();
   let timeline, inView = false, hovered = false, focused = false;
 

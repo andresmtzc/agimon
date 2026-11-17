@@ -1,9 +1,10 @@
+import { landingMotion } from './landing-motion.js';
 // Match the landing header's demo-button slide and hamburger spring.
 export function mountViewSwitchMotion(host) {
   const tabs = host.shadowRoot?.querySelector('.view-switch');
   if (!tabs) return () => {};
   const buttons = [...tabs.querySelectorAll('button[data-view]')];
-  const motion = host.motion || matchMedia('(prefers-reduced-motion: reduce)');
+  const motion = host.motion || landingMotion;
   tabs.dataset.viewMotion = 'pending';
   const track = document.createElement('span');
   track.className = 'view-switch-track';
