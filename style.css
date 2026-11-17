@@ -25,8 +25,8 @@
 .you-strokes path{stroke:#19171c;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
 .you-strokes .stroke-two{stroke-width:2.6}
 .mobile-break{display:none}
-/* Give the English promise its own final line on desktop too. */
-@media(min-width:1025px){.agimon-hero .agimon-headline:lang(en) .mobile-break{display:block;height:0}}
+/* Use each translation's chosen third-line break on desktop too. */
+@media(min-width:1025px){.agimon-hero .agimon-headline .mobile-break{display:block;height:0}}
 .agimon-hero [data-sentry-component=ClientsLogo]{pointer-events:none}
 .agimon-hero ._clients_qcur3_32{opacity:1}
 .agimon-hero ._clientsItems_qcur3_103:not(:first-child){display:none}
